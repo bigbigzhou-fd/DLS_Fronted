@@ -1,0 +1,61 @@
+<div class="modal-body">
+		<span class="glyphicon glyphicon-remove" style="position: absolute;right: 10px;top:10px;cursor: pointer;" ng-click="$ctrl.cancel()"></span>
+    <div class="dls-panel no-border">
+      <div class="dls-panel-heading">{{modalDatas.businessType | quotaAdjTypeFilter }}申请</div>
+      <div class="dls-panel-body">
+        <form  name='form' novalidate>
+
+        <p class="item-content">
+        	<label class="infoLbl">交易流水号：</label>
+        	<span class="infoContent" ng-bind="modalDatas.serialNum"></span>
+        </p>
+        <p class="item-content">
+        	<label class="infoLbl">机构名称：</label>
+        	<span class="infoContent" ng-bind="modalDatas.orgFullNameCN"></span>
+        </p>
+
+        <p class="item-content">
+        	<label class="infoLbl">部门名称：</label>
+        	<span class="infoContent" ng-bind="modalDatas.deptName"></span>
+        </p>
+        <p class="item-content">
+            <label class="infoLbl">调整金额：</label>
+            <span class="infoContent" ng-bind="modalDatas.gap"></span>
+        </p>
+        <p class="item-content" ng-show="!!modalDatas.invoiceNum">
+            <label class="infoLbl">发票号：</label>
+            <span class="infoContent" ng-bind="modalDatas.invoiceNum"></span>
+        </p>
+        <p class="item-content" ng-show="!!modalDatas.accountType">
+            <label class="infoLbl">账户类型：</label>
+            <span class="infoContent" ng-bind="modalDatas.accountType"></span>
+            <!-- <span class="infoContent" ng-bind="modalDatas.accountType | accountTypeFilter"></span> -->
+        </p>
+        <p class="item-content" ng-show="!!modalDatas.prdtType">
+        	<label class="infoLbl">产品类型：</label>
+            <span class="infoContent" ng-bind="modalDatas.prdtType"></span>
+        	<!-- <span class="infoContent" ng-bind="modalDatas.prdtType | prdtTypeFilter"></span> -->
+        </p>
+
+
+
+        <p class="item-content" style="height: auto;" ng-show="!!modalDatas.remarks">
+        	<label class="infoLbl">备注：</label>
+        	<span class="infoContent long" ng-bind="modalDatas.remarks"></span>
+        </p>
+        <hr>
+        <p class="item-content" >
+        	<label class="infoLbl">审核意见：</label>
+        	<!-- <textarea rows="2" cols="40" style="vertical-align: text-top;border-radius: 4px;" autofocus="true"  ng-model="modalDatas.remarks"></textarea> -->
+            <textarea name="notes"  rows="2" cols="40" style="vertical-align: text-top;border-radius: 4px;" autofocus="true" ng-model="modalDatas.notes" ng-maxlength="255"></textarea>
+            <span class="help-inline" style="margin-left: 120px;" ng-show="form.notes.$error.maxlength">最多为255个字符</span>
+        </p>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-disabled="form.$invalid" ng-click="$ctrl.ok()">确定</button>
+        <button class="btn btn-warning" type="button" ng-disabled="form.$invalid" ng-click="$ctrl.deny()">拒绝</button>
+        <!-- <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">取消</button> -->
+    </div>
+</div>

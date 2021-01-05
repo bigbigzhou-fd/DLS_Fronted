@@ -1,0 +1,62 @@
+<article class="dls-admin bg-2" ng-controller="signManageCtrl">
+	<header class="h-50 dls-btn-default  lh-50" style="width: 1150px;">
+	    <span class="pull-left inline-block  lh-50 p-lr-20 f-s-16 f-col-2 f-w-b">签约管理</span>
+	</header>
+
+	<section class="flex-container">
+		<div class="cart-item flex flex-d-r">
+			<div class="flex-1">
+				<!-- <label class="header-tag">搜索:</label> -->
+				<div class="relative inline-block" style="width: 240px;">
+				    <span class="iconfont icon-search" ng-click="getData()"></span>
+				    <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" placeholder="请输入搜索关键字" ng-keyup="search($event)" ng-model="keyword">
+				    <span class="p-r-10 iconfont icon-enter" ng-click="getDatas()"></span>
+				</div>
+			</div>
+
+			<div>
+				<label class="header-tag">签约状态:</label>
+				<select  class="form-control inline-block no-border-radius" style="width: 120px;" ng-model="status" ng-options="item.value as item.name  for item in signStates" >
+				  <option value="" ng-if="false"></option>
+				</select>
+			</div>
+		</div>
+
+
+
+		<!-- <p class="item-title">共有<span>{{totalItems}}</span>家机构结算单信息</p> -->
+		<div class="dls-tab">
+			<table class="table table-bordered table-striped">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in titles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in datas.list">
+		          <td>{{$index+1}}</td>
+		          <td>{{item.memId | textEmptyFilter}}</td>
+		          <td>{{item.orgFullNameCN | textEmptyFilter}}</td>
+		          <td>{{item.deptName | textEmptyFilter}}</td>
+		          <td>{{item.createTime | textEmptyFilter}}</td>
+		          <td>{{item.signTime | textEmptyFilter}}</td>
+		          <td>{{item.applicant | textEmptyFilter}}</td>
+		          <!-- <td>{{item.reviewMemId}}</td> -->
+		          <td>{{item.signStatus | signStatusFilter}}</td>
+		          <td>
+		          	<a class="btn btn-link" ng-if="item.signStatus !== '01' " ng-click="setStatus()" ui-sref="dls.sign.query({memId:item.memId,accountId:item.accountId,num:item.marketSerial})" href="javascript:void(0);">查看</a>
+		          	<a class="btn btn-link" ng-if="item.signStatus === '01' " ng-click="setStatus()" ui-sref="dls.sign.info({memId:item.memId,accountId:item.accountId})"  href="javascript:void(0);">签约</a>
+		          </td>
+
+		        </tr>
+		        <tr ng-show="pageOptions.total_items_num === 0">
+		        	<td colspan="{{titles.length+1}}">没有任何数据</td>
+		        </tr>
+
+		      </tbody>
+		    </table>
+		</div>
+		<pagination  options="pageOptions" cur-page="curPageNum" sum="pageOptions.total_items_num"></pagination>
+	</section>
+
+</article>

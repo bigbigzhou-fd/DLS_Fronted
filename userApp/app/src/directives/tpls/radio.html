@@ -1,0 +1,5 @@
+<div class="h-34 lh-34">
+    <span ng-repeat="item in radioData">
+        <input type="radio" name="{{radioName}}" ng-disabled="radioDisable" ng-click="select(item)" value="{{item.value}}"> {{item.name}}
+    </span>
+</div>

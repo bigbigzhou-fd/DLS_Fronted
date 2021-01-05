@@ -1,0 +1,173 @@
+.dls-admin .content{
+	padding: 10px;
+}
+.dls-admin .btn-group button {
+    color: #2E9BCF;
+    padding: 6px 12px;
+    border-radius: 0;
+}
+.dls-admin .btn {
+    // font-size: 12px;
+    border-radius: 0;
+}
+.btn-add-tag {
+	margin-bottom: 20px;
+	font-size: 14px;
+	padding: 6px 24px;
+    margin-left: 15px;
+}
+.dls-tree {
+	overflow-y: scroll;
+    height: 697px;
+}
+
+.open > .dropdown-toggle.btn-default:hover, .open > .dropdown-toggle.btn-default:hover  {
+    color: #2E9BCF;
+    background-color: transparent;
+    border-color: #ccc;
+}
+.open  .dropdown-menu {
+    padding: 5px 10px;
+}
+.open  .dropdown-menu li:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+.btn-default:active, .btn-default.active, .open > .dropdown-toggle.btn-default {
+    background-color: transparent;
+    color: #2E9BCF;
+}
+.btn-group .dropdown-toggle {
+ min-width: 100px;
+ text-align: left;
+}
+.btn-group.open .dropdown-toggle {
+    box-shadow: none;
+}
+.btn-group .caret {
+ position: absolute;
+ right: 10px;
+ top: 12px;
+}
+.td-hidden {
+    display: none;
+}
+.td-inline-block {
+    display: inline-block;
+    border: none!important;
+}
+.tdSpanEditable {
+    border: solid 2px #c8cdd0;
+    padding: 6px 20px;
+    background-color: #fff;
+}
+.edit-tr {
+    // position: absolute;
+    // display: none;
+}
+.edit-tr td{
+    padding: 0!important;
+}
+.edit-tr td input ,.edit-tr td select{
+    height: 34px;
+    width: 100%;
+}
+
+
+.param-list-li {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 10px;
+    background-color: #cfd9da;
+    margin-left: 120px;
+    margin-bottom: 10px;
+    width: 80%;
+    min-width: 800px;
+    position: relative;
+}
+.list-item ~ .list-item {
+    margin-left: 20px;
+}
+.list-item-label {
+    font-weight: normal;
+}
+.list-item-input {
+    height: 30px;
+    line-height: 30px;
+    width: 150px;
+    padding-left: 10px;
+}
+.item-content input[type="radio"], .item-content input[type="checkbox"] {
+    top: 4px;
+}
+.multSelect-wrap {
+    display: flex;
+}
+.multSelect-opera {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: inherit;
+    justify-content: center;
+    margin-left: 40px;
+    margin-right: -75px;
+}
+
+.tree-box .tree-leaf {
+    position:   relative;
+}
+
+.dls-panel {
+    border: solid 1px #eee;
+    padding: 10px 8px;
+    margin: 20px 10px;
+}
+.dls-panel-heading {
+    font-size: 18px;
+    font-family: '微软雅黑';
+    color: #595757;
+    font-weight: bolder;
+    border-bottom: solid 1px #eee;
+    padding: 0 10px;
+}
+.dls-panel-body {
+    padding: 10px 40px 30px 10px;
+}
+
+.dls-panel .infoLbl {
+    width: 120px;
+    text-align: right;
+}
+
+table .btn-link {
+    font-size: 12px;
+}
+.flex .infoLbl {
+    text-align: right;
+}
+.flex .infoContent {
+    margin-left: 0;
+}
+
+.f-label {
+    text-align: right;
+    font-size: 12px;
+    font-weight: normal;
+}
+.f-input {
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+}
+.dls-from .help-inline {
+    padding-top: 7px;
+    font-size: 12px;
+}
+.dls-from .control-label {
+    font-weight: normal;
+    font-size: 12px;
+}
+.dls-from .form-control {
+    font-size: 12px;
+}

@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html class="theme theme-white">
+<head>
+<meta charset="utf-8">
+<title>上海数据交易中心帮助文档</title>
+<link href="./css/template-theme-white.css" rel="stylesheet" media="screen">
+<style type="text/css">
+
+#wmd-preview h1  {
+    color: #0077bb; /* 将标题改为蓝色 */
+}</style>
+</head>
+<body class="theme theme-white">
+<div id="wmd-preview" class="wmd-preview wmd-preview-full-reader"><div class="md-section-divider"></div><div class="md-section-divider"></div><h1 data-anchor-id="8ern" id="上海数据交易中心帮助文档"><strong></strong><center><strong>上海数据交易中心帮助文档</strong></center></h1><hr><p data-anchor-id="5023"><div class="toc"><div class="toc">
+<ul>
+<li><a href="#上海数据交易中心帮助文档">上海数据交易中心帮助文档</a><ul>
+<li><a href="#一概念说明">一、概念说明</a><ul>
+<li><a href="#1-数据挂牌">1. 数据挂牌</a></li>
+<li><a href="#2-数据订购">2. 数据订购</a></li>
+<li><a href="#3工单管理">3.工单管理</a></li>
+</ul>
+</li>
+<li><a href="#二概念关系图">二、概念关系图</a></li>
+<li><a href="#三数据挂牌步骤">三、数据挂牌步骤</a></li>
+<li><a href="#四数据订购步骤">四、数据订购步骤</a></li>
+<li></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</p><hr><div class="md-section-divider"></div><h2 data-anchor-id="pb4d" id="一概念说明"><strong>一、概念说明</strong></h2><div class="md-section-divider"></div><h3 data-anchor-id="6hn2" id="1-数据挂牌"><strong>1. 数据挂牌</strong></h3><ul data-anchor-id="4enq">
+<li><p>交易品：交易中心定义的可进入交易网络流通的数据产品。交易品 =IKV+参数范围</p></li>
+<li><p>互联对象：供方在交易品基础之上定义的有能力提供的数据产品，互联对象 =IKV+（供方能够提供的参数范围）</p></li>
+<li><p>更新频率：数据供方更新数据信息的周期，如7天，30天等</p></li>
+<li><p>数据留存有效期：数据供方允许需方前置机缓存已购买数据的时间周期</p></li>
+</ul><hr><div class="md-section-divider"></div><h3 data-anchor-id="n5u6" id="2-数据订购"><strong>2. 数据订购</strong></h3><ul data-anchor-id="wl6a">
+<li><p>订单有效期：订单从生效到失效的时间期限</p></li>
+<li><p>结算周期：订单对应结算单结算金额的统计周期</p></li>
+<li><p>计数方式：指定数据产品计算交易数量的方式，包括查询计数和查得计数</p></li>
+<li><p>价格类型：数据供方在订单中与需方约定指定互联对象的价格模式，如固定单价、浮动单价等</p></li>
+<li><p>折扣方式：数据供方给予数据需方的折扣形式，包括固定折扣和阶梯折扣</p></li>
+<li><p>折扣:数据供方给予需方购买数据产品原价的若干成计价，如九折</p></li>
+<li><p>保价时间:数据供方承诺数据需方购买指定数据产品时价格不随供方调价影响的时间段</p></li>
+<li><p>封顶金额：指定订单在结算周期内，所有K值的合计结算金额对应的封顶区间金额</p></li>
+<li><p>保底金额：指定订单在结算周期内，所有K值的合计结算金额对应的保底区间金额</p></li>
+</ul><hr><div class="md-section-divider"></div><h3 data-anchor-id="rbdu" id="3工单管理"><strong>3.工单管理</strong></h3><ul data-anchor-id="i9pe">
+<li><p>工单：由一个和多个配送任务组成的配送任务单，主要记录配送对象、路由信息及配送状态</p></li>
+<li><p>路由方式：</p>
+
+<ul><li><p>静态路由：数据需方指定供方数据查询顺序</p></li>
+<li><p>动态路由：数据配送能够根据实际情况的变化适时地调整查询顺序</p></li></ul></li>
+<li><p>路由策略：数据需方设定的用于改变路由查询顺序的规则</p></li>
+<li><p>配送对象：需方与供方最终约定的采购数据对象，是确认参数的互联对象。配送对象=IKV+参数</p></li>
+</ul><hr><div class="md-section-divider"></div><h2 data-anchor-id="6p0k" id="二概念关系图"><strong>二、概念关系图</strong></h2><ul data-anchor-id="7hev">
+<li>交易品、互联对象、配送对象关系图 <br>
+<img src="./images/conceptRelationship.png" alt="对象关系图0.6.png-42.3kB"></li>
+</ul><p></p><center data-anchor-id="ner9"><strong>交易品、互联对象、配送对象关系图</strong></center><p></p><hr><div class="md-section-divider"></div><h2 data-anchor-id="3fqy" id="三数据挂牌步骤"><strong>三、数据挂牌步骤</strong></h2><ul data-anchor-id="pdry">
+<li><p>营销类数据</p>
+
+<p> 营销类数据主要面向广告营销场景。供方挂牌包含以下几个步骤：</p>
+
+<ul><li><p>选择交易品</p></li>
+<li><p>创建互联对象</p></li>
+<li><p>填写六要素信息</p></li>
+<li><p>提交六要素信息</p></li>
+<li><p>上架交易品 </p></li></ul></li>
+</ul><p data-anchor-id="zpjv"><img src="./images/marketing.png" alt="营销挂牌0.6.png-96.2kB"></p><p></p><center data-anchor-id="37ai"><strong>营销类数据挂牌流程</strong></center><p></p><ul data-anchor-id="htk5">
+<li><p>征信类数据</p>
+
+<p>  征信类数据主要面向广告营销场景。供方挂牌包含以下几个步骤：</p>
+
+<ul><li><p>选择交易品</p></li>
+<li><p>创建互联对象</p></li>
+<li><p>填写六要素信息</p></li>
+<li><p>提交审核</p></li>
+<li><p>上架交易品</p></li></ul></li>
+</ul><p data-anchor-id="vdei"><img src="./images/credit.png" alt="征信挂牌0.6.png-94.4kB"></p><p></p><center data-anchor-id="68ax"><strong>征信类数据挂牌流程</strong></center><p></p><hr><div class="md-section-divider"></div><h2 data-anchor-id="70hy" id="四数据订购步骤"><strong>四、数据订购步骤</strong></h2><ul data-anchor-id="m9hd">
+<li><p>数据订购</p>
+
+<p>  用户在上海交易中心的数据交易平台进行数据订购，需完成以下几步操作：</p>
+
+<ul><li><p>选择交易品</p></li>
+<li><p>加入购物车</p></li>
+<li><p>填写订单信息</p></li>
+<li><p>生成订单</p></li>
+<li><p>供方确认</p></li>
+<li><p>需方确认</p></li>
+<li><p>路由配置</p></li>
+<li><p>数据配送</p></li></ul></li>
+</ul><p data-anchor-id="5a6e"><img src="./images/dataOrder.png" alt="数据订购0.6.png-111.9kB"> <br>
+</p><center data-anchor-id="ibds"><strong>数据订购流程</strong></center><p></p><hr><div class="md-section-divider"></div><h2 id="title"></h2><hr></div>
+</body>
+</html>

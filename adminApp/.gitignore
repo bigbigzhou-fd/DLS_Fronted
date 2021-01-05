@@ -1,0 +1,12 @@
+logs/*
+!.gitkeep
+node_modules/
+app/bower_components/
+.idea
+dist/
+package-lock.json
+userAppDist/
+adminAppDist/
+tmp/
+#app/data/
+

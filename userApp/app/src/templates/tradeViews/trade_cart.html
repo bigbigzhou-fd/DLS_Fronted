@@ -1,0 +1,292 @@
+<div class="cart-panel" ng-controller="tradeCartCtrl">
+        <div id="popover" style="position: absolute;background-color: rgba(223, 223, 223, .9);display: none">
+            <ul style="padding:5px 10px">
+                <li class="f-s-12">请填写<span class="f-col-3">{{popRange}}</span>范围内的数值</li>
+                <li ng-repeat="item in popData" style="margin:8px 0">
+                    <input type="number" style="width:80px" placeholder="最小值" ng-model="item.min"> ~
+                    <input type="number" style="width:80px" placeholder="最大值" ng-model="item.max">
+                    <span class="f-col-red cursor-pointer f-s-12" ng-click="deletePopItem($index)"
+                          ng-show="popData.length > 1"> 删除 </span>
+                </li>
+                <li class="text-center">
+                    <span class="f-s-12 f-col-3 p-lr-10 p-tb-5 inline-block cursor-pointer"
+                          style="background-color: #1b6d85; color:#DDD" ng-click="addPopItem()">新增</span>
+                    <span class="f-s-12 f-col-3 p-lr-10 p-tb-5 inline-block cursor-pointer"
+                          style="background-color: #2d8526; color:#DDD" ng-click="savePopItem()">保存</span>
+                    <span class="f-s-12 f-col-3 p-lr-10 p-tb-5 inline-block cursor-pointer"
+                          style="background-color: #666; color:#DDD" ng-click="cancelPop()">取消</span>
+                </li>
+            </ul>
+        </div>
+    
+        <header class="h-50 dls-btn-default lh-50">
+            <span class="w-250 p-lr-20 f-s-16 f-col-2 f-w-b" ng-show="viewMode !== '02'">订单记录 < 购物车</span>
+            <span class="w-250 p-lr-20 f-s-16 f-col-2 f-w-b" ng-show="viewMode === '02'">订单列表 < 查看详情</span>
+        </header>
+        <!-- <cart-order ng-repeat="(dict_k, dict_vs) in cartDicts" cart-dicts="cartDicts[dict_k]" ng-if="cartDicts[dict_k].length"></cart-order> -->
+        <!-- <cart-order cart-dicts="datas" ng-if="datas.list.length"></cart-order> -->
+    
+        <form class="bg-2 cart-form" name="form" novalidate ng-show="cartDictsDatas.list.length && selectedConnObjNo.length">
+            <section class="flex-container">
+                <p class="cart-item"><span class="cart-item-label f-s-12 text-right">订单编号:</span><span
+                        class="cart-item-content f-s-12" ng-bind="cartDictsDatas.orderId"></span></p>
+    
+                <div class="cart-item">
+                    <span class="cart-item-label must f-s-12 text-right">订单类型:</span>
+                    <span class="cart-item-content f-s-12" ng-bind="cartDictsDatas.prdtType | tagTypeFilter "></span><span
+                        class="f-w-b f-s-12">订单</span>
+                </div>
+    
+                <div class="cart-item">
+                    <span class="cart-item-label must f-s-12 text-right">设置订单名称:</span>
+                    <div class="relative inline-block w-250">
+                        <input ng-disabled='viewMode === "02"' type="text" name="orderName"
+                               class="table-search form-control no-border-radius p-l-10 h-30 lh-30" placeholder="请输入订单名称"
+                               ng-model="cartDictsDatas.orderName" required ng-pattern="DlsUtil.namePattern">
+                    </div>
+                    <span class="help-inline" ng-show="form.orderName.$error.required"> 请输入订单名称</span>
+                    <span class="help-inline" ng-if="form.orderName.$error.pattern && form.orderName.$dirty">请输入除'<'和'>'以外的符号</span>
+                </div>
+    
+                <div class="cart-item">
+                    <span class="cart-item-label must f-s-12 text-right">设置结算周期:</span>
+                    <div class="relative inline-block w-250">
+                        <select class="form-control td-select  h-30 lh-30" disabled="disabled" name="type"
+                                ng-model="periodType"
+                                ng-options="item.value as item.name  for item in selectOptions.settPeriodType">
+                            <option value="" ng-if="false"></option>
+                        </select>
+                    </div>
+                </div>
+    
+                <div class=" flex flex-d-r m-b-10">
+                    <div class="flex-item flex-1 relative">
+                        <span style="width:120px;" class="cart-item-name must f-s-12 text-right ver-top">设置订单生效时间:</span>
+                        <div ng-show=" viewMode !== '02' " style="margin-left:125px;"
+                             class="form-control inline-block w-200 dateEdit" moment-picker="cartDictsDatas.orderEffectTime"
+                             ng-bind="cartDictsDatas.orderEffectTime" locale="zh-cn" format="YYYY-MM-DD"
+                             min-date="minDateMoment"></div>
+                        <div ng-show=" viewMode === '02' " style="margin-left:125px;"
+                             class="form-control inline-block w-200 dateEdit" ng-disabled="viewMode === '02'"
+                             ng-class="{'click-disabled': viewMode === '02'}"
+                             moment-picker="cartDictsDatas.orderEffectTime" ng-bind="cartDictsDatas.orderEffectTime"
+                             locale="zh-cn" format="YYYY-MM-DD"></div>
+                    </div>
+    
+                    <div class="flex-item flex-1 relative">
+                        <span class="cart-item-name must f-s-12 text-right ver-top">设置订单终止时间:</span>
+                        <div class="form-control inline-block m-l-130 w-200 dateEdit"
+                             moment-picker="cartDictsDatas.orderExpireTime" ng-bind="cartDictsDatas.orderExpireTime"
+                             ng-disabled="!cartDictsDatas.orderEffectTime || viewMode === '02'" locale="zh-cn"
+                             ng-class="{'click-disabled': !cartDictsDatas.orderEffectTime || viewMode === '02'}"
+                             format="YYYY-MM-DD" min-date="cartDictsDatas.orderEffectTime"></div>
+                    </div>
+    
+                    <div class="cart-item flex-item flex-1 relative">
+                        <span class="cart-item-label f-s-12 text-right" style="width: 80px; text-align: right;">清算类型:</span>
+                        <label class="radio-inline">
+                            <input type="radio" name="clearType" disabled="disabled" ng-model="clearType" id="clearType"
+                                   value="1"> 集中清算
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="clearType" disabled="disabled" ng-model="clearType" id="clearType"
+                                   value="2"> 双边清算
+                        </label>
+                    </div>
+    
+                </div>
+    
+                <div class="order-wrap" ng-repeat="data in cartDictsDatas.list" ng-show="data.list.length>0" ng-init="carIndex = $index;">
+                    <div class="flex">
+                        <p class="cart-item"><span>供方机构名称:</span><span class="cart-item-content"
+                                                                       ng-bind="data.supMemName"></span></p>
+                        <p class="cart-item m-l-20"><span>供方部门名称:</span><span class="cart-item-content"
+                                                                              ng-bind="data.supDeptName"></span></p>
+                        <p class="cart-item m-l-20"><span>配送对象信息:</span></p>
+                    </div>
+    
+
+                    <div class="dls-tab order-tab">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr class="primary">
+                                <th ng-repeat="title in titles"
+                                    ng-hide=" '参数列表' === title && '02' === cartDictsDatas.prdtType ">{{title}}
+                                </th>
+                                <th style="min-width:200px" ng-show="'03' === cartDictsDatas.prdtType">业务编号</th>
+                                <th ng-show='viewMode === "02"' style="min-width:80px;">状态</th>
+                                <th style="min-width:60px;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in data.list track by $index" ng-class="{'tr-gray':item.status === '03'}">
+                                    <td style="min-width:200px">{{item.prdtName}}</td>
+                                    <td>{{item.connObjId}}</td>
+                                    <td>{{item.connObjVer | connVerFilter}}</td>
+                                    <td style="min-width:100px">{{item.price | emptyFilter}}</td>
+        
+                                    <td>
+        
+                                        <select class="form-control td-select" name="type" disabled="disabled"
+                                                ng-model="item.priceType"
+                                                ng-options="item.value as item.name  for item in selectOptions.priceType"
+                                        >
+                                            <option value="" ng-if="false"></option>
+                                        </select>
+        
+                                    </td>
+        
+                                    <td style="min-width: 265px;">
+                                        <select class="form-control td-select" disabled="disabled" name="type"
+                                                ng-model="item.valuationModeCd"
+                                                ng-options="item.value as item.name  for item in selectOptions.countType"
+                                                >
+                                            <option value="" ng-if="false"></option>
+                                        </select>
+                                        <select class="form-control td-select" disabled="disabled" name="type"
+                                                ng-model="item.valuationCountCd"
+                                                ng-options="item.value as item.name  for item in selectOptions.countGetType"
+                                               >
+                                            <option value="" ng-if="false"></option>
+                                        </select>
+                                    </td>
+        
+                                    <td style="min-width: 80px;">
+                                        <select ng-if="item.discountMode" class="form-control td-select" disabled="disabled"
+                                                name="type" ng-model="item.discountMode"
+                                                ng-options="item.value as item.name for item in selectOptions.discountType">
+                                            <option value="" ng-if="false"></option>
+                                        </select>
+                                        <span ng-if="!item.discountMode">--</span>
+                                    </td>
+        
+                                    <td style="min-width: 180px;">
+                                        <input type="text" name="discount"
+                                               class="form-control no-border-radius td-input td-input-sm" disabled="disabled"
+                                               placeholder="" ng-model="item.discount"> %
+                                        <span class="m-l-20"><a class="btn btn-link f-s-12"
+                                                                href="javascript:void(0);">动态折扣配置</a></span>
+                                    </td>
+        
+                                    <td style="min-width:100px">
+                                        <input type="text" name="priceHoldAmount"
+                                               class="form-control no-border-radius td-input td-input-sm" disabled="disabled"
+                                               placeholder="" ng-model="item.priceHoldAmount" value="'-'"> 天
+                                    </td>
+        
+                                    <td class="td-radio" ng-if=" '02' !== cartDictsDatas.prdtType" style="min-width: 300px;">
+        
+                                        <div class="param-list" ng-repeat="listItem in item.Paralist">
+                                            <div ng-if=" listItem.type === '01' ">
+                                                <label for="" class="td-radio-label" ng-bind="listItem.name"></label>
+                                                <input type="text" style="width: 150px;"
+                                                       class="form-control no-border-radius td-input" placeholder=""
+                                                       ng-model="listItem.CapRange" ng-disabled=true>
+                                                <label ng-hide="viewMode == '02'"
+                                                       class="m-l-10 f-col-3 f-s-12 f-w-l cursor-pointer"
+                                                       ng-click="editParam_1(listItem, $event)">编辑</label>
+                                            </div>
+        
+                                            <div class="flex flex-d-r" ng-if=" listItem.type === '02' ">
+                                                <label for="" class="td-radio-label" ng-bind="listItem.name"></label>
+                                                <div ng-repeat="rangeItem in listItem.range track by $index"
+                                                     style="margin-right: 5px;">
+                                                    <label class="radio-inline td-radio-inline">
+                                                        <input class="cart-ratio" type="checkbox" name="param2"
+                                                               ng-model="rangeItem.value" ng-disabled="viewMode == '02'"> <span
+                                                            ng-bind="rangeItem.name"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+        
+                                            <div ng-if=" listItem.type === '03' ">
+                                                <label for="" class="td-radio-label" ng-bind="listItem.name"></label>
+                                                <a class="btn btn-link f-s-12" href="{{'../api' + listItem.range}}"
+                                                   target="_blank">查看附件</a>
+                                                <span ng-if="viewMode == '02'" ng-bind="listItem.remarks"
+                                                      uib-popover="{{listItem.remarks}}" popover-placement="auto bottom-left"
+                                                      popover-trigger="'click'" popover-popup-close-delay="200"
+                                                      style="border:1px solid #DDD;vertical-align:middle;width: 96px;display:inline-block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></span>
+                                                <input type="text" style="width: 96px;" name=""
+                                                       class="form-control no-border-radius td-input" placeholder=""
+                                                       ng-model="listItem.remarks" ng-if="viewMode != '02'">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td ng-show="viewMode !== '02'&&'03' === cartDictsDatas.prdtType">
+                                        <div class="flex">
+                                            <button ng-click="openModal('md','optDetailModal',$index,carIndex)">选择</button>
+                                            <p class="w-120 bg-1 m-l-15" style="color:#fff;" ng-bind="item.busiId"></p>
+                                        </div>
+                                        <div class="m-t-7">
+                                            备注:<input type="text" ng-model="item.note" uib-popover="{{item.note}}" popover-placement="auto bottom-left" popover-trigger="'mouseenter'" popover-popup-close-delay="0" style="margin-left:13px;width:135px;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                        </div>
+                                    </td>
+                                    <td ng-show="viewMode === '02'&&'03' === cartDictsDatas.prdtType">
+                                        <div class="flex">
+                                            <button ng-click="openModal1('md','lookDetailModal',$index,carIndex)">查看</button>
+                                            <p class="w-100 bg-1 m-l-15" style="color:#fff;" ng-bind="item.busiId"></p>
+                                        </div>
+                                        <div class="m-t-7">
+                                                备注:<input type="text" style="margin-left:13px;width:135px;" disabled ng-model="item.note">
+                                        </div>
+                                    </td>
+                                    <td ng-show="viewMode !== '02'">
+                                        <button class="btn btn-link f-s-12" ng-click="addTo(carIndex,$index,item)" ng-show="'03' === cartDictsDatas.prdtType&&!item.opt">追加</button>
+                                        <button class="btn btn-link f-s-12"
+                                                ng-click="deleteConnObjInCart($index,item.connObjNo,data.supMemId,cartDictsDatas.orderId,carIndex)"
+                                                ng-show='viewMode !== "02"'>删除
+                                        </button>
+                                    </td>
+                                    <td ng-show="viewMode === '02'" class="text-center">
+                                        <span>{{item.status | supConfirmFilter}}</span>
+                                    </td>
+                                    <td ng-show="viewMode === '02'" class="text-center">
+                                      <span class="f-s-12" ng-click="viewAppendix($index)"
+                                            ng-repeat="linkItem in item.Paralist">
+                                      </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p ng-show="viewMode !== '01'" class="cart-item m-l-20"><label>价格参数设定：</label></p>
+    
+                    <section ng-show="viewMode !== '01'">
+                            <span class="inline-block min-w-250">
+                                <label class="f-s-12">保底金额：</label>
+                                <input type="text" disabled="disabled" ng-model="data.baseAmount">
+                            </span>
+                            <span class="inline-block min-w-250">
+                                <label class="f-s-12">封顶金额：</label>
+                                <input type="text" disabled="disabled" ng-model="data.ceilingAmount">
+                            </span>
+                    </section>
+    
+                    <section ng-show="viewMode !== '01'">
+                        <label class="ver-top f-s-12">价格模式：</label>
+                        <textarea cols="60" rows="3" class="inline-block" disabled="disabled" ng-model="data.priceModel">{{list.priceModel}}</textarea>
+                    </section>
+                    <a href="javascript:history.go(-1);" class="btn btn-default no-border-radius back" style="margin-left: 10px;">返回</a>
+                </div>
+                <div class="listBtnArea" ng-show='viewMode !== "02"'>
+                    <button class="btn btn-default pull-right cart-confirm-btn m-l-20" ng-click="calcelOrder()"> 取消</button>
+                    <button class="btn btn-success pull-right cart-confirm-btn"
+                            ng-disabled="form.$invalid || !cartDictsDatas.orderExpireTime" ng-click="confirmOrder('02')">
+                        确认订单
+                    </button>
+                    <button class="btn btn-success pull-right cart-confirm-btn"
+                            ng-disabled="form.$invalid || !cartDictsDatas.orderExpireTime" ng-click="confirmOrder('01')"> 保存
+                    </button>
+                </div>
+            </section>
+        </form>
+    
+        <div ng-if="!cartDictsDatas.list.length || !selectedConnObjNo.length" class="cart-message flex-container">
+            <img src="public/images/cart_logo.png" class="f-l" alt="购物车">
+            <p>购物车空空如也~</p><br>
+            <a ui-sref="dls.trade.cartList" href="javascript:void(0);">前往购物大厅&gt;</a>
+        </div>
+    </div>
+    
+    

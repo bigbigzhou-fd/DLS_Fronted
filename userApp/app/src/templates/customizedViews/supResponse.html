@@ -1,0 +1,54 @@
+<div class="bg-2 p-b-80 p-lr-20" ng-controller="supSignUpCtrl">
+    <header class="flex-between">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 f-s-16 f-col-2 f-w-b">供方报名查询</span>
+    </header>
+    <p class="h-30 lh-30 f-s-12">
+        <span class="w-120 text-right">需求类型： {{reqType | reqTypeFilter | emptyFilter }}</span>
+    </p>
+    <p class="h-30 lh-30 f-s-12">
+        <span class="w-120 text-right">需求编号： {{reqId}}</span>
+    </p>
+    <p class="lh-20 f-s-12">
+        <span class="w-120 text-right">需求关键字： {{keyword}}</span>
+    </p>
+    <p class="h-30 lh-30 f-s-12">
+        <span class="w-120 text-right">发布时间： {{disTime}}</span>
+    </p>
+    <p class="h-30 lh-30 f-s-12">
+        <span class="w-120 text-right">交付截止时间： {{respNum}}</span>
+    </p>
+
+    <div class="dls-tab" style="width: 100%">
+        <table class="table table-bordered table-striped" style="min-width: 100%;">
+            <thead>
+            <tr class="primary">
+                <th>序号</th>
+                <th>供方名称</th>
+                <th>报名时间</th>
+                <th>产品特色</th>
+                <th>成功案例</th>
+                <th>团队优势</th>
+                <th>预计可交付日期</th>
+                <!--<th>供方确认</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in datas">
+                <td>{{$index+1}}</td>
+                <td>{{item.orgFullNameCN}}</td>
+                <td>{{item.respTime}}</td>
+                <td>{{item.svcFeature}}</td>
+                <td>{{item.succSample}}</td>
+                <td>{{item.advantage}}</td>
+                <td>{{item.expectPubDate}}</td>
+                <!--<td></td>-->
+            </tr>
+            <tr ng-show="!datas">
+                <td colspan="5">没有任何数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <pagination class="m-l-20 m-t-50" options="pageOptions" cur-page="curPage"></pagination>
+</div>

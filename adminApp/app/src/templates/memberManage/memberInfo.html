@@ -1,0 +1,63 @@
+<article class="bg-2" ng-controller="memberInfoCtrl">
+    <header class="h-50 dls-btn-default ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">会员列表</span>
+    </header>
+
+    <section class="flex-container">
+        <div class="cart-item flex flex-d-r">
+            <label class="radio-inline">
+                <input class="cart-ratio" type="radio" name="searchType" ng-click="setType(1)" checked> 会员编号
+            </label>
+            <label class="radio-inline">
+                <input class="cart-ratio" type="radio" name="searchType" ng-click="setType(2)"> 机构全称中文
+            </label>
+        </div>
+
+        <div class="relative inline-block w-400">
+            <span class="iconfont icon-search" ng-click="getDatas()"></span>
+            <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" placeholder="请输入想搜索的关键字" ng-keyup="search($event)" ng-model="searchText">
+            <span class="p-r-10 iconfont icon-enter" ng-click="getDatas()"></span>
+        </div>
+
+        <div class="dls-grid m-t-10 m-l-0">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr class='grid-header-row'>
+                    <th style="min-width:{{col.width}}px" ng-repeat="col in member_info_titles.columnDefs">{{col.displayName}}</th>
+                    <th style="min-width:100px;">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="grid-body-row" ng-repeat="list in memberLists">
+                    <td class="grid-body-row-content">{{$index+1}} </td>
+                    <td class="grid-body-row-content">{{list.memId | textEmptyFilter}} </td>
+                    <td class="grid-body-row-content">{{list.companyId | textEmptyFilter}}</td>
+                    <td class="grid-body-row-content">{{list.orgFullNameCN | textEmptyFilter}} </td>
+                    <td class="grid-body-row-content">{{list.deptName | textEmptyFilter}}</td>
+                    <td class="grid-body-row-content">{{list.token | textEmptyFilter}}</td>
+                    <td class="grid-body-row-content">
+                        <span ng-show="!list.edit">{{list.svrURL}}</span>
+                        <input ng-show="list.edit" ng-model=list.svrURL>
+                    </td>
+                    <td class="grid-body-row-content">
+                        <span ng-show="!list.edit">{{list.supmngURL}}</span>
+                        <input ng-show="list.edit" ng-model="list.supmngURL">
+                    </td>
+                    <td class="grid-body-row-content">
+                        <span ng-show="!list.edit">{{list.demmngURL}}</span>
+                        <input ng-show="list.edit" ng-model=list.demmngURL>
+                    </td>
+                    <td class="grid-body-row-content">{{list.pubKey}}</td>
+                    <td class="grid-body-row-content f-col-3">
+                        <span ng-show='!list.edit' ng-click="edit(list)">编辑</span>
+                        <span ng-show='list.edit' ng-click="sure(list)">确定</span>
+                        <span ng-show='list.edit' ng-click="cancel(list)">取消</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination>
+    </section>
+</article>

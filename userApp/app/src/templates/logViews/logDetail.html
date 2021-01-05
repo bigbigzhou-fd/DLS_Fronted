@@ -1,0 +1,34 @@
+<div class="bg-2 p-b-80 p-lr-20" ng-controller="logDetailCtrl">
+    <header class="h-50 dls-btn-default ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 f-s-16 f-col-2 f-w-b">业务日志查询 >> 日志详情</span>
+    </header>
+    <div class="bg-3">
+        <p class="h-30 lh-30"><label class="w-100 f-s-12 p-l-20 p-t-10">日志日期:</label>{{statDate}}</p>
+        <p class="h-30 lh-30"><label class="w-100 f-s-12 p-l-20 p-t-10">订单编号:</label>{{orderId}}</p>
+        <p class="h-30 lh-30"><label class="w-100 f-s-12 p-l-20 p-t-10">订单名称:</label>{{order_Name}}</p>
+        <p class="h-30 lh-30"><label class="w-100 f-s-12 p-l-20 p-t-10">结算类型:</label>{{sett_type | settleTypeFilter}}</p>
+        <div class="dls-grid p-r-20 m-t-20">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr class='grid-header-row'>
+                    <th>序号</th>
+                    <th ng-repeat="col in logDetailGrid.columnDefs">
+                        {{col.displayName}}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="data in originDatas" class="grid-body-row">
+                    <td class="grid-body-row-content">{{$index+1}}</td>
+                    <td ng-repeat="col in logDetailGrid.columnDefs" class="grid-body-row-content" ng-bind="data[col.field] | textEmptyFilter">
+                    </td>
+                </tr>
+                <tr  class="text-center" ng-show="originDatas.length === 0">
+                    <td colspan="10">暂无数据</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems" class="m-l-20"></pagination>
+    </div>
+</div>

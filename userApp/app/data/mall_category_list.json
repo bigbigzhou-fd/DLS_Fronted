@@ -1,0 +1,337 @@
+{
+    "status": 1,
+    "msg": "成功",
+    "data": [
+        {
+            "isParent": true,
+            "pId": 0,
+            "id": "KV01",
+            "name": "基础标签"
+        },
+        {
+            "isParent": true,
+            "pId": 0,
+            "id": "KV02",
+            "name": "行为标签"
+        },
+        {
+            "isParent": true,
+            "pId": 0,
+            "id": "KV03",
+            "name": "验证标签"
+        },
+        {
+            "isParent": true,
+            "pId": 0,
+            "id": "KV04",
+            "name": "评价标签"
+        },
+        {
+            "isParent": true,
+            "pId": "KV01",
+            "id": "KV0101",
+            "name": "人口属性"
+        },
+        {
+            "isParent": true,
+            "pId": "KV01",
+            "id": "KV0102",
+            "name": "群体属性"
+        },
+        {
+            "isParent": true,
+            "pId": "KV01",
+            "id": "KV0103",
+            "name": "设备"
+        },
+        {
+            "isParent": true,
+            "pId": "KV02",
+            "id": "KV0201",
+            "name": "上网行为"
+        },
+        {
+            "isParent": true,
+            "pId": "KV02",
+            "id": "KV0202",
+            "name": "通信行为"
+        },
+        {
+            "isParent": false,
+            "pId": "KV02",
+            "id": "KV0203",
+            "name": "LBS网格"
+        },
+        {
+            "isParent": true,
+            "pId": "KV02",
+            "id": "KV0204",
+            "name": "消费行为"
+        },
+        {
+            "isParent": true,
+            "pId": "KV02",
+            "id": "KV0205",
+            "name": "风险行为"
+        },
+        {
+            "isParent": true,
+            "pId": "KV03",
+            "id": "KV0301",
+            "name": "信息验证"
+        },
+        {
+            "isParent": true,
+            "pId": "KV03",
+            "id": "KV0302",
+            "name": "关系验证"
+        },
+        {
+            "isParent": true,
+            "pId": "KV03",
+            "id": "KV0303",
+            "name": "财产验证"
+        },
+        {
+            "isParent": false,
+            "pId": "KV04",
+            "id": "KV0401",
+            "name": "黑名单"
+        },
+        {
+            "isParent": false,
+            "pId": "KV04",
+            "id": "KV0402",
+            "name": "兴趣爱好"
+        },
+        {
+            "isParent": false,
+            "pId": "KV04",
+            "id": "KV0403",
+            "name": "购买意图"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0101",
+            "id": "KV010101",
+            "name": "基本信息"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0102",
+            "id": "KV010201",
+            "name": "家庭属性"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0103",
+            "id": "KV010301",
+            "name": "移动设备"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0103",
+            "id": "KV010302",
+            "name": "手机号"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0103",
+            "id": "KV010303",
+            "name": "银行卡"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0201",
+            "id": "KV020101",
+            "name": "上网访问行为"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0201",
+            "id": "KV020102",
+            "name": "APP使用行为"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0201",
+            "id": "KV020103",
+            "name": "视频观看行为"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0201",
+            "id": "KV020104",
+            "name": "电商浏览行为"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0201",
+            "id": "KV020105",
+            "name": "电商收藏行为"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0201",
+            "id": "KV020106",
+            "name": "电商购物行为"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0202",
+            "id": "KV020201",
+            "name": "手机呼叫行为"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0202",
+            "id": "KV020202",
+            "name": "手机上网行为"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0202",
+            "id": "KV020203",
+            "name": "手机短信行为"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0204",
+            "id": "KV020401",
+            "name": "手机消费"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0204",
+            "id": "KV020402",
+            "name": "刷卡消费能力"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0204",
+            "id": "KV020403",
+            "name": "刷卡消费偏好"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0204",
+            "id": "KV020404",
+            "name": "消费综合能力"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0204",
+            "id": "KV020405",
+            "name": "航空消费行为"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0205",
+            "id": "KV020501",
+            "name": "社交"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0205",
+            "id": "KV020502",
+            "name": "网贷"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0205",
+            "id": "KV020503",
+            "name": "信用卡借贷"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0205",
+            "id": "KV020504",
+            "name": "涉诉"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0205",
+            "id": "KV020505",
+            "name": "驾驶"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0301",
+            "id": "KV030101",
+            "name": "身份信息验证"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0301",
+            "id": "KV030102",
+            "name": "银行卡信息验证"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0301",
+            "id": "KV030103",
+            "name": "学历验证"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0301",
+            "id": "KV030104",
+            "name": "学籍验证"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0301",
+            "id": "KV030105",
+            "name": "职业资格验证"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0301",
+            "id": "KV030106",
+            "name": "公积金信息验证"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0301",
+            "id": "KV030107",
+            "name": "关联企业信息验证"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0302",
+            "id": "KV030201",
+            "name": "常用联络人"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0302",
+            "id": "KV030202",
+            "name": "婚姻验证"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0303",
+            "id": "KV030301",
+            "name": "房产核验"
+        },
+        {
+            "isParent": false,
+            "pId": "KV0303",
+            "id": "KV030302",
+            "name": "车产核验"
+        },
+        {
+            "isParent": true,
+            "pId": 0,
+            "id": "KY05",
+            "name": "测试标签23"
+        },
+        {
+            "isParent": false,
+            "pId": "KY05",
+            "id": "KY0501",
+            "name": "1"
+        }
+    ],
+    "msg_level": 1
+}

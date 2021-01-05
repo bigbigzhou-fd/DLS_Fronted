@@ -1,0 +1,49 @@
+<ul class="dls-aside-shorter">
+    <li>
+        <span class="iconfont icon-website"></span>
+        <ul>
+            <li>数据供方平台</li>
+            <li ui-sref="dls.provider.itemManage.item" ng-click="curView('dls.provider.itemManage.item')">数据单品管理</li>
+            <li ui-sref="dls.provider.itemManage.set" ng-click="curView('dls.provider.itemManage.set')">数据套餐管理</li>
+            <li ui-sref="dls.provider.dataOrigin">数据来源资质证明管理</li>
+        </ul>
+    </li>
+    <li>
+        <span class="iconfont icon-chart1"></span>
+        <ul>
+            <li>交易撮合</li>
+            <li ui-sref="dls.trade.mall.item">交易大厅</li>
+            <li ui-sref="dls.trade.cart">购物车</li>
+            <li ui-sref="dls.trade.providerConfirm">供方确认</li>
+            <li ui-sref="dls.trade.orderList">订单列表</li>
+        </ul>
+    </li>
+    <li>
+        <span class="iconfont icon-report"></span>
+        <ul >
+            <li>账户管理</li>
+            <li ui-sref="dls.account.quota">额度查询</li>
+            <li ui-sref="dls.account.clearing">清算</li>
+        </ul>
+    </li>
+    <li>
+        <span class="glyphicon glyphicon-check"></span>
+        <ul >
+            <li>结算</li>
+            <li ui-sref="dls.settlement.summary">结算汇总</li>
+        </ul>
+    </li>
+    <li>
+        <span class="glyphicon glyphicon-dashboard"></span>
+        <ul >
+            <li>业务日志</li>
+            <li ui-sref="dls.log.capDemLog">营销类业务日志查询(需方)</li>
+            <li ui-sref="dls.log.capSharedSupLog">营销类业务日志查询(供方)</li>
+            <!--<li ui-sref="dls.log.capBuyoutSupLog">CAP业务日志查询(买断供方)</li>-->
+            <li ui-sref="dls.log.dmixDemLog">征信类业务日志查询(需方)</li>
+            <li ui-sref="dls.log.dmixSupLog">征信类业务日志查询(供方)</li>
+            <li ui-sref="dls.log.stdDemLog">其他业务日志查询(需方)</li>
+            <li ui-sref="dls.log.stdSupLog">其他业务日志查询(供方)</li>
+        </ul>
+    </li>
+</ul>

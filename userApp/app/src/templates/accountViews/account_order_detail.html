@@ -1,0 +1,63 @@
+<article class="bg-2" ng-controller="accountOrderDetailCtrl">
+<!-- <article class="bg-2" ng-controller="accountLogCtrl"> -->
+	<header class="h-50 dls-btn-default  lh-50">
+	    <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">业务日志订单详情</span>
+	</header>
+
+	<section class="flex-container f-s-12">
+		<p class="item-title">订单详情</p>
+		<div class="flex-s-c flex-d-r">
+			<p class="item-content">
+				<label class="infoLbl">起始日期：</label>
+				<span class="date">2016-10-05 00:00:00</span>
+				<label class="infoLbl">终止日期：</label>
+				<span class="date">2016-10-06 00:00:00</span>
+			</p>
+
+			<!-- <date-picker class="inline-block w-150 m-r-10 datePicker" dt="startDt" mindt="1970, 5, 22"></date-picker>
+			<span> ~ </span>
+			<date-picker class="inline-block w-150 m-l-10 datePicker" dt="endDt" mindt="1970, 5, 22"></date-picker> -->
+			<!-- <button class="btn btn-confirm" ng-click="getDatas(startDt,endDt)">查询</button> -->
+		</div>
+
+		<p class="item-title">订单<span class="item-name">测试订单1</span>详情 <a href="javascript:history.go(-1);" class="f-r">返回订单列表</a></p>
+
+
+		<!-- <p class="cart-item item-title">共有<span ng-bind="totalItems"></span>条订单</p> -->
+
+		<!-- <dls-table titles="account_order_titles" datas="orderLists" width="1840">
+		</dls-table> -->
+
+		<div class="dls-tab" style="overflow-x: scroll;">
+			<table class="table table-bordered table-striped" style="min-width: 1507px;">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in account_order_titles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in orderLists">
+		          <td ng-bind="$index+1"></td>
+		          <td ng-bind="item.taskId | textEmptyFilter"></td>
+		          <td ng-bind="item.orderId | textEmptyFilter"></td>
+		          <td ng-bind="item.connObjId | textEmptyFilter"></td>
+		          <td ng-bind="item.ConnObjVer | textEmptyFilter"></td>
+		          <td ng-bind="item.connObjCatCd_display | textEmptyFilter"></td>
+		          <td ng-bind="item.prdtName | textEmptyFilter"></td>
+		          <td ng-bind="item.valuationModeCd_display | textEmptyFilter"></td>
+		          <td ng-bind="item.valuationPrice | moneyEmptyFilter"></td>
+		          <td ng-bind="item.total_deliveryNum | textEmptyFilter"></td>
+		          <td ng-bind="item.curr_deliveryNum | textEmptyFilter"></td>
+		          <td ng-bind="item.incomeTotal | moneyEmptyFilter"></td>
+		          <td ng-bind="item.incomeCurr | moneyEmptyFilter"></td>
+		          <td ng-bind="item.payTotal | moneyEmptyFilter"></td>
+		          <td ng-bind="item.payCurr | moneyEmptyFilter"></td>
+		        </tr>
+
+		      </tbody>
+		    </table>
+		</div>
+
+		 <!-- <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination> -->
+	</section>
+</article>

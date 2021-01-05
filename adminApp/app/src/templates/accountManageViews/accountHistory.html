@@ -1,0 +1,188 @@
+<article class="bg-2" ng-controller="accountHistoryCtrl">
+    <header class="h-50 dls-btn-default  lh-50">
+        <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">历史记录</span>
+    </header>
+
+    <section class="flex-container f-s-12">
+        <div class="f-s-12 h-30 lh-30">
+            <label class='w-80 text-right'>查询日期：</label>
+            <date-picker class="inline-block w-150 m-r-10 datePicker ver-mid" dt="startDt"
+                         mindt="1970, 5, 22"></date-picker>
+            <span> ~ </span>
+            <date-picker class="inline-block w-150 m-l-10 datePicker ver-mid" dt="endDt"
+                         mindt="1970, 5, 22"></date-picker>
+            <button class="btn btn-default h-34 m-l-20" ng-click="getData()">查询</button>
+        </div>
+
+        <div class="m-t-30 flex p-r-20">
+            <label class="h-34 lh-34 p-l-20">查询类型：</label>
+            <ul class="flex" ng-init="btnIndex = '00'; ">
+                <li class='f-s-14 btn btn-default h-30 lh-30' style="border-radius:5px 0 0 5px; padding:0 10px;"
+                    ng-class="{'btn-primary': btnIndex === '00'}" ng-click="btnIndex = '00'">审核记录
+                </li>
+                <li class='f-s-14 btn btn-default h-30 lh-30 no-border-radius' style="padding:0 10px;"
+                    ng-class="{'btn-primary': btnIndex === '01'}" ng-click="btnIndex = '01'">交易记录
+                </li>
+                <li class='f-s-14 btn btn-default h-30 lh-30 no-border-radius'
+                    style="border-radius:0px 5px 5px 0px; padding:0 10px;" ng-class="{'btn-primary': btnIndex === '02'}"
+                    ng-click="btnIndex = '02'">额度冻结记录
+                </li>
+            </ul>
+
+            <label class="h-34 lh-34 p-l-20" ng-show="btnIndex === '00'">审核状态：</label>
+            <label class="h-34 lh-34 p-l-20" ng-show="btnIndex === '01'">业务类型：</label>
+            <label class="h-34 lh-34 p-l-20" ng-show="btnIndex === '02'">冻结状态：</label>
+
+            <select ng-show="btnIndex === '00'" class='h-30 lh-30 f-s-14'
+                    ng-options='item.value as item.label for item in auditType' ng-model='reviewStatus'>
+
+            </select>
+
+            <select ng-show="btnIndex === '01'" class='h-30 lh-30 f-s-14'
+                    ng-options='item.value as item.label for item in tradeType' ng-model='busType'>
+
+            </select>
+
+            <select ng-show="btnIndex === '02'" class='h-30 lh-30 f-s-14'
+                    ng-options='item.value as item.label for item in freezeType' ng-model='freType'>
+
+            </select>
+
+            <label class="h-34 lh-34 p-l-20" ng-show="btnIndex === '02'">业务类型：</label>
+
+            <select ng-show="btnIndex === '02'" class='h-30 lh-30 f-s-14'
+                    ng-options='item.value as item.label for item in freTradeType' ng-model='busType'>
+            </select>
+
+            <a class='btn btn-success h-34 lh-34 m-l-120 p-lr-10' style='border-radius:5px;' target="_blank" href="../../api/acc/admin/user/account/manage/list/export/?startTime={{sd}}&endTime={{ed}}&type={{btnIndex}}&reviewStatus={{reviewStatus}}&busType={{busType}}&freType={{freType}}&memId={{memId}}">导出</a>
+        </div>
+
+        <div class="dls-grid m-l-0 m-t-10 p-r-10">
+            <table class="table table-bordered table-hover table-striped" ng-show="btnIndex === '00'">
+                <thead>
+                <tr class='grid-header-row'>
+                    <th>日期</th>
+                    <th>交易流水号</th>
+                    <th>产品名称</th>
+                    <th>业务类型</th>
+                    <th>变动金额（元）</th>
+                    <th>状态</th>
+                    <th>操作人</th>
+                    <!-- <th ng-if="busType=='06' && btnIndex == '01'">结算单号</th> -->
+                    <th>备注</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="data in originDatas" class="grid-body-row">
+                    <td class="grid-body-row-content">{{data.updateTime | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.serialNum | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.prdtType | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.busType | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.gap | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.reviewStatus | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.reviewer | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">
+                        <span class="f-col-3" ng-mouseenter="setPopover(data)" uib-popover-html="popoverDetail"
+                              popover-placement="auto bottom-left" popover-trigger="'mouseenter'">详情</span>
+                    </td>
+                </tr>
+                <tr class="text-center" ng-show="originDatas.length === 0">
+                    <td class="grid-body-row-content" colspan="9">暂无数据</td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered table-hover table-striped" ng-show="btnIndex === '01'">
+                <thead>
+                <tr class='grid-header-row'>
+                    <th>日期</th>
+                    <th>交易流水号</th>
+                    <th>产品名称</th>
+                    <th>业务类型</th>
+                    <th>变动金额</th>
+                    <th>状态</th>
+                    <th>操作人</th>
+                    <th>备注</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="data in originDatas" class="grid-body-row">
+                    <td class="grid-body-row-content">{{data.createTime | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.serialNum | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.prdtType | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.businessType | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.lmt | moneyEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.transactionStatus | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.operator | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">
+                        <span class="f-col-3" ng-mouseenter="setPopover(data)" uib-popover-html="popoverDetail"
+                              popover-placement="auto bottom-left" popover-trigger="'mouseenter'">详情</span>
+                    </td>
+                </tr>
+                <tr class="text-center" ng-show="originDatas.length === 0">
+                    <td class="grid-body-row-content" colspan="9">暂无数据</td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered table-hover table-striped" ng-show="btnIndex === '02'">
+                <thead>
+                <tr class='grid-header-row'>
+                    <th>日期</th>
+                    <th>交易流水号</th>
+                    <th>业务类型</th>
+                    <th>变动金额</th>
+                    <th>变动前金额</th>
+                    <th>变动后金额</th>
+                    <th>状态</th>
+                    <th>操作人</th>
+                    <th>备注</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="data in originDatas" class="grid-body-row">
+                    <td class="grid-body-row-content">{{data.createTime | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.serialNum | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.busType | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.lmtGap | moneyEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.preFreLmt | moneyEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.freLmt | moneyEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.transactionStatus | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">{{data.operator | textEmptyFilter}}
+                    </td>
+                    <td class="grid-body-row-content">
+                        <span class="f-col-3" ng-mouseenter="setPopover(data)" uib-popover-html="popoverDetail"
+                              popover-placement="auto bottom-left" popover-trigger="'mouseenter'">详情</span>
+                    </td>
+                </tr>
+                <tr class="text-center" ng-show="originDatas.length === 0">
+                    <td class="grid-body-row-content" colspan="9">暂无数据</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <pagination cur-page="curPage" options="pageOptions"></pagination>
+        <p><a class="btn btn-primary  m-b-50" href="javascript:history.go(-1);">返回</a></p>
+    </section>
+
+
+</article>

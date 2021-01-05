@@ -1,0 +1,179 @@
+<div class="cart-panel" ng-controller="orderListDetailCtrl">
+    <header class="h-50 dls-btn-default lh-50">
+        <span class="w-250 p-lr-20 f-s-16 f-col-2 f-w-b">订单列表 >> 订单详情</span>
+    </header>
+
+    <form class="bg-2 cart-form"  name="form" novalidate>
+        <section class="flex-container">
+            <p class="h-25 lh-25 f-s-12">
+                <label class="w-120 text-right">订单编号</label><span class="p-l-20">{{orderListDatas.orderId}}</span>
+            </p>
+            <p class="h-25 lh-25 f-s-12">
+                <label class="w-120 text-right">订单名称</label><span class="p-l-20">{{orderListDatas.name}}</span>
+            </p>
+            <p class="h-25 lh-25 f-s-12">
+                <label class="w-120 text-right">订单类型</label><span class="p-l-20">{{orderListDatas.orderType | tagTypeFilter}}</span>
+            </p>
+            <p class="h-25 lh-25 f-s-12">
+                <label class="w-120 text-right">订单状态</label><span class="p-l-20">{{orderListDatas.status | orderStateFilter}}</span>
+            </p>
+            <p class="h-25 lh-25 f-s-12">
+                <label class="w-120 text-right">结算周期</label><span class="p-l-20">{{orderListDatas.settPeriod | settPeriodFilter}}</span>
+            </p>
+            <p class="h-25 lh-25 f-s-12">
+                <label class="w-120 text-right">清算类型</label><span class="p-l-20">{{orderListDatas.settModCd | settModFilter}}</span>
+            </p>
+            <p class="h-25 lh-25 f-s-12">
+                <span class="w-300 inline-block">
+                    <label class="w-120 text-right">订单生效日期</label><span class="p-l-20">{{orderListDatas.orderEffectDate}}</span>
+                </span>
+                <span class="w-300 inline-block">
+                    <label class="w-120 text-right">订单失效日期</label><span class="p-l-20">{{orderListDatas.orderExpiryDate}}</span>
+                </span>
+                <span class="w-300 inline-block">
+                    <label class="w-120 text-right">订单确认剩余时间</label><span class="p-l-20">{{orderListDatas.leftTime}}</span>
+                </span>
+            </p>
+
+            <div class="order-wrap">
+                <div class="flex">
+                    <p class="cart-item"><span>需方机构名称:</span><span class="cart-item-content" ng-bind="orderListDatas.demInfoFullNameCN"></span></p>
+                    <p class="cart-item m-l-20"><span>需方部门名称:</span><span class="cart-item-content" ng-bind="orderListDatas.demInfoDeptName"></span></p>
+                    <p class="cart-item m-l-20"><span>配送对象信息:</span></p>
+                </div>
+
+                <div class="dls-tab order-tab">
+                    <table class="table table-bordered table-striped" style="width:100%;">
+                        <thead>
+                        <tr class="primary">
+                            <th>交易品名称</th>
+                            <th>互联对象编号</th>
+                            <th>版本</th>
+                            <th>单价（元）</th>
+                            <th>价格类型</th>
+                            <th>计数方式</th>
+                            <th>折扣方式</th>
+                            <th style="width:200px;">
+                                <p>折扣</p>
+                                <p class="f-col-red">（折后 = 原价*折扣比例）</p>
+                            </th>
+                            <th>保价时间</th>
+                            <th>参数列表</th>
+                            <th ng-hide="'02' === orderListDatas.orderType">业务编号</th>
+                            <th>状态</th>
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in orderListDatas.orderDtlInfoList">
+                            <td style="min-width: 120px">{{item.prdtName}}</td>
+                            <td>{{item.connObjNo}}</td>
+                            <td>{{item.connObjVer}}</td>
+                            <td style="min-width: 80px">{{item.price}}</td>
+
+                            <td>
+                                <select  class="form-control td-select" disabled="disabled" name="type" ng-model="item.priceType" ng-options="i.value as i.name  for i in selectOptions.priceType" required>
+                                    <option value="" ng-if="false"></option>
+                                </select>
+                            </td>
+
+                            <td style="min-width: 280px">
+                                <select  class="form-control td-select" disabled="disabled" name="type" ng-model="item.valuationModeCd" ng-options="i.value as i.name  for i in selectOptions.countType" required>
+                                    <option value="" ng-if="false"></option>
+                                </select>
+                                <select  class="form-control td-select" disabled="disabled" name="type" ng-model="item.valuationCountCd" ng-options="i.value as i.name for i in selectOptions.countGetType" required>
+                                    <option value="" ng-if="false"></option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <select  class="form-control td-select" disabled="disabled" name="type" ng-model="item.discountMode" ng-options="i.value as i.name for i in selectOptions.discountType" required>
+                                    <option value="" ng-if="false"></option>
+                                </select>
+                            </td>
+
+                            <!-- <td><button class="btn btn-link" ng-click="detail(item)">{{item.connObjVer}}</button></td> -->
+                            <td style="min-width: 200px">
+                                <input type="text" style="min-width:50px" name="orderName" class="form-control no-border-radius td-input td-input-sm" disabled="disabled" placeholder="" ng-model="item.discount"> %
+                                <span class="m-l-20"><a class="btn btn-link f-s-12" href="">动态折扣配置</a></span>
+                            </td>
+
+                            <td style="min-width: 120px">
+                                <input type="text" style="min-width:50px" name="orderName" class="form-control no-border-radius td-input td-input-sm" disabled="disabled" placeholder="" ng-model="item.valInsuredTime" value="'-'"> 天
+                            </td>
+
+                            <td class="td-radio" style="min-width: 250px">
+                                <section ng-repeat="param in item.paraList">
+                                    <div class="flex flex-d-r" ng-if="param.type === '01'">
+                                        <label for="" class="td-radio-label" style="padding-right:10px;">{{param.name}}</label>
+                                        <label for="" class="td-radio-label">{{param.range}}</label>
+                                    </div>
+                                    <div class="flex flex-d-r"  ng-if="param.type === '02'">
+                                        <label for="" class="td-radio-label" style="padding-right:10px;">{{param.name}}</label>
+                                        <label for="" class="td-radio-label">{{param.range}}</label>
+                                    </div>
+                                    <div class="flex flex-d-r"  ng-if="param.type === '03'">
+                                        <label for="" class="td-radio-label" style="min-width:50px;">{{param.name}}</label>
+                                        <a class="td-radio-label f-col-3" href="../../api{{param.range}}" target="_blank">查看</a>
+                                        <span ng-bind="param.remarks" uib-popover="{{param.remarks}}" popover-placement="auto bottom-left" popover-trigger="'click'" popover-popup-close-delay="200" style="border:1px solid #DDD;vertical-align:middle;width: 96px;display:inline-block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></span>
+                                    </div>
+                                </section>
+                            </td>
+                            <!-- <td class="w-250">
+                                <div class="flex">
+                                    <button>查看</button>
+                                    <p class="w-100 bg-1 m-l-15" style="color:#fff;">00000</p>
+                                </div>
+                                <div class="m-t-7">
+                                        备注:<input type="text" class="w-100" style="margin-left:3px;" disabled ng-model="1111">
+                                </div>
+                            </td> -->
+                            <td  ng-hide="'02' === orderListDatas.orderType" style="min-width:198px">
+                                <div class="flex">
+                                    <button ng-click="openModal('md','lookDetailModal',$index,carIndex)">查看</button>
+                                    <p class="w-120 bg-1 m-l-15" style="color:#fff;" ng-bind="item.busiId"></p>
+                                </div>
+                                <div class="m-t-7">
+                                    备注:<input type="text" disabled ng-model="item.note" uib-popover="{{item.note}}" popover-placement="auto bottom-left" popover-trigger="'mouseenter'" popover-popup-close-delay="0" style="margin-left:13px;width:135px;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                </div>
+                            </td>
+                            <td class="text-center" style="min-width: 120px">
+                                {{item.supConfirmStatus | supConfirmFilter}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="cart-item m-l-20"><label>价格参数设定：</label></p>
+
+                <section>
+                    <span class="inline-block w-250">
+                        <label class="f-s-12">保底金额：</label>
+                        <input type="text" disabled="disabled" ng-model="orderListDatas.baseAmount">
+                    </span>
+                    <span class="inline-block w-250">
+                        <label class="f-s-12">封顶金额：</label>
+                        <input type="text" disabled="disabled" ng-model="orderListDatas.ceilingAmount">
+                    </span>
+                </section>
+
+                <section>
+                    <label class="ver-top f-s-12">价格模式：</label>
+                    <textarea cols="60" rows="3" class="inline-block" disabled="disabled" ng-model="orderListDatas.priceModel">{{data.priceModel}}</textarea>
+                </section>
+            </div>
+
+            <div class="flex flex-center m-t-50" ng-if="role === 'dem'">
+                <button class="btn btn-primary cart-confirm-btn" ng-disabled="form.$invalid" ng-click="confirmOrder($parent.dict_k)"> 保存 </button>
+            </div>
+            <div class="flex flex-center m-t-50" ng-if="role === 'sup'">
+                <a class="btn btn-primary cart-confirm-btn" href="javascript:history.go(-1)"> 返回 </a>
+            </div>
+        </section>
+    </form>
+</div>
+
+
+

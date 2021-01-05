@@ -1,0 +1,158 @@
+<article class="dls-admin bg-2">
+	<header class="h-50 dls-btn-default  lh-50" style="width: 1150px;">
+	    <span ng-if="pageType=== 'info' " class="pull-left inline-block  lh-50 p-lr-20 f-s-16 f-col-2 f-w-b">资金账户开户</span>
+	    <span ng-if="pageType=== 'query' " class="pull-left inline-block  lh-50 p-lr-20 f-s-16 f-col-2 f-w-b">签约查询</span>
+	</header>
+	<section class="flex-container">
+		<p class="item-title">资金账户开户信息</p>
+		<div class="p-l-10">
+			<p class="item-content">
+				<label class="infoLbl">资金账户号：</label>
+				<span class="infoContent" ng-bind="datas.fundsId"></span>
+			</p>
+			
+			<div ng-if="pageType === 'query' ">
+				
+				<p class="item-content">
+					<label class="infoLbl">开户申请时间：</label>
+					<span class="infoContent" ng-bind="datas.createTime"></span>
+				</p>
+
+				<p class="item-content">
+					<label class="infoLbl">开户状态：</label>
+					<span class="infoContent" ng-bind="datas.signStatus  | signStatusFilter"></span>
+					<a class="btn btn-link" style="font-size: 16px;" ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span></a>
+				</p>
+				<p class="item-content">
+					<label class="infoLbl">备注：</label>
+					<span class="infoContent" ng-bind="datas.signStatus | signStatusReasonFilter"></span>
+				</p>
+			</div>
+		</div>
+
+		<p class="item-title">申请信息</p>
+		<form class="form-horizontal dls-from" name="signForm" novalidate>
+			<div class="form-group">
+		    <label for="orgFullNameCN" class="col-sm-2 control-label must">机构全称:</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control no-border-radius" name="orgFullNameCN" ng-model="datas.orgFullNameCN" placeholder="机构全称" ng-disabled="!editable" required>
+		    </div>
+		    <span class="help-inline" ng-show="editable && signForm.orgFullNameCN.$error.required"> 请输入机构全称</span>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="orgType" class="col-sm-2 control-label must">机构性质:</label>
+		    <div class="col-sm-4">
+		      <!-- <input type="text" class="form-control no-border-radius" name="orgType" ng-model="datas.orgType" placeholder="机构性质" ng-disabled="!editable" required> -->
+		      <select  class="form-control inline-block no-border-radius" name="orgType" ng-model="datas.orgType" ng-options="item.value as item.name  for item in orgTypes" ng-disabled="!editable" required>
+		        <option value="" ng-if="false"></option>
+		      </select>
+		    </div>
+		    <span class="help-inline" ng-show="editable && signForm.orgType.$error.required"> 请选择机构性质</span>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="orgTypeCd" class="col-sm-2 control-label must">机构类型:</label>
+		    <div class="col-sm-4">
+		      <!-- <input type="text" class="form-control no-border-radius" name="orgTypeCd" ng-model="datas.orgTypeCd" placeholder="机构类型" ng-disabled="!editable" required> -->
+		      <select  class="form-control inline-block no-border-radius" name="orgTypeCd" ng-model="datas.orgTypeCd" ng-options="item.value as item.name  for item in orgTypeCds" ng-disabled="!editable" required>
+		        <option value="" ng-if="false"></option>
+		      </select>
+		    </div>
+		    <span class="help-inline" ng-show="editable && signForm.orgTypeCd.$error.required"> 请选择机构类型</span>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="orgNo" class="col-sm-2 control-label must">组织机构代码:</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control no-border-radius" name="orgNo" ng-model="datas.orgNo" placeholder="组织机构代码" ng-disabled="!editable" required>
+		    </div>
+		    <span class="help-inline" ng-show="editable && signForm.orgNo.$error.required"> 请输入组织机构代码</span>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="acctName" class="col-sm-2 control-label must">银行账号名称:</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control no-border-radius" name="acctName" ng-model="datas.acctName" placeholder="银行账号名称" ng-disabled="!editable" required>
+		    </div>
+		    <span class="help-inline" ng-show="editable && signForm.acctName.$error.required"> 请输入银行账号名称</span>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="acctNo" class="col-sm-2 control-label must">银行账号:</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control no-border-radius" name="acctNo" ng-model="datas.acctNo" placeholder="银行账号" ng-disabled="!editable" required>
+		    </div>
+		    <span class="help-inline" ng-show="editable && signForm.acctNo.$error.required"> 请输入银行账号</span>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="issueBankID" class="col-sm-2 control-label must">开户行号:</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control no-border-radius" name="issueBankID" ng-model="datas.issueBankID" placeholder="开户行号" ng-disabled="!editable" required>
+		    </div>
+		    <span class="help-inline" ng-show="editable && signForm.issueBankID.$error.required"> 请输入开户行号</span>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="issueBankName" class="col-sm-2 control-label must">开户银行:</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control no-border-radius" name="issueBankName" ng-model="datas.issueBankName" placeholder="开户银行" ng-disabled="!editable" required>
+		    </div>
+		    <span class="help-inline" ng-show="editable && signForm.issueBankName.$error.required"> 请输入开户银行</span>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="moneyKind" class="col-sm-2 control-label must">币种:</label>
+		    <div class="col-sm-4">
+		      <!-- <input type="text" class="form-control no-border-radius" name="moneyKind" ng-model="datas.moneyKind" placeholder="币种" ng-disabled="!editable" required> -->
+		      <select  class="form-control inline-block no-border-radius" name="moneyKind" ng-model="datas.moneyKind" ng-options="item.value as item.name  for item in moneyKinds" ng-disabled="!editable" required>
+		        <option value="" ng-if="false"></option>
+		      </select>
+		    </div>
+		    <span class="help-inline" ng-show="editable && signForm.moneyKind.$error.required"> 请选择币种</span>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="bindPhone" class="col-sm-2 control-label">绑定手机号:</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control no-border-radius" name="bindPhone" ng-model="datas.bindPhone" placeholder="绑定手机号">
+		    </div>
+		  </div>
+
+		  <!-- <hr> -->
+
+		  <div class="form-group">
+		  	<label for="bindPhone" class="col-sm-2 control-label">通知方式:</label>
+	      <div class="col-sm-4">
+	        <div class="checkbox">
+	          <label>
+	            <input type="checkbox" ng-model="noticeMode[0]" ng-true-value="'1'" ng-false-value="'0'" disabled> 站内信通知
+	          </label>
+	          <label>
+	            <input type="checkbox" ng-model="noticeMode[1]" ng-true-value="'2'" ng-false-value="'0'"> 短信通知
+	          </label>
+
+	          <label>
+	            <input type="checkbox" ng-model="noticeMode[2]" ng-true-value="'3'" ng-false-value="'0'"> 邮件通知
+	          </label>
+	        </div>
+	      </div>
+	    </div>
+
+	    <div class="col-sm-offset-2 m-b-50 flex">
+	    	<button class="btn btn-primary m-r-20" ng-disabled="datas.signStatus === '03' || datas.signStatus === '02' " ng-click="saveDatas()">提交</button>
+	    	<a class="btn btn-default" href="javascript:history.go(-1);">取消</a>
+	    </div>
+
+
+
+
+
+		</form>
+
+
+
+	</section>
+
+</article>

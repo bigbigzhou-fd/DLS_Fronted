@@ -1,0 +1,50 @@
+<article class="bg-2" ng-controller="settlementManageCtrl">
+	<header class="h-50 dls-btn-default ver-mid lh-50">
+	    <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">结算单管理</span>
+
+	    <a ng-if="!!permissions.hasPermission('93')" class="btn-dowmload" href="{{'../../api/stt/sett/dataTable/manager/export?keyword='+keywords+'&startTime='+startTime_format+'&endTime='+endTime_format}}"><span class="iconfont icon-download"></span>导出成员信息</a>
+	</header>
+
+	<section class="flex-container">
+		<div class="cart-item flex flex-d-r">
+			<p class="cart-item item-title m-r-10">日期:</p>
+			<date-picker class="inline-block w-150 m-r-10 datePicker" dt="startTime" mindt="1970, 5, 22"></date-picker>
+			<span> 至 </span>
+			<date-picker class="inline-block w-150 m-l-10 datePicker" dt="endTime" mindt="1970, 5, 22"></date-picker>
+		</div>
+
+
+		<div class="cart-item flex flex-d-r">
+			<input class="cart-ratio form-control no-border-radius" type="txt" name="keywords" ng-model="keywords" style="width: 250px;" placeholder="请输入需要查询的memid或机构名称">
+		</div>
+
+		<p class="item-title">共有<span>{{totalItems}}</span>家机构结算单信息</p>
+		<div class="dls-tab">
+			<table class="table table-bordered table-striped">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in titles">{{title}}</th>
+		          <th>操作</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in settlementManageDatas.list">
+		          <td>{{$index+1}}</td>
+		          <td>{{item.orgFullNameCN | textEmptyFilter}}</td>
+		          <td>{{item.deptName | textEmptyFilter}}</td>
+		          <td>{{item.settNum | textEmptyFilter}}</td>
+		          <td>{{!!item.recvAct ? item.recvAct : '--'}}</td>
+		          <td>{{!!item.paidAct ? item.paidAct : '--'}}</td>
+		          <td><a class="btn btn-link" ui-sref="dls.settlement.info({memId:item.memId, startTime: startTime, endTime: endTime})" ng-click="setData()" href="javascript:void(0);" href="javascript:void(0);">查看</a></td>
+
+		        </tr>
+		        <tr ng-show="totalItems === 0">
+		        	<td colspan="{{titles.length+1}}">没有任何数据</td>
+		        </tr>
+
+		      </tbody>
+		    </table>
+		</div>
+		<pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination>
+	</section>
+</article>

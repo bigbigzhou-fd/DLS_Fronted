@@ -1,0 +1,47 @@
+<article class="bg-2" ng-controller="tradeOrderListCtrl">
+	<header class="h-50 dls-btn-default ver-mid lh-50">
+	    <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">订单列表</span>
+	</header>
+
+	<section class="flex-container">
+		<div class="cart-item flex flex-d-r">
+			<label class="radio-inline">
+			  <input class="cart-ratio" type="radio" name="searchType" ng-model="searchType" id="1" value="1"> 订单号
+			</label>
+			<label class="radio-inline">
+			  <input class="cart-ratio" type="radio" name="searchType" ng-model="searchType" id="2" value="2"> 需方名称
+			</label>
+			<label class="radio-inline">
+			  <input class="cart-ratio" type="radio" name="searchType" ng-model="searchType" id="3" value="3"> 供方名称
+			</label>
+		</div>
+
+		<div class="relative cart-item w-300">
+			<span class="iconfont icon-search" ng-click="search(searchText,searchType)"></span>
+			<input type="text" ng-keyup="searchItem($event)" placeholder="请输入想搜索的关键字" class="table-search form-control p-lr-25 no-border-radius" name="table-search" ng-model="searchText">
+			<span class="iconfont icon-enter" ng-click="search(searchText,searchType)"></span>
+		</div>
+
+		<div class="dls-tab">
+			<table class="table table-bordered table-striped">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in titles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in orderLists">
+		          <td><a class="btn btn-link" ui-sref="dls.trade.orderDetail({odId:item.orderId})" ng-bind="item.orderId" href="javascript:void(0);"></a></td>
+		          <td>{{item.name | textEmptyFilter}}</td>
+		          <td>{{item.demInfoFullNameCN | textEmptyFilter}}</td>
+		          <td>{{item.supInfoFullNameCN | textEmptyFilter}}</td>
+		          <td>{{item.orderInitTime | textEmptyFilter}}</td>
+		          <td>{{item.orderExpiryDate | textEmptyFilter}}</td>
+		          <td><state-btn data="item.status"></state-btn></td>
+		        </tr>
+		      </tbody>
+		    </table>
+		</div>
+		<pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination>
+	</section>
+</article>

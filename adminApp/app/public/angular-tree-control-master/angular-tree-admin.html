@@ -1,0 +1,11 @@
+<ul {{options.ulClass}}>
+<p>12121</p>
+    <li ng-repeat="node in node.{{options.nodeChildren}} | filter:filterExpression:filterComparator {{options.orderBy}}" ng-class="headClass(node)" {{options.liClass}} set-node-to-data>
+        <i class="tree-branch-head" ng-class="iBranchClass()" ng-click="selectNodeHead(node)"><img src="public/images/fold-close.png" class="dls-image-f1"/></i>
+        <i class="tree-leaf-head {{options.iLeafClass}}"><img src="public/images/bookmark.png" class="dls-image-f2"/></i>
+        <div class="tree-label {{options.labelClass}}" ng-class="[selectedClass(), unselectableClass()]" ng-click="selectNodeHead(node,$event)" tree-transclude></div>
+        <span ng-if="node.child.length == 0" ng-show="options.addBtn" class="tree-li-add-btn" ng-click="options.btnClick(node,$event)">+</span>
+        <treeitem ng-if="nodeExpanded()"></treeitem>
+    </li>
+</ul>
+

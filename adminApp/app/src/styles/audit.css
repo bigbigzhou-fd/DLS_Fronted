@@ -1,0 +1,83 @@
+#memberAudit .dls-select-header{
+    background-color:#FFF;
+}
+
+.member-apply input[type="file"]{
+    display:inline-block;
+}
+
+.member-apply .dls-select-header{
+    width:350px;
+}
+
+.member-apply .dls-select section{
+    width:350px;
+}
+
+.member-apply .form-control{
+    margin-left:16px;
+    margin-top:8px;
+    height:30px;
+    line-height:30px;
+    border-radius:0;
+    width:350px;
+    display:inline-block;
+}
+
+.disabled-input{
+    width:350px;
+    position:relative;
+    margin-left:16px;
+    margin-top:8px;
+    padding-left:10px;
+}
+
+
+.dls-dropdown-menu{
+    right:0;
+    left:-535px;
+    padding-bottom:0 !important;
+}
+
+.select-time-box-l{
+    position:absolute;
+    right:20px
+}
+
+.select-time-box-s{
+    position:absolute;
+    right:20px
+}
+
+.dls-dropdown-menu  .cart-item{
+    position:absolute;
+    right:10px;
+}
+
+.time-active{
+    background-color: #0068B7;
+    color:#FFF;
+    line-height:26px;
+    border-radius:10px;
+}
+
+.uib-daypicker tr{
+    line-height:30px;
+}
+
+.uib-close{
+    line-height:18px;
+}
+
+@media screen and (max-width: 1762px) {
+    .select-time-box-l{
+        display:none;
+    }
+}
+
+@media screen and (min-width: 1762px) {
+    .select-time-box-s{
+        display:none;
+    }
+}
+

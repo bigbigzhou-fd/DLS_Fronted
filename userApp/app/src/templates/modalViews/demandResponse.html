@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <h3 class="modal-title">响应</h3>
+</div>
+<div class="modal-body">
+  <form  name='form' novalidate>
+    <p class="item-content">
+      <label class="infoLbl">关键字：</label>
+      <span class="infoContent" ng-bind="modalDatas.keywords"></span>
+    </p>
+    <p class="item-content">
+      <label class="infoLbl">预计数据规模：</label>
+      <span class="infoContent" ng-bind="modalDatas.scale"></span>
+    </p>
+
+    <p class="item-content">
+      <label class="infoLbl">期望价格：</label>
+      <span class="infoContent" ng-bind="modalDatas.expectPrice"></span>
+    </p>
+
+    <p class="item-content" style="margin-bottom: 30px;">
+      <label class="infoLbl">备注：</label>
+      <textarea name="remarks" cols="50"  rows="5" ng-model="modalDatas.remarks" ng-maxlength="500" style="overflow: auto"></textarea>
+      <span class="help-inline" ng-show="form.remarks.$error.maxlength">最多为500个字符</span>
+    </p>
+
+    <p class="item-content">
+      <label class="infoLbl">预计数据准备时间：</label>
+      <input type="text" class="" style="width: 100px;" ng-model="modalDatas.prepDays" name="prepDays"  required> 天
+      <span class="help-inline" ng-show="form.prepDays.$error.required">必填</span>
+    </p>
+  </form>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-disabled="form.$invalid" type="button" ng-click="$ctrl.ok()">确定</button>
+    <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">取消</button>
+</div>

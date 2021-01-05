@@ -1,0 +1,51 @@
+<div class="bg-2" ng-controller="providerDataOriginCtrl">
+    <header class="h-50 ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">数据来源证明文件</span>
+        <section class="pull-right m-r-10">
+            <a class="btn dls-btn-warning dls-btn-primary btn-lg f-s-16 no-border-radius m-r-10" ng-click="addCertificate()"><span class="f-col-4">新增证明文件</span></a>
+        </section>
+    </header>
+    <div class="bg-3 m-lr-20 p-lr-10">
+        <section class="p-t-10">
+            <label class="f-s-12 p-lr-10 h-34 lh-34 f-w-l">搜索</label>
+            <div class="relative inline-block w-400">
+                <span class="iconfont icon-search" ng-click="searchData()"></span>
+                <input type="text" ng-model="searchText" id="originDataSearch" name="table-search" class="table-search form-control p-l-30 no-border-radius" placeholder="请输入想搜索的关键字，不同关键字之间用空格分割" ng-keyup="searchOriginData($event)">
+                <span class="iconfont icon-enter p-r-10" ng-click="searchData()"></span>
+            </div>
+        </section>
+        <div ng-show = "showOriginData">
+            <section class="m-t-10">
+                <div class="dls-grid">
+                    <table class="table table-bordered table-hover table-striped" id={{providerOriginDataGrid.id}} exporterSuppressColumns="{{providerOriginDataGrid.exporterSuppressColumns}}">
+                        <thead>
+                        <tr class='grid-header-row'>
+                            <th style="min-width:{{providerOriginDataGrid.widths[0].width}}">序号</th>
+                            <th style="min-width:{{col.width}}" ng-repeat="col in providerOriginDataGrid.columnDefs">{{col.displayName}}</th>
+                            <th style="min-width:{{providerOriginDataGrid.widths[9].width}}">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="data in originDatas" ng-class={true:'selectRow'}[data.isSelected] class="grid-body-row" ng-click="selectRow($event,data)">
+                            <td class="grid-body-row-content">{{$index+1}}</td>
+                            <td ng-repeat="col in providerOriginDataGrid.columnDefs" class="grid-body-row-content">
+                                {{data[col.field]}}
+                            </td>
+                            <td style="text-align: center">
+                                <a href="../../api{{data.url}}" target="_blank" style="border-right:1px solid black;padding-right:5px;">查看</a>
+                                <a ng-click="deleteData(data)" style="padding-left:3px;">删除</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <pagination class="m-l-20" options="pageOptions" cur-page="curPage" style="margin-top:50px;"></pagination>
+        </div>
+    </div>
+    <div ng-show = "!showOriginData" class="text-center min-h-400 lh-300">
+        搜索结果为 0 ，请更换搜索关键词
+    </div>
+</div>
+
+

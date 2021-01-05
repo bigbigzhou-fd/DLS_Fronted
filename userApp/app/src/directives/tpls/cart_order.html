@@ -1,0 +1,92 @@
+<form class="bg-2 cart-form"  name="form" novalidate>
+	<section class="flex-container">
+		<p class="cart-item"><span class="cart-item-label">订单编号:</span><span class="cart-item-content" ng-bind="cartDicts.orderId"></span></p>
+
+		<div class="cart-item">
+		    <span class="cart-item-label must" >设置订单名称:</span>
+		    <div class="relative inline-block w-250">
+		        <input type="text"  name="orderName" class="table-search form-control no-border-radius p-l-10" placeholder="请输入订单名称" ng-model="orderName" required ng-pattern="DlsUtil.namePattern">
+		    </div>
+		        <span class="help-inline" ng-show="form.orderName.$error.required"> 请输入订单名称</span>
+		        <span class="help-inline" ng-if="form.orderName.$error.pattern && form.orderName.$dirty">请输入除'<'和'>'以外的符号</span>
+		</div>
+
+		<div class="cart-item">
+		    <span class="cart-item-label must" >订单类型:</span>
+		    <div class="relative inline-block w-250">
+			    <select class="form-control" class="edit"  name="prdtType" ng-model="prdtType">
+			        <option value="01" >标准数据配送</option>
+			        <option value="02">风控雷达（数融）</option>
+			        <option value="03">CAP产品</option>
+			    </select>
+		    </div>
+		</div>
+
+		<div class="cart-item">
+		    <span class="cart-item-label must" >设置结算周期:</span>
+		    <div class="relative inline-block w-250">
+		    <select class="form-control" class="edit"  name="settPeriod" ng-model="settPeriod" required>
+            <option value="01">按天</option>
+            <option value="02">按月</option>
+            <option value="03">按季</option>
+        </select>
+		    </div>
+		</div>
+
+		<div class=" flex flex-d-r m-b-10">
+			<div class="flex-item flex-1 relative">
+				<span class="cart-item-name must">设置订单生效时间:</span>
+				<div class="form-control inline-block m-l-130 w-250 dateEdit" moment-picker="dateStar" ng-bind="dateStar" locale="zh-cn" format="YYYY-MM-DD HH:mm"></div>
+	    </div>
+
+      <div class="flex-item flex-1 relative">
+				<span class="cart-item-name must">设置订单终止时间:</span>
+				<div class="form-control inline-block m-l-130 w-250 dateEdit" moment-picker="dateEnd" ng-bind="dateEnd" locale="zh-cn" format="YYYY-MM-DD HH:mm"></div>
+      </div>
+
+		</div>
+
+		<div class="order-wrap" ng-repeat="data in cartDicts.list">
+			<div class="flex">
+				<p class="cart-item"><span>供方机构名称:</span><span class="cart-item-content" ng-bind="data.supMemName"></span></p>
+				<p class="cart-item m-l-20"><span>供方部门名称:</span><span class="cart-item-content" ng-bind="data.supDeptName"></span></p>
+		    <p class="cart-item m-l-20"><span>配送对象信息:</span></p>
+			</div>
+
+			<!-- <div class="cart-item">
+		  </div> -->
+			<div class="dls-tab">
+				<table class="table table-bordered table-striped">
+			      <thead>
+			        <tr class="primary">
+			          <th ng-repeat="title in titles">{{title}}</th>
+			          <th>操作</th>
+			        </tr>
+			      </thead>
+			      <tbody>
+			        <tr ng-repeat="item in data.list">
+			          <td>{{item.prdtName}}</td>
+			          <td>{{item.connObjId}}</td>
+			          <td>{{item.connObjVer}}</td>
+			          <td>{{item.price}}</td>
+			          <!-- <td><button class="btn btn-link" ng-click="detail(item)">{{item.connObjVer}}</button></td> -->
+			          <td>{{item.sourcePrdType | prdtTypeFilter}}</td>
+			          <td>{{item.valuationModeCd}}</td>
+			          <td>{{item.valuationPrice}}</td>
+			          <td><button class="btn btn-link" ng-click="deleteItem($index)">删除</button></td>
+			        </tr>
+			      </tbody>
+			    </table>
+			</div>
+
+		</div>
+
+		<div class="listBtnArea">
+			<button class="btn btn-success pull-right cart-confirm-btn" ng-disabled="form.$invalid" ng-click="confirmOrder($parent.dict_k)"> 确认订单 </button>
+		</div>
+
+	</section>
+</form>
+
+
+

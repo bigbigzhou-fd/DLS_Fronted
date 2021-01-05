@@ -1,0 +1,131 @@
+<article class="dls-admin bg-2" ng-controller="capEditCtrl">
+	<header class="h-50 dls-btn-default  lh-50" style="width: 1150px;">
+	    <span class="pull-left inline-block  lh-50 p-lr-20 f-s-16 f-col-2 f-w-b">营销类交易品信息录入</span>
+	</header>
+	<form class="content-wrap" name="capEditForm" novalidate>
+		<p class="item-content">
+			<label class="p-label">交易品编号：</label>
+			<span class="infoContent highLight" ng-bind="code"></span>
+		</p>
+		<p class="item-content">
+			<label class="p-label">交易品类型：</label>
+			<span class="infoContent"> 营销类产品 </span>
+		</p>
+
+		<!-- <p class="f-w-b f-s-12 p-tb-10 p-tb-10">填写申请机构基本信息</p> -->
+		<p class="item-content">
+		    <label class="p-label must">交易品名称：</label>
+		    <input class="p-input" type="text" placeholder="交易品名称" ng-model="goodsDatas.name" name="name" required ng-pattern="DlsUtil.namePattern" ng-disabled="mode=='view'">
+		    <!-- <label class="input-error" ng-show="capEditForm.name.$dirty && capEditForm.name.$invalid">该项为必填项</label> -->
+		    <span class="help-inline" ng-show="capEditForm.name.$error.required && capEditForm.name.$dirty"> 请输入交易品名称</span>
+		    <span class="help-inline" ng-show="capEditForm.name.$error.pattern && capEditForm.name.$dirty">请输入除'<'和'>'以外的符号</span>
+		</p>
+		<br>
+
+		<p class="item-content" style="position: relative;">
+		    <label class="p-label">交易品名赋值</label>
+		    <hr class="p-hr">
+		</p>
+
+		<p class="item-content">
+		    <label class="p-label must">赋值类型：</label>
+		    <select  class="form-control p-input inline-block no-border-radius" style="width: 120px;" name="_valueType" ng-model="goodsDatas.valueType" ng-disabled="mode=='view'" ng-options="item.value as item.name  for item in valueType" required>
+		      <option value="" ng-if="false"></option>
+		    </select>
+		    <span class="help-inline" ng-show="capEditForm._valueType.$error.required"> 请选择赋值类型</span>
+		</p>
+
+		<p class="item-content" style="height: 100px;">
+		    <label class="p-label must">赋值说明：</label>
+		    <textarea class="p-textarea" type="text" placeholder="请输入赋值说明" ng-model="goodsDatas.valueEx" name="valueEx" required ng-disabled="mode=='view'"></textarea>
+		    <span class="help-inline" ng-show="capEditForm.valueEx.$error.required  && capEditForm.valueEx.$dirty"> 请输入赋值说明</span>
+		</p>
+
+		<p class="item-content" style="position: relative;">
+		    <label class="p-label">参数列表</label>
+		    <hr class="p-hr">
+		</p>
+
+		<div class="param-list-wrap">
+			<ul ng-repeat="item in goodsDatas.parameters">
+				<li class="param-list-li">
+					<p class="list-item">
+						<label class="list-item-label">参数名称：</label>
+						<input class="list-item-input" type="text" placeholder="参数名称" ng-model="item.paraName" name="paraName{{$index}}" required ng-disabled="mode=='view'">
+						<span class="help-block-error" ng-show="capEditForm.paraName{{$index}}.$error.required"> 请输入参数名称</span>
+					</p>
+					<p class="list-item">
+						<label class="list-item-label">参数类型：</label>
+						<select  class="inline-block list-item-input no-border-radius" style="width: 120px;" name="paraType{{$index}} " ng-model="item.paraType" ng-disabled="mode=='view'" ng-options="item.value as item.name  for item in paramType" ng-change="paraTypeChanged($index,item.paraType)" required>
+						  <option ng-value="" ng-if="false"></option>
+						</select>
+						<span class="help-block-error" ng-show="capEditForm.paraType{{$index}}.$error.required"> 请选择参数类型</span>
+					</p>
+
+					<div class="list-item" ng-show=" '01' === item.paraType">
+						<p class="list-item-child" ng-repeat="rangs in item.paraRange track by $index">
+							<label class="list-item-label">参数范围：</label>
+							<input class="list-item-input" style="width: 70px;" type="number" placeholder="最小值" ng-model="rangs.min" name="paraRangeMin{{$index}}" ng-disabled="mode=='view'" ng-pattern="DlsUtil.rangePattern">
+							<input class="list-item-input" style="width: 70px;" type="number" placeholder="最大值" ng-model="rangs.max" name="paraRangeMax{{$index}}" ng-disabled="mode=='view'"  ng-pattern="DlsUtil.rangePattern">
+
+							<!-- <span class="help-block-error" ng-show="capEditForm.paraRangeMin{{$index}}.$error.required"> 请输入参数范围</span> -->
+							<!-- <span class="help-block-error" ng-show="capEditForm.paraRangeMax{{$index}}.$error.required"> 请输入参数范围</span> -->
+							<!-- <span class="help-block-error" ng-show="capEditForm.paraRange{{$index}}.$error.pattern && capEditForm.paraRange{{$index}}.$dirty">参数范围请用英文分号分隔</span> -->
+							<button class="btn btn-link" ng-click="deleteParaRange($parent.$index,$index)" ng-hide="mode=='view'">删除</button>
+						</p>
+						<button class="btn btn-link" ng-click="addParaRange($index)" ng-hide="mode=='view'">添加范围</button>
+
+						<!-- <p class="list-item-child">
+							<label class="list-item-label">参数范围：</label>
+							<select  class="inline-block list-item-input no-border-radius" style="width: 120px;" name="_valueType" ng-model="_valueType" ng-options="item.value as item.name  for item in valueType" required>
+							  <option value="" ng-if="false"></option>
+							</select>
+							<input class="list-item-input" type="text" placeholder="参数名称" ng-model="name" name="name">
+						</p> -->
+					</div>
+
+
+					<div class="list-item" ng-if=" '02' === item.paraType">
+						<p class="list-item-child">
+							<label class="list-item-label">参数范围：</label>
+							<!-- <select  class="inline-block list-item-input no-border-radius" style="width: 120px;" name="_valueType" ng-model="_valueType" ng-options="item.value as item.name  for item in valueType" required>
+							  <option value="" ng-if="false"></option>
+							</select> -->
+							<input class="list-item-input" type="text" placeholder="参数范围" ng-model="item.paraRange "  ng-disabled=" 3 == item.paraType || mode=='view'" name="paraRange{{$index}}" ng-required=" 3 !== item.paraType" ng-pattern="DlsUtil.rangePattern">
+							<span class="help-block-error" style="color:dodgerblue">参数范围请用英文逗号分隔</span>
+							<span class="help-block-error" ng-show="capEditForm.paraRange{{$index}}.$error.required"> 请输入参数范围</span>
+						</p>
+					</div>
+
+
+					<p style="position: absolute;right: 0" ><button class="btn btn-link" ng-click="deleteParaItem($index)" ng-hide="mode=='view'"><span class="glyphicon glyphicon-trash" style="vertical-align: text-top;padding-right: 2px;"></span>删除</button></p>
+				</li>
+				
+			</ul>
+			<p class="col-sm-offset-2"><button class="btn btn-link" ng-click="addParaItem($index)" ng-hide="mode=='view'"><span class="glyphicon glyphicon-plus" style="vertical-align: text-top;padding-right: 2px;"></span>添加更多</button></p>
+		</div>
+
+		<p class="item-content" style="position: relative;">
+		    <label class="p-label">交易品审核</label>
+		    <hr class="p-hr">
+		</p>
+		<p class="item-content">
+		    <label class="p-label must">是否交易中心审核</label>
+		    <label class="radio-inline m-l-20">
+		      <input type="radio" name="checkStatus" ng-model="goodsDatas.checkStatus" ng-value= 1 required ng-disabled="mode=='view'"> 是
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" name="checkStatus" ng-model="goodsDatas.checkStatus" ng-value= 0 required ng-disabled="mode=='view'"> 否
+		    </label>
+		    <span class="help-inline" ng-show="capEditForm.checkStatus.$error.required "> 请设置</span>
+		</p>
+
+		<div class="form-group m-t-20">
+	    <div class="col-sm-offset-2 col-sm-10">
+	      <button type="submit" class="btn btn-primary" ng-disabled="capEditForm.$invalid" ng-hide="mode=='view'" ng-click="saveDatas()">提交</button>
+	      <!-- <button type="submit" class="btn btn-default m-l-20" ng-click="javascript:history.go(-1);">取消</button> -->
+	      <a href="javascript:history.go(-1);" class="btn btn-default back m-l-20">返回</a>
+	    </div>
+	  </div>
+	</form>
+</article>

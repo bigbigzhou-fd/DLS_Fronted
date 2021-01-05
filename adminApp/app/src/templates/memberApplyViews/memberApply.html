@@ -1,0 +1,93 @@
+<div class="bg-2 p-lr-20" ng-controller="memberApplyCtrl">
+    <header id="memberAudit" class="h-50 ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-170 f-s-16 f-col-2 f-w-b">成员申请列表</span>
+        <label class="f-s-12 f-w-l ver-top p-r-10">审核状态</label>
+        <!--<dls-select class="inline-block m-t-10" datas="auditState" selected-label="auditStateType" value="auditStateTypeVal"></dls-select>-->
+        <select ng-options="item.value as item.label for item in auditStateType" ng-model="auditStateTypeVal"></select>
+        <label class="f-s-12 f-w-l ver-top p-r-10 m-l-20">搜索</label>
+        <div class="relative inline-block w-350">
+            <span class="iconfont icon-search" ng-click="getData()"></span>
+            <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" placeholder="请输入想搜索的关键字" ng-keyup="search($event)" ng-model="searchText">
+            <span class="p-r-10 iconfont icon-enter" ng-click="getData()"></span>
+        </div>
+        <label class="select-time-box-l">
+            <div class="inline-block m-l-120 m-r-10">
+                <label class="p-lr-5 f-w-l cursor-pointer" ng-click="selectTime(1)" ng-class="{true:'time-active'}[timeSection == 1]">今天</label>
+                <label class="p-lr-5 f-w-l cursor-pointer" ng-click="selectTime(2)" ng-class="{true:'time-active'}[timeSection == 2]">昨天</label>
+                <label class="p-lr-5 f-w-l cursor-pointer" ng-click="selectTime(3)" ng-class="{true:'time-active'}[timeSection == 3]">最近一周</label>
+                <label class="p-lr-5 f-w-l cursor-pointer" ng-click="selectTime(4)" ng-class="{true:'time-active'}[timeSection == 4]">最近一月</label>
+                <label class="p-lr-5 f-w-l cursor-pointer" ng-click="selectTime(9)" ng-class="{true:'time-active'}[timeSection == 9]">全部</label>
+            </div>
+            <div class="cart-item inline-block">
+                <date-picker class="inline-block w-150 m-r-10 datePicker ver-mid" dt="beginDate" mindt="1970, 5, 22"></date-picker>
+                <span> ~ </span>
+                <date-picker class="inline-block w-150 m-l-10 datePicker ver-mid" dt="endDate" mindt="1970, 5, 22"></date-picker>
+            </div>
+        </label>
+
+        <label class="select-time-box-s">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    选择时间 <span class="caret"></span>
+                </button>
+                <div class="dls-dropdown-menu dropdown-menu">
+                    <div class="inline-block m-r-10">
+                        <label class="p-lr-5 f-w-l cursor-pointer" ng-click="selectTime(1)" ng-class="{true:'time-active'}[timeSection == 1]">今天</label>
+                        <label class="p-lr-5 f-w-l cursor-pointer" ng-click="selectTime(2)" ng-class="{true:'time-active'}[timeSection == 2]">昨天</label>
+                        <label class="p-lr-5 f-w-l cursor-pointer" ng-click="selectTime(3)" ng-class="{true:'time-active'}[timeSection == 3]">最近一周</label>
+                        <label class="p-lr-5 f-w-l cursor-pointer" ng-click="selectTime(4)" ng-class="{true:'time-active'}[timeSection == 4]">最近一月</label>
+                        <label class="p-lr-5 f-w-l cursor-pointer" ng-click="selectTime(9)" ng-class="{true:'time-active'}[timeSection == 9]">全部</label>
+                    </div>
+                    <div class="cart-item inline-block">
+                        <date-picker class="inline-block w-150 m-r-10 datePicker ver-mid" dt="beginDate" mindt="1970, 5, 22"></date-picker>
+                        <span> ~ </span>
+                        <date-picker class="inline-block w-150 m-l-10 datePicker ver-mid" dt="endDate" mindt="1970, 5, 22"></date-picker>
+                    </div>
+                </div>
+            </div>
+        </label>
+
+
+
+    </header>
+
+    <div class="flex bg-3 p-lr-20 flex-d-c">
+        <div class="m-t-10">
+            <a class="btn btn-success pull-right m-l-20" href={{"../../api/acc/apply/apply_export/?tid="+auditStateTypeVal+"&radio="+timeSection+"&text="+searchText+"&beginDate="+beginDt+"&endDate="+endDt}}>导出成员申请</a>
+            <button class="btn btn-warning pull-right" ng-click="applyMember()">申请成员资格</button>
+        </div>
+        <div class="dls-grid m-t-10">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr class='grid-header-row'>
+                    <th style="min-width:{{col.width}}px" ng-repeat="col in memberApplyOptions.columnDefs">{{col.displayName}}</th>
+                    <th style="min-width:150px">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="grid-body-row" ng-repeat="list in memberLists">
+                    <td class="grid-body-row-content f-col-3" ng-click="detail(list)">{{list.applyNo}}</td>
+                    <td class="grid-body-row-content">{{list.applyDate}}</td>
+                    <td class="grid-body-row-content">{{list.orgFullNameCN}} </td>
+                    <td class="grid-body-row-content">{{list.deptName}}</td>
+                    <td class="grid-body-row-content">{{list.contactName}} </td>
+                    <td class="grid-body-row-content">{{list.emailAddr}} </td>
+                    <td class="grid-body-row-content">{{list.phoneNo}} </td>
+                    <td class="grid-body-row-content">
+                        <span class="inline-block f-col-4 auditState auditState{{list.applyProgCd}}" ng-class="{true : 'auditState-null'}[list.applyProgCd == '']">{{(list.applyProgCd + list.openAcctStatCd) | applyState}}</span>
+                    </td>
+                    <td class="text-center">
+                        <span class="f-col-3 p-lr-5" ng-click="detail(list)"><span class="glyphicon glyphicon-eye-open"></span>查看</span>
+                        <span ng-show="list.applyProgCd == '00' || list.applyProgCd == '03'" class="p-lr-5" ng-click="edit(list)"><span class="glyphicon glyphicon-edit f-col-7"></span>编辑</span>
+                        <span ng-show="list.applyProgCd != '00' && list.applyProgCd != '03'" class="p-lr-5"><span class="glyphicon glyphicon-edit f-col-6">编辑</span></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <pagination options="pageOptions" cur-page="curPage"></pagination>
+        </div>
+    </div>
+</div>
+

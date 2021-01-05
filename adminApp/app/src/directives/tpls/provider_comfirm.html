@@ -1,0 +1,33 @@
+<div class="p-lr-20">
+    <div class="container-fluid bg-3 p-l-10 p-b-50 m-t-10 relative" ng-repeat="list in lists">
+        <p class="f-s-13 h-34 lh-34"><label class="f-w-l">需方机构名称：<label class="">{{list.demInfoDeptName}}</label></label></p>
+        <p class="f-s-13 h-34 lh-34"><label class="f-w-l">需方部门名称：<label>{{list.demInfoFullNameCN}}</label></label></p>
+        <p class="f-s-13 h-34 lh-34" style="min-width: 1100px;"><label class="f-w-l p-r-30">订单编号：<label>{{list.orderId}}</label></label><label class="f-w-l p-r-30">订单状态：<state-label state=list.status></state-label></label></label><label class="f-w-l p-r-30">清算类型：<label>{{list.settModCd}}</label></label><label class="f-w-l p-r-30">订单起始日期：<label>{{list.orderInitTime | getFirstContent}}</label></label><label class="f-w-l p-r-30">订单终止日期：<label>{{list.orderExpiryDate | getFirstContent}}</label></label><label class="f-w-l p-r-30">订单确认剩余时间：<label>{{list.cacheTime}}</label></label></p>
+        <div class="dls-grid" ng-class="{true:'aside-short',false:'aside-long'}[aside.shortType]">
+            <table class="table table-bordered table-hover table-striped" style="min-width: 500px;">
+                <thead>
+                <tr class='grid-header-row'>
+                    <th ng-repeat="col in options.columnDefs">{{col.displayName}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="data in list.orderDtlInfoList" class="grid-body-row">
+                    <td ng-repeat="col in options.columnDefs" class="grid-body-row-content">
+                        <span ng-show="col.field !== 'connObjVer'">{{data[col.field]}}</span>
+                        <span ng-show="col.field == 'connObjVer'" class="f-col-3" ng-click="detail(data)">{{data[col.field]}}</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <section class="pro_comfirm_btns">
+                <button ng-click="provider_confirm(list.orderId,'agree', $index)">同意订单</button>
+                <button ng-click="provider_confirm(list.orderId,'reject',$index)">拒绝订单</button>
+            </section>
+
+        </div>
+    </div>
+
+    <div ng-if="lists.length == 0" ng-include="'src/templates/tradeViews/order_empty.html'">
+    </div>
+</div>

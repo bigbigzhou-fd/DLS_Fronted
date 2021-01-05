@@ -1,0 +1,32 @@
+{
+    "status": 1,
+    "msg": "成功",
+    "data": {
+        "cartNum": 0,
+        "list": [
+            {
+                "settNo": "1212",
+                "startTime": "1212",
+                "endTime": "1212",
+                "settPeriod": "1212",
+                "paidAmt": "1212",
+                "rctAmt": "1212"
+            }
+        ],
+        "page": {
+            "pre_more": false,
+            "begin": 0,
+            "rows": 10,
+            "total_rows": 16,
+            "page_list": [
+                1,
+                2,
+                3
+            ],
+            "end": 0,
+            "suf_more": true,
+            "total_pages": 11,
+            "page": 1
+        }
+    }
+}

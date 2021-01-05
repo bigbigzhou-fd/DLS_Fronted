@@ -1,0 +1,37 @@
+<div class="modal-dialog" role="document">
+        <div class="modal-header flex">
+            <h2 class="modal-title p-lr-10" id="myModalLabel" style="font-weight: bold;font-size: 14px;color: #0acca6"></span>业务编号详情</h2>
+            <a class="close" data-dismiss="modal" aria-label="Close" style="margin-left:460px;"><span aria-hidden="true" ng-click="$ctrl.cancel()">&times;</span></a>
+        </div>
+        <div class="modal-body" id="myModalBody">
+            <div class="relative m-b-10 cart-item">
+                    搜索:
+                <div class="relative inline-block w-225">
+                    <span class="iconfont icon-search"></span>
+                    <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" ng-model="searchText" ng-change="modelChanged()" ng-keyup="searchItem($event)"  placeholder="请输入搜索关键字">
+                    <span class="iconfont icon-enter" ng-click="getDatas()"></span>
+                </div>
+                <!-- <button type='submit' class='btn btn-primary' style='position:absolute;right:0;padding:8px 30px;background-color: #3598DB;border: none' ng-click="$ctrl.ok()">确认</button>                                     -->
+            </div>
+            <!-- <p style="height:40px;line-height:40px;margin-bottom:15px;">你好</p> -->
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr class="primary">
+                        <th>序号</th>
+                        <th>业务编号</th>
+                        <th>说明</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody style="text-align:center;">
+                        <tr ng-repeat="item in deployList">
+                            <td ng-bind="$index+1" style="padding-top:18px;"></td>
+                            <td ng-bind="item.busiIdList" style="padding-top:18px;"></td>
+                            <td style="padding-top:18px;"><span ng-bind="item.noteList" uib-popover="{{item.noteList}}" popover-placement="auto bottom-left" popover-trigger="'mouseenter'" popover-popup-close-delay="0" style="width:200px;display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></span></td>
+                            <td><input type="radio" style="margin-right:4px;vertical-align:middle;" name="opt" ng-click="radioState($index)"><label style="margin-bottom:0px;">添加</label></td>
+                        </tr>
+                </tbody>
+            </table>                     
+        </div>
+        <pagination options="pageOptions" cur-page="curPage"></pagination>
+</div>

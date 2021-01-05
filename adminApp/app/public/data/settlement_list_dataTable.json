@@ -1,0 +1,192 @@
+{
+	"status": 1,
+	"msg": "成功",
+	"data": {
+		"instSetlSum": [{
+			"payAmt": "110.00",
+			"getCompAndDept": "博彦科技(上海)有限公司 微软事业部",
+			"statMonth": "201610",
+			"memId": "0000079",
+			"rcvAmt": "500.00",
+			"id": 1,
+			"cycle": "2016/10/1 ~2016/10/31"
+		}],
+		"year": "2016",
+		"month": "10",
+		"memOrder": [
+			[{
+				"supMemId": "0000079",
+				"orderId": "ODN20161019000000116",
+				"orderExpiryDate": "2016-12-30 00:00:00",
+				"needCache": 0,
+				"orderInitTime": "2016-10-19 10:14:08",
+				"name": "测试1订单",
+				"feeCalDim": 1,
+				"svcType": "CACHE",
+				"orderConfirmTime": "2016-10-19 10:15:12",
+				"settModCd": "02",
+				"demMemId": "0000080",
+				"supMemName": "0000079_adm",
+				"orderEffectDate": "2016-10-19 00:00:00",
+				"status": "06",
+				"detailInfo": [{
+					"orderId": "ODN20161019000000116",
+					"connObjCatCd": "1010101",
+					"connObjId": "DON00000790000000346",
+					"taskNum": 2,
+					"payAmt": "",
+					"expectPrice": "100.00",
+					"taskId": "CTN20161019000007900000800000116",
+					"connObjNo": "DOS20161019000000281",
+					"rcvAmt": "200.00",
+					"id": 47
+				}],
+				"confirmTime": "2016-10-19 10:15:12",
+				"memInfo": {
+					"acc": "0000079_adm",
+					"roleName": "供应方",
+					"is_sup": true,
+					"orgOther": "博彦科技(上海)有限公司 惠普事业部",
+					"org": "博彦科技(上海)有限公司 微软事业部"
+				},
+				"cacheTime": 0,
+				"id": 27,
+				"demMemName": "0000080_adm"
+			}],
+			[{
+				"supMemId": "0000079",
+				"orderId": "ODN20161020000000121",
+				"orderExpiryDate": "2016-12-30 00:00:00",
+				"needCache": 0,
+				"orderInitTime": "2016-10-20 15:13:29",
+				"name": "\u8ba2\u53552",
+				"feeCalDim": 1,
+				"svcType": "CACHE",
+				"orderConfirmTime": "2016-10-20 15:15:11",
+				"settModCd": "02",
+				"demMemId": "0000080",
+				"supMemName": "0000079_adm",
+				"orderEffectDate": "2016-10-20 00:00:00",
+				"status": "06",
+				"detailInfo": [{
+					"orderId": "ODN20161020000000121",
+					"connObjCatCd": "1010101",
+					"connObjId": "DON00000790000000346",
+					"taskNum": 3,
+					"payAmt": "",
+					"expectPrice": "100.00",
+					"taskId": "CTN20161020000007900000800000121",
+					"connObjNo": "DOS20161019000000281",
+					"rcvAmt": "300.00",
+					"id": 48
+				}],
+				"confirmTime": "2016-10-20 15:15:11",
+				"memInfo": {
+					"acc": "0000079_adm",
+					"roleName": "\u4f9b\u5e94\u65b9",
+					"is_sup": true,
+					"orgOther": "\u535a\u5f66\u79d1\u6280(\u4e0a\u6d77)\u6709\u9650\u516c\u53f8 \u60e0\u666e\u4e8b\u4e1a\u90e8",
+					"org": "\u535a\u5f66\u79d1\u6280(\u4e0a\u6d77)\u6709\u9650\u516c\u53f8 \u5fae\u8f6f\u4e8b\u4e1a\u90e8"
+				},
+				"cacheTime": 0,
+				"id": 28,
+				"demMemName": "0000080_adm"
+			}],
+			[{
+				"supMemId": "0000080",
+				"orderId": "ODN20161020000000126",
+				"orderExpiryDate": "2016-10-21 00:00:00",
+				"needCache": 0,
+				"orderInitTime": "2016-10-20 16:03:44",
+				"name": "\u6d4b\u8bd53",
+				"feeCalDim": 0,
+				"svcType": "CACHE",
+				"orderConfirmTime": "2016-10-20 16:08:55",
+				"settModCd": "02",
+				"demMemId": "0000079",
+				"supMemName": "0000080_adm",
+				"orderEffectDate": "2016-10-20 00:00:00",
+				"status": "06",
+				"detailInfo": [{
+					"orderId": "ODN20161020000000126",
+					"connObjCatCd": "1010101",
+					"connObjId": "DON00000800000000356",
+					"taskNum": 11,
+					"payAmt": "110.00",
+					"expectPrice": "11.00",
+					"taskId": "CTN20161020000008000000790000126",
+					"connObjNo": "DOS20161020000000286",
+					"rcvAmt": "",
+					"id": 49
+				}],
+				"confirmTime": "2016-10-20 16:08:55",
+				"memInfo": {
+					"acc": "0000079_adm",
+					"roleName": "\u9700\u6c42\u65b9",
+					"is_sup": false,
+					"orgOther": "\u535a\u5f66\u79d1\u6280(\u4e0a\u6d77)\u6709\u9650\u516c\u53f8 \u60e0\u666e\u4e8b\u4e1a\u90e8",
+					"org": "\u535a\u5f66\u79d1\u6280(\u4e0a\u6d77)\u6709\u9650\u516c\u53f8 \u5fae\u8f6f\u4e8b\u4e1a\u90e8"
+				},
+				"cacheTime": 0,
+				"id": 29,
+				"demMemName": "0000079_adm"
+			}]
+		],
+		"memId": "0000079",
+		"orderSetl": [
+			[{
+				"orderId": "ODN20161020000000136",
+				"demid": "0000079",
+				"payAmt": "100.00",
+				"statAmt": "100.00",
+				"deliveryNum": 1,
+				"otherCompAndDept": "\u535a\u5f66\u79d1\u6280(\u4e0a\u6d77)\u6709\u9650\u516c\u53f8 \u60e0\u666e\u4e8b\u4e1a\u90e8",
+				"role": "\u9700\u6c42\u65b9",
+				"statMonth": "201610",
+				"rcvAmt": "",
+				"id": 4,
+				"supid": "0000080"
+			}],
+			[{
+				"orderId": "ODN20161020000000126",
+				"demid": "0000079",
+				"payAmt": "110.00",
+				"statAmt": "110.00",
+				"deliveryNum": 10,
+				"otherCompAndDept": "\u535a\u5f66\u79d1\u6280(\u4e0a\u6d77)\u6709\u9650\u516c\u53f8 \u60e0\u666e\u4e8b\u4e1a\u90e8",
+				"role": "\u9700\u6c42\u65b9",
+				"statMonth": "201610",
+				"rcvAmt": "",
+				"id": 3,
+				"supid": "0000080"
+			}],
+			[{
+				"orderId": "ODN20161020000000121",
+				"demid": "0000080",
+				"payAmt": "",
+				"statAmt": "300.00",
+				"deliveryNum": 3,
+				"otherCompAndDept": "\u535a\u5f66\u79d1\u6280(\u4e0a\u6d77)\u6709\u9650\u516c\u53f8 \u60e0\u666e\u4e8b\u4e1a\u90e8",
+				"role": "\u4f9b\u5e94\u65b9",
+				"statMonth": "201610",
+				"rcvAmt": "300.00",
+				"id": 2,
+				"supid": "0000079"
+			}],
+			[{
+				"orderId": "ODN20161019000000116",
+				"demid": "0000080",
+				"payAmt": "",
+				"statAmt": "200.00",
+				"deliveryNum": 1,
+				"otherCompAndDept": "\u535a\u5f66\u79d1\u6280(\u4e0a\u6d77)\u6709\u9650\u516c\u53f8 \u60e0\u666e\u4e8b\u4e1a\u90e8",
+				"role": "\u4f9b\u5e94\u65b9",
+				"statMonth": "201610",
+				"rcvAmt": "200.00",
+				"id": 1,
+				"supid": "0000079"
+			}]
+		]
+	},
+	"msg_level": 1
+}

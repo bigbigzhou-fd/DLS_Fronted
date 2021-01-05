@@ -1,0 +1,47 @@
+<div class="bg-2 p-b-80 p-lr-20" ng-controller="demPublishCtrl">
+    <header class="flex-between">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 f-s-16 f-col-2 f-w-b">验收管理</span>
+    </header>
+    <section class="btn-middle inline-block lh-50">
+        <div class="btn-group ratio-btns">
+            <label class="btn btn-success  no-border-radius" ng-model="tradeScenarioValue" uib-btn-radio="'03'">数据定制</label>
+            <label class="btn btn-success  no-border-radius" ng-model="tradeScenarioValue" uib-btn-radio="'02'">算法模型定制</label>
+        </div>
+    </section>
+    <div class="dls-tab" style="width: 100%;margin-bottom:0px;">
+        <table class="table table-bordered table-striped" style="min-width: 100%;">
+          <thead>
+            <tr class="primary">
+              <th>序号</th>
+              <th>需求编号</th>
+              <th>需求名称</th>
+              <th>交易品上架</th>
+              <th>供方挂牌</th>
+              <th>产生订单</th>
+              <th>订单确认</th>
+              <th>工单确认</th>
+              <th>验收确认</th>
+              <th>我要评价</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in datas">
+              <td>{{$index+1}}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr ng-show="!datas">
+                <td colspan="{{tradeMallTitles.marketingTitles.length+1}}">没有任何数据</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    <pagination class="m-l-20" options="pageOptions" cur-page="curPage"></pagination>
+</div>

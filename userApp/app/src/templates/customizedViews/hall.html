@@ -1,0 +1,102 @@
+<div class="bg-2" ng-controller="customizedMallCtrl">
+    <header class="h-50 dls-btn-default ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">定制交易大厅</span>
+
+        <section class="pull-right lh-50">
+            <button class="btn btn-success inline-block ver-mid" style="margin-right: 20px;" ui-sref="dls.customizedViews.demPublish">需求发布</button>
+        </section>
+    </header>
+
+
+    <section class="flex-container f-s-12">
+        <div class="item-content">
+            <label class="infoLbl">应用场景：</label>
+            <!-- <span class="infoContent" ng-bind="quotaUserDatas.orgFullNameCN"></span> -->
+            <div class="btn-group">
+                <label class="btn btn-link" ng-model="scene" uib-btn-radio="'00'">全部</label>
+                <label class="btn btn-link" ng-model="scene" uib-btn-radio="'02'">营销</label>
+                <label class="btn btn-link" ng-model="scene" uib-btn-radio="'04'">征信</label>
+                <label class="btn btn-link" ng-model="scene" uib-btn-radio="'03'">智慧城市</label>
+                <label class="btn btn-link" ng-model="scene" uib-btn-radio="'99'">其它</label>
+            </div>
+        </div>
+        <div class="item-content">
+                <label class="infoLbl">需求类型：</label>
+                <!-- <span class="infoContent" ng-bind="quotaUserDatas.orgFullNameCN"></span> -->
+                <div class="btn-group">
+                    <label class="btn btn-link" ng-model="demandType" uib-btn-radio="''">全部</label>
+                    <label class="btn btn-link" ng-model="demandType" uib-btn-radio="'01'">数据定制</label>
+                    <label class="btn btn-link" ng-model="demandType" uib-btn-radio="'02'">数据清洗</label>
+                    <label class="btn btn-link" ng-model="demandType" uib-btn-radio="'03'">数据可视化</label>
+                    <label class="btn btn-link" ng-model="demandType" uib-btn-radio="'04'">数据分析</label>
+                    <label class="btn btn-link" ng-model="demandType" uib-btn-radio="'05'">数据模型</label>
+                    <label class="btn btn-link" ng-model="demandType" uib-btn-radio="'06'">其它</label>
+                </div>
+        </div>
+        <div class="item-content">
+            <label class="infoLbl">发布时间：</label>
+            <div class="btn-group">
+                <label class="btn btn-link" ng-model="releaseDate" uib-btn-radio="'00'">全部</label>
+                <label class="btn btn-link" ng-model="releaseDate" uib-btn-radio="'01'">一周内</label>
+                <label class="btn btn-link" ng-model="releaseDate" uib-btn-radio="'02'">一月内</label>
+                <label class="btn btn-link" ng-model="releaseDate" uib-btn-radio="'03'">三月内</label>
+                <label class="btn btn-link" ng-model="releaseDate" uib-btn-radio="'04'">一年内</label>
+            </div>
+        </div>
+
+        <div class="relative inline-block w-350 m-l-10">
+            <span class="iconfont icon-search"></span>
+            <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" ng-model="searchText" ng-change="modelChanged()" ng-keyup="searchItem($event)"  placeholder="请输入想搜索的关键字或交易品名称">
+            <span class="iconfont icon-enter" ng-click="getDatas()"></span>
+        </div>
+
+        <p class="item-title">共有<span ng-bind="pageOptions.total_items_num"></span>条信息</p>
+
+        <ul class="ul-container">
+            <li ng-repeat="item in datas">
+                <div class="wrapper">
+                    <div class="left">
+                        <div><a ui-sref="dls.demand.bill({reqId:item.reqId})" ng-click="setAppStatus()"><h1 ng-bind="item.keywords | shrinkFilter : 15" title="{{item.keywords}}"></h1></a></div>
+                        <div>
+                            <span style="display:inline-block;width: 250px;">发布时间：<span ng-bind="item.pubTime"></span></span>
+                            <span class="m-l-20">截止时间：<span ng-bind="item.deadline"></span></span>
+                        </div>
+                        <div class="items">
+                            <span>预计数据规模：<span ng-bind="item.dataScale | textEmptyFilter"></span></span>
+                            <!-- <span class="m-l-20">期望价格：<span ng-bind="item.expectPrice | textEmptyFilter"></span> 元</span> -->
+                        </div>
+                        <div class="items">
+                                <span style="display:inline-block;width: 250px;">应用场景：<span ng-bind="item.scene | reqSceneFilter | emptyFilter "></span> </span>
+                                <span class="m-l-20">需求类型：<span ng-bind="item.reqType | reqTypeFilter | emptyFilter "></span> </span>
+                        </div>
+                        <div class="info">
+                            <p>交付验收要求：
+                                <span class="desc" ng-show="item.showAll" ng-bind="item.accRequest | textEmptyFilter"></span>
+                                <span class="desc" ng-show="!item.showAll" ng-bind="item.accRequest | shrinkFilter : 50 | textEmptyFilter"></span>
+                                <a class="btn btn-link" ng-show="item.accRequest.length > 100" style="font-size: 12px;padding: 0" ng-click="item.showAll = !item.showAll">{{!item.showAll ? '展开' : '收起'}}</a>
+                            </p>
+                        </div>
+                        <div class="items">
+                                <span style="display:inline-block;width: 250px;">交付金额：<span ng-bind="item.preCharge | textEmptyFilter"></span>元</span>
+                                <span class="m-l-20">已报名：<span ng-bind="item.responseNum"></span>人</span>
+                        </div>
+                    </div>
+
+                    <div class="right">
+                        <p>相似度：<a ui-sref="dls.demand.similarity({reqId:item.reqId})"><span ng-bind="item.simiDegree | similarityFilter" ng-click="setAppStatus()"></span></a></p>
+                        <!-- <p>加关注：<a ui-sref="dls.demPublish.supResponse({reqId:item.reqId})" ng-click="setAppStatus()"><span ng-bind="item.responseNum"></span></a></p> -->
+                        <div class="operation" style="margin-top: 5px;">
+                            <a ng-if="item.focusStatus === '01' " ng-click="focus(item, $index)"><span class="glyphicon glyphicon-heart-empty"></span><br>加关注</a>
+                            <a class="f-col-red" ng-if="item.focusStatus === '02' " ng-click="focus(item, $index)"><span class="glyphicon glyphicon-heart"></span><br>已关注</a>
+                            <a  ng-if="item.respStatus === '01'&& item.reqType!='01'" ng-click="openModal('md', 'registrationForm',$index,item.reqType)"><span class="glyphicon glyphicon-envelope"></span><br>报名</a>
+                            <a  ng-if="item.respStatus === '01'&& item.reqType =='01'" ng-click="openModal('md', 'demandResponse',$index,item.reqType)"><span class="glyphicon glyphicon-envelope"></span><br>报名</a>
+                            <a style="color: orangered" ng-if="item.respStatus === '02'"><span class="glyphicon glyphicon-envelope"></span><br>已报名</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <pagination class="m-l-20 m-t-50" options="pageOptions" cur-page="curPage"></pagination>
+    </section>
+</div>

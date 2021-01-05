@@ -1,0 +1,113 @@
+<article class="bg-2">
+    <header class="h-50 dls-btn-default ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">工单列表 >> 路由配置</span>
+    </header>
+    <div class="flex-container p-b-50">
+        <div>
+            <p class="w-300 inline-block h-30 lh-30">工单编号：{{jobId}}</p>
+            <p class="inline-block h-30 lh-30">工单状态：{{jobStatus | workOrderStatus}}</p>
+        </div>
+        <div>
+            <p class="w-300 inline-block h-30 lh-30">订单编号：{{orderId}}</p>
+            <p class="inline-block h-30 lh-30">订单状态：{{orderState | orderStateFilter}}</p>
+        </div>
+        <div class="m-t-10">
+            <p class="h-34 lh-34">
+                <label>路由信息：</label>
+            </p>
+            <section class="w-300 inline-block f-l">
+                <span class="ver-top h-34 lh-34">路由方式：</span>
+                <div class="inline-block" bootstrap-select source-data="routerTypeData" selected-data="routerType" select-disable="true"></div>
+            </section>
+            <section class="w-300 inline-block f-l">
+                <span class="ver-top h-34 lh-34">动态路由策略：</span>
+                <div class="inline-block" select-disable="true" bootstrap-select source-data="dynamicRouterTypeData" selected-data="dynamicRouterType"></div>
+            </section>
+        </div>
+        <div class="m-t-10 c-f">
+            <p class="h-34 lh-34">
+                <label>配送信息：</label>
+            </p>
+            <section class="w-300 inline-block f-l">
+                <span class="ver-top h-34 lh-34">配送方式：</span>
+                <div class="inline-block" bootstrap-select source-data="dispatchTypeData" selected-data="dispatchType"></div>
+            </section>
+            <section class="w-300 inline-block f-l" ng-show="dispatchType != '01'">
+                <span class="ver-top h-34 lh-34">最长等待时间：</span>
+                <input type="text" class="text-center w-120 h-34 lh-34" ng-model="maxDelay" ng-keyup="checkMaxDelay()"> 小时
+                <label class="ver-top h-34 lh-34 f-s-12 f-w-l f-col-red" ng-show="!maxDelay">该项为必填项！</label>
+            </section>
+        </div>
+
+        <div class="m-t-70 c-f">
+            <div ng-repeat="item in sessionLists">
+                <section class="h-34 lh-34">
+                    路由会话编号：{{item.sessionId}}
+                    <span class="inline-block m-l-40">
+                        序号： <input type="text" class="w-60 h-30 lh-30 text-center" ng-keyup="checkNum($event)" ng-model="item.routeOrder">
+                    </span>
+                    <div class="inline-block m-l-40" dls-radio radio-name="session_{{$index}}" radio-data="taskManageData" selected-data="item.taskManage" ng-click="setTask($event,item)"></div>
+                </section>
+                <div class="dls-grid m-l-0 m-t-10 p-r-10">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                        <tr class='grid-header-row'>
+                            <th>交易品名称</th>
+                            <th>配送任务编号</th>
+                            <th ng-show="prdtType === '03'">业务编号</th>
+                            <th>供方机构名称</th>
+                            <th>供方部门名称</th>
+                            <th ng-show="prdtType !== ''">查询ID类型</th>
+                            <th ng-show="prdtType === '03'">是否人群包</th>
+                            <th>任务控制</th>
+                            <th>任务状态</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="grid-body-row" ng-repeat="data in item.taskInfo">
+                            <td class="grid-body-row-content">
+                                <span>{{data.tagName}}</span>
+                            </td>
+                            <td class="grid-body-row-content">
+                                <span>{{data.taskId}}</span>
+                            </td>
+                            <td class="grid-body-row-content" ng-show="prdtType === '03'">
+                                    <span>{{data.busiId}}</span>
+                                </td>
+                            <td class="grid-body-row-content">
+                                <span>{{data.orgFullNameCN}}</span>
+                            </td>
+                            <td class="grid-body-row-content">
+                                <span>{{data.deptName}}</span>
+                            </td>
+                            <td class="grid-body-row-content" ng-show="prdtType === '03'">
+                                <select ng-options="type.value as type.name for type in IDTypeData" ng-model="data.qryIdType" ng-disabled="prdtType === '03'">
+                                </select>
+                            </td>
+                            <td class="grid-body-row-content" ng-show="prdtType === '02'">
+                                <select ng-options="type.value as type.name for type in data.IDTypeData" ng-model="data.qryIdType">
+                                </select>
+                            </td>
+                            <td class="grid-body-row-content" ng-show="prdtType === '03'">
+                                <select ng-options="type.value as type.name for type in isPeopleSetData" ng-model="data.keyQryType"></select>
+                            </td>
+                            <td class="grid-body-row-content">
+                                <div dls-radio radio-name="{{data.taskId}}" radio-data="taskManageData" selected-data="data.status"></div>
+                            </td>
+                            <td class="grid-body-row-content">
+                                <span class="inline-block task_status task_status_{{data.status}}"></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="flex flex-center m-t-50">
+            <button class="btn btn-primary m-r-30" ng-click="save()">保存</button>
+            <button class="btn btn-default" ng-click="cancel()">取消</button>
+        </footer>
+    </div>
+</article>

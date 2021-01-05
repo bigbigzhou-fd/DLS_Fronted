@@ -1,0 +1,179 @@
+<div class="bg-2 p-lr-20 create-item member-apply">
+    <header id="memberAudit" class="h-50 ver-mid lh-50">
+        <span class=" inline-block ver-mid lh-50 p-lr-20 f-s-16 f-col-2 f-w-b f-s-12 p-tb-10">成员资格审核申请表 </span><span class="f-s-13 f-w-l f-col-1">< 已申请成员资格列表</span>
+    </header>
+
+    <div class="flex bg-3 p-lr-20 flex-d-c p-b-80">
+        <nav class="c-f m-b-10" ng-show="type == 'create'">
+            <ol class="breadcrumb h-34 lh-34">
+                <li class="active"><span>1</span>填写申请机构基本信息</li>
+                <li><span>2</span>填写申请机构联系人信息</li>
+                <li><span>3</span>填写申请机构清算账户信息</li>
+                <li><span>4</span>填写发票信息</li>
+                <li><span>5</span>上传资质文件</li>
+                <li><span>6</span>确认并提交申请</li>
+            </ol>
+        </nav>
+        <p><label class="text-left f-s-12 f-w-l h-30 lh-30 m-t-10 p-r-5">申请编号</label><label class="f-s-12 f-w-l border square cursor-pointer" title="申请编号是为每一位申请单位自动生成的唯一标识码">？</label><label class="f-s-12 f-w-l f-col-3 p-l-10">{{applyNo}}</label></p>
+
+        <form name="memberApplyForm" novalidate>
+            <div ng-show="showAll || step == 1">
+                <p class="f-w-b f-s-12 p-tb-10 p-tb-10">填写申请机构基本信息</p>
+                <p class="h-30 lh-30"><label class="c-f f-w-l f-s-12 w-170 text-right h-30 ver-top must">机构全称（中文）</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="机构全称（中文）" ng-model="orgFullNameCN" name="orgFullNameCN" ng-readonly="showAll" required><label class="f-col-red f-s-12 f-w-l p-l-10" ng-show="memberApplyForm.orgFullNameCN.$dirty && memberApplyForm.orgFullNameCN.$invalid">该项为必填项</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top">机构简称（英文）</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="机构简称（英文)" ng-model="orgFullNameEN" name="orgFullNameEN" ng-readonly="showAll"></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top must">部门名称</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="部门名称" ng-model="deptName" name="deptName" ng-readonly="showAll" required><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.deptName.$dirty && memberApplyForm.deptName.$invalid">该项为必填项</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top must">组织机构代码</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="组织机构代码" ng-model="orgNo" name="orgNo" ng-readonly="showAll" required><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.orgNo.$dirty && memberApplyForm.orgNo.$invalid">该项为必填项</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top">机构注册地址</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="机构注册地址" ng-model="orgRegAddr" name="orgRegAddr" ng-readonly="showAll"></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top">注册资本总额</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="注册资本总额" ng-model="regCapital" name="regCapital" ng-readonly="showAll"></p>
+                <p class="h-30 lh-30"><label class="c-f f-w-l f-s-12 w-170 text-right h-30 ver-top must">机构类别</label>
+                    <select class="form-control" ng-options="item.value as item.label for item in orgTypeArr" name="orgTypeCd" ng-model="orgTypeVal" ng-disabled="type == 'view' || showAll"></select>
+                </p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30 ver-top must">所属行业</label>
+                    <select class="form-control" name="industryCd" ng-disabled="type == 'view' || showAll" ng-model="industryTypeVal" ng-options="item.value as item.label for item in industryTypeArr">
+                    </select>
+                </p>
+                <p class="h-30 lh-30 m-t-10">
+                    <label class="c-f f-w-l f-s-12 w-170 text-right h-30 ver-top must">所在国家/地区</label>
+                    <select class="form-control" name="nationCd"  ng-disabled="type == 'view' || showAll" ng-options="item.value as item.label for item in nationTypeArr" ng-model="nationTypeVal">
+                    </select>
+                </p>
+                <p class="h-30 lh-30 m-t-10">
+                    <label class="c-f f-w-l f-s-12 w-170 text-right h-30 ver-top must">省/自治区/直辖市</label>
+                    <select class="form-control" name="provCd"  ng-disabled="type == 'view' || showAll" ng-options="item.value as item.label for item in provTypeArr" ng-model="provTypeVal">
+                    </select>
+                </p>
+                <p class="h-30 lh-30 m-t-20"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top must">通讯地址</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="通讯地址" ng-model="postAddr" name="postAddr" ng-readonly="showAll" required><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.postAddr.$dirty && memberApplyForm.postAddr.$invalid">该项为必填项</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top must">邮政编码</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="邮政编码" ng-model="zipNo" name="zipNo" ng-readonly="showAll" required ng-pattern="/^\d{6}$/"><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.zipNo.$dirty && memberApplyForm.zipNo.$invalid">该项为必填项,且为6位数字</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top">机构官网</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="机构官网" ng-model="companyWebSite" name="companyWebSite" ng-readonly="showAll"><label class="m-l-20 f-w-l f-s-12 f-col-3">比如：www.chinadep.com</label></p>
+                <input style="visibility: hidden" type="text" class="disabled-input" ng-model="applyNo" name="applyNo">
+
+                <div class="m-l-170 m-t-30" ng-show="!showAll">
+                    <button class="btn btn-primary" ng-click="next(2)">下一步</button>
+                    <button class="btn btn-default f-col-3 m-l-20" ng-click="submit()">暂时保存</button>
+                    <button class="btn btn-default f-col-3 m-l-20" ng-click="goBack()">取消</button>
+                </div>
+            </div>
+
+            <hr class="dotted p-b-10 m-t-10" ng-show="showAll">
+
+            <div ng-show="showAll || step == 2">
+                <p class="f-w-b f-s-12 p-tb-10">填写申请机构联系人信息</p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30 ver-top must">业务联系人姓名</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="业务联系人姓名" ng-model="contactName1" name="main_contactName" ng-readonly="showAll" required><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.main_contactName.$dirty && memberApplyForm.main_contactName.$invalid">该项为必填项</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top must">业务联系人电子邮件</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="email" placeholder="业务联系人电子邮件" ng-model="emailAddr1" name="main_emailAddr" ng-readonly="showAll" required><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.main_emailAddr.$dirty && memberApplyForm.main_emailAddr.$invalid">请正确填写邮箱地址</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top must">业务联系人电话</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="业务联系人电话" ng-model="phoneNo1" name="main_phoneNo" ng-readonly="showAll" required><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.main_phoneNo.$dirty && memberApplyForm.main_phoneNo.$invalid">该项为必填项</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top">业务联系人传真</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="业务联系人传真" ng-model="faxNo1" name="main_faxNo" ng-readonly="showAll"></p>
+
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30 ver-top">其他业务联系人姓名</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="其他业务联系人姓名" ng-model="contactName2" name="othContactName" ng-readonly="showAll"></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top">其他业务联系人电子邮件</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="其他业务联系人电子邮件" ng-model="emailAddr2" name="othEmailAddr" ng-readonly="showAll"></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top">其他业务联系人电话</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="其他业务联系人电话" ng-model="phoneNo2" name="othPhoneNo" ng-readonly="showAll"></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top">其他业务联系人传真</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="其他业务联系人传真" ng-model="faxNo2" name="othFaxNo" ng-readonly="showAll"></p>
+
+                <div class="m-l-170 m-t-30" ng-show="!showAll">
+                    <button class="btn btn-primary" ng-click="pre(1)">上一步</button>
+                    <button class="btn btn-primary m-l-20" ng-click="next(3)">下一步</button>
+                    <button class="btn btn-default f-col-3 m-l-20" ng-click="submit()">暂时保存</button>
+                    <button class="btn btn-default f-col-3 m-l-20" ng-click="goBack()">取消</button>
+                </div>
+            </div>
+
+            <hr class="dotted p-b-10 m-t-10" ng-show="showAll">
+
+            <div ng-show="showAll || step == 3">
+                <p class="f-w-l f-s-12 f-col-3" ng-show="!showAll">* 会员作为结算收款方,相关银行账号信息。</p>
+                <p class="f-w-b f-s-12 p-tb-10">填写申请机构清算账户信息</p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30 ver-top ver-top must">银行账号户名</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="银行账号户名" ng-model="acctName" name="acctName" ng-readonly="showAll" required><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.acctName.$dirty && memberApplyForm.acctName.$invalid">该项为必填项</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top must">银行账号</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="银行账号" ng-model="acctNo" name="acctNo" ng-readonly="showAll" required><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.acctNo.$dirty && memberApplyForm.acctNo.$invalid">该项为必填项</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top must">开户银行</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="开户银行" ng-model="issueBankName" name="issueBankName" ng-readonly="showAll" required><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.issueBankName.$dirty && memberApplyForm.issueBankName.$invalid">该项为必填项</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top must">开户行行号</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="开户行行号" ng-model="issueBankID" name="issueBankID" ng-readonly="showAll" required ng-pattern="/^\d{12}$/"><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.issueBankID.$dirty && memberApplyForm.issueBankID.$invalid">该项为必填项，且为12位数字</label></p>
+
+                <div class="m-l-170 m-t-30" ng-show="!showAll">
+                    <button class="btn btn-primary" ng-click="pre(2)">上一步</button>
+                    <button class="btn btn-primary m-l-20" ng-click="next(4)">下一步</button>
+                    <button class="btn btn-default f-col-3 m-l-20" ng-click="submit()">暂时保存</button>
+                    <button class="btn btn-default f-col-3 m-l-20" ng-click="goBack()">取消</button>
+                </div>
+            </div>
+
+            <hr class="dotted p-b-10 m-t-10" ng-show="showAll">
+
+            <div ng-show="showAll || step == 4">
+                <p class="f-w-l f-s-12 f-col-3" ng-show="!showAll">* 会员作为结算付款方，交易中心需要向其开具发票，而需要的信息内容。</p>
+                <p class="f-w-l f-s-12 f-col-3" ng-show="!showAll">* 上海数据交易中心有限公司统一使用增值税专用发票。</p>
+
+                <p class="f-w-b f-s-12 p-tb-10">填写发票信息</p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30 ver-top must">发票抬头</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="发票抬头" ng-model="billHead" name="billHead" ng-readonly="showAll" required><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.billHead.$dirty && memberApplyForm.billHead.$invalid">该项为必填项</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top must">发票银行账号</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="发票银行账号" ng-model="billAcctNo" name="billAcctNo" ng-readonly="showAll" required><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.billAcctNo.$dirty && memberApplyForm.billAcctNo.$invalid">该项为必填项</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top must">发票开户银行</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="发票开户银行" ng-model="billIssueBankName" name="billIssueBankName" ng-readonly="showAll" required><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.billIssueBankName.$dirty && memberApplyForm.billIssueBankName.$invalid">该项为必填项</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top must">发票寄送地址</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="发票寄送地址" ng-model="billSendAddr" name="billSendAddr" ng-readonly="showAll" required><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.billSendAddr.$dirty && memberApplyForm.billSendAddr.$invalid">该项为必填项</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30 ver-top must">发票联系人电话</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="发票联系人电话" ng-model="billContactPhone" name="billContactPhone" ng-readonly="showAll" required><label class="f-col-red f-s-12 f-w-l p-l-10"  ng-show="memberApplyForm.billContactPhone.$dirty && memberApplyForm.billContactPhone.$invalid">该项为必填项</label></p>
+                <p class="h-30 lh-30 m-t-10"><label class="c-f f-w-l f-s-12 w-170 text-right h-30  ver-top">纳税人识别号</label><input ng-class="{true:'input-disabled'}[showAll]"class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="纳税人识别号" ng-model="taxID" name="taxID" ng-readonly="showAll"><label class="f-col-3 f-s-12 f-w-l m-l-20">如需开具增票，必须填写纳税人识别号</label></p>
+
+                <div class="m-l-170 m-t-30" ng-show="!showAll">
+                    <button class="btn btn-primary" ng-click="pre(3)">上一步</button>
+                    <button class="btn btn-primary m-l-20" ng-click="next(5)">下一步</button>
+                    <button class="btn btn-default f-col-3 m-l-20" ng-click="submit()">暂时保存</button>
+                    <button class="btn btn-default f-col-3 m-l-20" ng-click="goBack()">取消</button>
+                </div>
+            </div>
+
+            <hr class="dotted p-b-10 m-t-10" ng-show="showAll">
+
+            <div ng-if="type=='create'" ng-show="step == 5">
+                <p class="f-w-l f-s-12" ng-show="!showAll">请上传以下文件，以便完成成员申请。</p>
+                <p class="f-w-l f-s-12 f-col-3" ng-show="!showAll">* 注意：单个附件不能大于10MB。</p>
+                <p class="f-w-l f-s-12 f-col-3" ng-show="!showAll">* 注意：上传附件的格式为pdf,jpg,gif,png</p>
+                <p class="f-w-b f-s-12 p-tb-10">上传资质文件</p>
+                <p><label class="w-170 text-right f-s-12 f-w-l h-30 lh-30 m-t-10 must">营业执照（加盖公章）</label><a ng-if="attachUrl1 && !lesEdit" href="../../api{{attachUrl1}}" target="_blank" class="f-s-12 f-w-l f-col-3 inline-block m-l-20">查看</a><input ng-class="{true:'input-disabled'}[showAll]"type="file" class="m-l-20" check-input ng-class="{true:'input-disabled'}[showAll]"ng-model="applyAttachInfo01" name="file-les"><label id="uploadFile01" class="f-col-red f-s-12 f-w-l p-l-10" style="display:none">该项为必填项</label></p>
+                <p><i style="margin-left:190px">*如已完成三证合一，则不需上传《组织机构代码证》、《税务登记证》。</i></p>
+                <p><label class="w-170 text-right f-s-12 f-w-l h-30 lh-30 m-t-10">机构组织代码证（加盖公章）</label><a ng-if="attachUrl2 && !codeEdit" href="../../api{{attachUrl2}}" target="_blank" class="f-s-12 f-w-l f-col-3 inline-block m-l-20">查看</a><input ng-class="{true:'input-disabled'}[showAll]"type="file" ng-model="applyAttachInfo02" name="file-code" class="m-l-20"></p>
+                <p><label class="w-170 text-right f-s-12 f-w-l h-30 lh-30 m-t-10">税务登记证（加盖公章）</label><a ng-if="attachUrl3 && !regEdit" href="../../api{{attachUrl3}}" target="_blank" class="f-s-12 f-w-l f-col-3 inline-block m-l-20">查看</a><input ng-class="{true:'input-disabled'}[showAll]"type="file" ng-model="applyAttachInfo03" name="file-reg" class="m-l-20"></p>
+                <p><label class="w-170 text-right f-s-12 f-w-l h-30 lh-30 m-t-10 must">法人身份证扫描件</label><a ng-if="attachUrl4 && !idEdit" href="../../api{{attachUrl4}}" target="_blank" class="f-s-12 f-w-l f-col-3 inline-block m-l-20">查看</a><input ng-class="{true:'input-disabled'}[showAll]"type="file" check-input ng-class="{true:'input-disabled'}[showAll]"ng-model="applyAttachInfo04" name="file-id" class="m-l-20"><label id="uploadFile04" class="f-col-red f-s-12 f-w-l p-l-10" style="display:none">该项为必填项</label></p>
+                <p><label class="w-170 text-right f-s-12 f-w-l h-30 lh-30 m-t-10">其他</label><a ng-if="attachUrl5 && !otherEdit" href="../../api{{attachUrl5}}" target="_blank" class="f-s-12 f-w-l f-col-3 inline-block m-l-20">查看</a><input ng-class="{true:'input-disabled'}[showAll]"type="file" ng-model="applyAttachInfo05" name="file-other" class="m-l-20"></p>
+
+                <div class="m-l-170 m-t-30" ng-show="!showAll">
+                    <button class="btn btn-primary" ng-click="pre(4)">上一步</button>
+                    <button class="btn btn-primary m-l-20" ng-click="next(6)">下一步</button>
+                    <button class="btn btn-default f-col-3 m-l-20" ng-click="submit()">暂时保存</button>
+                    <button class="btn btn-default f-col-3 m-l-20" ng-click="goBack()">取消</button>
+                </div>
+            </div>
+
+            <div ng-if="type=='create'" ng-show="showAll">
+                <p class="f-w-b f-s-12 p-tb-10">上传资质文件</p>
+                <p><label class="w-170 text-right f-s-12 f-w-l h-30 lh-30 m-t-10 must">营业执照（加盖公章）</label><a ng-if="attachUrl1 && !applyAttachInfo01_name" href="../../api{{attachUrl1}}" target="_blank" class="f-s-12 f-w-l f-col-3 inline-block m-l-20">查看</a><label class="f-s-12 f-w-l m-l-20">{{applyAttachInfo01_name}}</label></p>
+                <p><label class="w-170 text-right f-s-12 f-w-l h-30 lh-30 m-t-10">机构组织代码证（加盖公章）</label><a ng-if="attachUrl2 && !applyAttachInfo02_name" href="../../api{{attachUrl2}}" target="_blank" class="f-s-12 f-w-l f-col-3 inline-block m-l-20">查看</a><label class="f-s-12 f-w-l m-l-20">{{applyAttachInfo02_name}}</label></p>
+                <p><label class="w-170 text-right f-s-12 f-w-l h-30 lh-30 m-t-10">税务登记证（加盖公章）</label><a ng-if="attachUrl3 && !applyAttachInfo03_name" href="../../api{{attachUrl3}}" target="_blank" class="f-s-12 f-w-l f-col-3 inline-block m-l-20">查看</a><label class="f-s-12 f-w-l m-l-20">{{applyAttachInfo03_name}}</label></p>
+                <p><label class="w-170 text-right f-s-12 f-w-l h-30 lh-30 m-t-10 must">法人身份证扫描件</label><a ng-if="attachUrl4 && !applyAttachInfo04_name" href="../../api{{attachUrl4}}" target="_blank" class="f-s-12 f-w-l f-col-3 inline-block m-l-20">查看</a><label class="f-s-12 f-w-l m-l-20">{{applyAttachInfo04_name}}</label></p>
+                <p><label class="w-170 text-right f-s-12 f-w-l h-30 lh-30 m-t-10">其他</label><a ng-if="attachUrl5 && !applyAttachInfo05_name" href="../../api{{attachUrl5}}" target="_blank" class="f-s-12 f-w-l f-col-3 inline-block m-l-20">查看</a><label class="f-s-12 f-w-l m-l-20">{{applyAttachInfo05_name}}</label></p>
+
+                <div class="m-l-170 m-t-30" ng-show="!showAll">
+                    <button class="btn btn-primary" ng-click="pre(4)">上一步</button>
+                    <button class="btn btn-primary m-l-20" ng-click="next(6)">下一步</button>
+                    <button class="btn btn-default f-col-3 m-l-20" ng-click="submit()">暂时保存</button>
+                    <button class="btn btn-default f-col-3 m-l-20" ng-click="goBack()">取消</button>
+                </div>
+            </div>
+
+            <div ng-if="type=='view'" ng-show="showAll || step == 5">
+                <p class="f-w-b f-s-12 p-tb-10">上传资质文件</p>
+                <p><label class="w-170 text-right f-s-12 f-w-l h-30 lh-30 m-t-10 must">营业执照（加盖公章）</label><a ng-if="attachUrl1" href="../../api{{attachUrl1}}" target="_blank" class="f-s-12 f-w-l f-col-3 inline-block m-l-20">查看</a></p>
+                <p><label class="w-170 text-right f-s-12 f-w-l h-30 lh-30 m-t-10">机构组织代码证（加盖公章）</label><a ng-if="attachUrl2" href="../../api{{attachUrl2}}" target="_blank" class="f-s-12 f-w-l f-col-3 inline-block m-l-20">查看</a></p>
+                <p><label class="w-170 text-right f-s-12 f-w-l h-30 lh-30 m-t-10">税务登记证（加盖公章）</label><a ng-if="attachUrl3" href="../../api{{attachUrl3}}" target="_blank" class="f-s-12 f-w-l f-col-3 inline-block m-l-20">查看</a></p>
+                <p><label class="w-170 text-right f-s-12 f-w-l h-30 lh-30 m-t-10 must">法人身份证扫描件</label><a ng-if="attachUrl4" href="../../api{{attachUrl4}}" target="_blank" class="f-s-12 f-w-l f-col-3 inline-block m-l-20">查看</a></p>
+                <p><label class="w-170 text-right f-s-12 f-w-l h-30 lh-30 m-t-10">其他</label><a ng-if="attachUrl5" href="../../api{{attachUrl5}}" target="_blank" class="f-s-12 f-w-l f-col-3 inline-block m-l-20">查看</a></p>
+            </div>
+
+            <div class="m-l-170 m-t-30" ng-show="step == 6 ">
+                <button class="btn btn-primary" ng-click="pre(5)">上一步</button>
+                <button class="btn btn-primary m-l-20" ng-click="finalSubmit()">提交</button>
+                <button class="btn btn-default f-col-3 m-l-20" ng-click="goBack()">取消</button>
+            </div>
+        </form>
+
+        <div class="m-t-10" ng-show="showAll" ng-if="type == 'view'">
+            <a class="btn btn-default  w-100 m-l-40" ng-click="goBack()" >关闭</a>
+        </div>
+
+    </div>
+</div>
+

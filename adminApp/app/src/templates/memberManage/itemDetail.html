@@ -1,0 +1,172 @@
+<div class="bg-2 p-lr-20 create-item" ng-controller="itemDetailCtrl">
+    <header class="h-50 lh-50">
+        <label class="f-col-3">查看互联对象</label>
+    </header>
+    <div class="flex bg-3 flex-d-c p-lr-150">
+        <div class="bg-3 p-b-10">
+            <p><label class="f-w-l f-s-12 w-150 text-right">流通对象编号</label><label class="f-w-l f-s-12 p-l-20 f-col-3">{{connObjId}}</label></p>
+            <div><label class="f-w-l f-s-12 w-150 text-right must">ID属性</label>
+                <div class="m-l-20 bg-3 tree-box-wrapper">
+                    <div class="tree-box">
+                        <treecontrol class="tree-light dotted"
+                                     tree-model="dataIdStr"
+                                     options="detailTreeOptions"
+                                     selected-node="selectedNode">{{node.name}}
+                        </treecontrol>
+                    </div>
+                    <div class="tree-selected">
+                        <label class="f-w-l f-s-12 m-l-10">已选择</label>
+                        <ul>
+                            <li class="f-w-l f-s-12 p-l-10 selected-list" ng-repeat="data in prdtIdRelList">{{data.id}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="b-t-dotted bg-3">
+            <div>
+                <p class="p-t-10"><label class="f-w-l f-s-12 w-150 text-right">标签名称</label><label class="f-w-l f-s-12 p-l-20">{{tagName}}</label></p>
+                <p><label class="f-w-l f-s-12 w-150 text-right">标签分类</label><label class="f-w-l f-s-12 p-l-20">{{tagTypeName}}</label></p>
+            </div>
+            <div>
+                <label class="f-s-12 m-l-40">标签描述</label>
+                <div>
+                    <p><label class="f-w-l f-s-12 w-150 text-right">标签指定内容</label><input style="width:449px;" type="text" class="m-l-20 p-l-10" placeholder="标签指定内容" ng-disabled="showAll" value={{labelContext}}></p>
+                    <p><label class="f-w-l f-s-12 w-150 text-right">标签指定网站</label><textarea cols="60" rows="10" class="ver-top p-l-10 m-l-20" placeholder="请输入网站域名，多个网站请使用“回车”分隔" ng-disabled="showAll">{{labelWeb}}</textarea></p>
+                    <p class="m-t-7">
+                        <label class="f-w-l f-s-12 w-150 text-right">标签约束条件</label>
+                        <label class="ver-top" ng-repeat="item in itemLmtCondList">
+                            <label class="inline-block m-l-15 ver-top step3-select relative">
+                                <dls-select select-disabled="selectDisabled" class="pull-left" datas="step3Select1" selected-label=item[0]></dls-select>
+                                <dls-select select-disabled="selectDisabled" class="pull-left m-l-10" datas="step3Select2"  selected-label=item[1]></dls-select>
+                                <input type="text" class="p-l-10 m-l-10 h-30 lh-30 ver-top" placeholder="约束条件" ng-disabled="showAll">
+                            </label>
+                        </label>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="bg-3 b-t-dotted">
+            <div>
+                <p class="p-t-10"><label class="f-w-l f-s-12 w-150 text-right">Value类型</label><label class="f-w-l f-s-12 p-l-20">{{valueType}}</label></p>
+                <p><label class="f-w-l f-s-12 w-150 text-right ver-top must">Value赋值</label><textarea class="m-l-20 p-l-10" cols="60" rows="10" ng-disabled="showAll">{{setValue}}</textarea></p>
+            </div>
+        </div>
+        <div class="bg-3 b-t-dotted">
+            <div>
+                <p class='p-t-10'><label class="f-w-l f-s-12 w-150 text-right ver-top must">互联对象名称</label><input style="width:449px;" type="text" class="m-l-20 p-l-10" placeholder="标签指定内容" ng-disabled="showAll" value={{prdtName}}></p>
+                <p class="m-t-7"><label class="f-w-l f-s-12 w-150 text-right ver-top must">互联对象描述</label><textarea class="m-l-20 p-l-10" cols="60" rows="3" ng-disabled="showAll">{{prdtDesc}}</textarea></p>
+                <p><label class="f-w-l f-s-12 w-150 text-right ver-top must">关键词</label><textarea class="m-l-20 p-l-10" cols="60" rows="3" ng-disabled="showAll">{{keyWord}}</textarea></p>
+                <p><label class="f-w-l f-s-12 w-150 text-right ver-top must">语种</label><dls-select select-disabled="selectDisabled"  class="inline-block m-l-20" selected-label="language"></dls-select></p>
+                <p class="m-t-7">
+                    <label class="f-w-l f-s-12 w-150 text-right ver-top must pull-left">来源行业</label>
+                <div class="m-l-20 bg-3 tree-box-wrapper">
+                    <div class="tree-box">
+                        <treecontrol class="tree-light dotted"
+                                     tree-model="sourceIndustry"
+                                     options="detailTreeOptions">{{node.name}}
+                        </treecontrol>
+                    </div>
+                    <div class="tree-selected">
+                        <label class="f-w-l f-s-12 m-l-10">已选择</label>
+                        <ul>
+                            <li class="f-w-l f-s-12 p-l-10 selected-list" ng-repeat="data in sourceIndustryArr">{{data.name}}</li>
+                        </ul>
+                    </div>
+                </div>
+                </p>
+
+                <p class="m-t-15">
+                    <label class="f-w-l f-s-12 w-150 text-right ver-top pull-left must">应用场景限定</label>
+                <div class="m-l-20 bg-3 tree-box-wrapper">
+                    <div class="tree-box">
+                        <treecontrol class="tree-light dotted"
+                                     tree-model="dataScene_str">{{node.name}}
+                        </treecontrol>
+                    </div>
+                    <div class="tree-selected">
+                        <label class="f-w-l f-s-12 m-l-10">已选择</label>
+                        <ul>
+                            <li class="f-w-l f-s-12 p-l-10 selected-list" ng-repeat="data in dataSceneArr">{{data.name}}<span ng-show="!showAll" ng-click="removeStep5_3Label($index)" class="glyphicon glyphicon-trash trash-1"></span></li>
+                        </ul>
+                    </div>
+                </div>
+                </p>
+                <p class="m-t-7"><label class="f-w-l f-s-12 w-150 text-right ver-top must">加工方式</label><dls-select select-disabled="selectDisabled" class="inline-block m-l-20" selected-label="processType"></dls-select></p>
+
+                <lable class='cursor-pointer f-w-b' ng-click="showOptionalItems()"><span class='p-r-10' ng-class="{true:'glyphicon glyphicon-menu-down',false:'glyphicon glyphicon-menu-right'}[showOptions]"></span>可选信息</lable>
+                <section>
+                    <p class="m-t-7"><label class="f-w-l f-s-12 w-150 text-right ver-top">验证方式</label><dls-select select-disabled="selectDisabled" class="inline-block m-l-20" datas="step5Select3" selected-label="valiDateType"></dls-select></p>
+                    <hr class="cut-off-rule">
+                    <p class="relative text-center m-t--10"><span class="bg-3 f-w-b">应用场景</span></p>
+                    <p class="m-t-15">
+                        <label class="f-w-l f-s-12 w-150 text-right ver-top pull-left">排除应用场景限定</label>
+                    <div class="m-l-20 bg-3 tree-box-wrapper">
+                        <div class="tree-box">
+                            <treecontrol class="tree-light dotted"
+                                         tree-model="dataScene_str">{{node.name}}
+                            </treecontrol>
+                        </div>
+                        <div class="tree-selected">
+                            <label class="f-w-l f-s-12 m-l-10">已选择</label>
+                            <ul>
+                                <li class="f-w-l f-s-12 p-l-10" class="selected-list" ng-repeat="data in step5_4Selected">{{data.name}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    </p>
+                    <p class="m-t-15"><label class="c-f f-w-l f-s-12 w-150 text-right h-30">遍历方式约束</label><input class="m-l-20 h-30 lh-30 w-150 p-l-10" type="text" value="{{loopPercentage}}" ng-disabled="showAll">%</p>
+
+                    <hr class="cut-off-rule">
+                    <p class="relative text-center m-t--10"><span class="bg-3 f-w-b">覆盖约束</span></p>
+                    <div id="providerCoverageConstraints">
+                        <div class="provider-c-c-item">
+                            <p class="m-t-15"><label class="c-f f-w-l f-s-12 w-150 text-right h-30">覆盖总数</label><input class="m-l-20 h-30 lh-30 w-150 p-l-10" type="text" placeholder="覆盖总数" ng-disabled="showAll"></p>
+                            <p>
+                                <label class="f-w-l f-s-12 w-150 text-right ver-top pull-left">{{labelTitle}}</label>
+                            <div class="m-l-20 bg-3"  style="position:relative;display:inline-block;vertical-align:top;min-width:700px;border:1px solid #B9B0B0;">
+                                <div style="display:inline-block;min-width:500px;border-right:1px solid #B9B0B0;height:160px;overflow-y:auto">
+                                    <treecontrol class="tree-light dotted"
+                                                 tree-model = dataArea_str>{{node.name}}
+                                    </treecontrol>
+                                </div>
+                                <div style="display:inline-block;vertical-align:top;margin-top:5px;position:relative;height:160px;overflow-y:auto">
+                                    <label class="f-w-l f-s-12 m-l-10">已选择</label>
+                                    <ul>
+                                        <li class="f-w-l f-s-12 p-l-10" style="position:relative;width:190px;height:30px;line-height:30px;border-bottom:1px dotted #B9B0B0" ng-repeat="data in selectedLabels">{{data.node.name}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            </p>
+                            <p class="m-t-15 m-l-170">
+                                <label class="m-r-10 f-w-l">覆盖数量</label><input class="m-r-10" type="text" placeholder="覆盖UV" ng-disabled="showAll">
+                            </p>
+                        </div>
+                    </div>
+                    <hr class="cut-off-rule">
+                    <p class="relative text-center m-t--10"><span class="bg-3 f-w-b">行业约束</span></p>
+                    <p class="m-t-15"><label class="f-w-l f-s-12 w-150 text-right">成员约束</label><input type="radio" class="inline-block m-l-20 ver-tbottom" name="memConstraint" ng-show="memConstraint == 1" ng-disabled="showAll" checked><label ng-show="memConstraint == 1" class="p-lr-5 f-s-12 f-w-l">是</label><input type="radio" class="inline-block m-l-10 ver-tbottom" name="memConstraint" ng-show="memConstraint == 0" ng-disabled="showAll" checked><label ng-show="memConstraint == 0" class="p-lr-5 f-s-12 f-w-l">否</label><label ng-show="memConstraint !== 1 && memConstraint !== 0" ><input type="radio" class="inline-block m-l-20 ver-tbottom" name="memConstraint" ng-disabled="showAll"><label class="p-lr-5 f-s-12 f-w-l">是</label><input type="radio" class="inline-block m-l-10 ver-tbottom" name="memConstraint" ng-disabled="showAll"><label class="p-lr-5 f-s-12 f-w-l">否</label></label></p>
+                    <p class="m-t-15"><label class="f-w-l f-s-12 w-150 text-right">行业约束</label><input type="radio" class="inline-block m-l-20 ver-tbottom" name="tradeConstraint" ng-show="tradeConstraint == 1" ng-disabled="showAll" checked><label ng-show="tradeConstraint == 1" class="p-lr-5 f-s-12 f-w-l">是</label><input type="radio" class="inline-block m-l-10 ver-tbottom" name="tradeConstraint" ng-show="tradeConstraint == 0" ng-disabled="showAll" checked><label ng-show="tradeConstraint == 0" class="p-lr-5 f-s-12 f-w-l">否</label><label ng-show="tradeConstraint !== 1 && tradeConstraint !== 0" ><input type="radio" class="inline-block m-l-20 ver-tbottom" name="tradeConstraint" ng-disabled="showAll"><label class="p-lr-5 f-s-12 f-w-l">是</label><input type="radio" class="inline-block m-l-10 ver-tbottom" name="tradeConstraint" ng-disabled="showAll"><label class="p-lr-5 f-s-12 f-w-l">否</label></label></p>
+                    <p class="m-t-15"><label class="f-w-l f-s-12 w-150 text-right">数据来源</label><input type="checkbox" class="inline-block m-l-20 ver-tbottom" name="dataOrigin" value="01" ng-disabled="showAll"><label class="p-lr-5 f-s-12 f-w-l">沉淀的数据</label><input type="checkbox" class="inline-block m-l-20 ver-tbottom" name="dataOrigin" value="02" ng-disabled="showAll"><label class="p-lr-5 f-s-12 f-w-l">购买的数据</label><input type="checkbox" class="inline-block m-l-20 ver-tbottom" name="dataOrigin"  value="03" ng-disabled="showAll"><label class="p-lr-5 f-s-12 f-w-l">抓取的数据</label><input type="checkbox" class="inline-block m-l-20 ver-tbottom" name="dataOrigin"  value="04" ng-disabled="showAll"><label class="p-lr-5 f-s-12 f-w-l"> 其他合法手段获得的数据</label></p>
+                    <p class="m-t-15 m-b-10"><label class="f-w-l f-s-12 w-150 text-right ver-top">供方数据质量自评</label><input type="text" class="m-l-20 h-30 w-150 p-l-10" placeholder="供方数据质量自评" value={{selfDefine}} ng-disabled="showAll"><label class="f-col-3 f-w-l f-s-12 p-l-10">评分范围为0-100分</label></p>
+                </section>
+            </div>
+        </div>
+        <div class="b-t-dotted bg-3">
+            <div>
+                <p class='p-t-10'><label class="f-w-l f-s-12 w-150 text-right h-30 must">周期频率</label><textarea class="m-b-10 m-l-20 ver-top p-l-10" cols="60" rows="3" class="m-l-20" placeholder="请输入网站域名，多个网站请使用“回车”分隔" ng-disabled="showAll">{{dataLoop}}</textarea></p>
+                <p><label class="f-w-l f-s-12 w-150 text-right h-30 pull-left must">更新频率</label><input class="m-l-20 pull-left h-30 lh-30 w-150 p-l-10" type="text" placeholder="更新频率" value={{freqLoop}} ng-disabled="showAll"><dls-select select-disabled="selectDisabled" class="pull-left m-l-5" selected-label="freqLoopUnit"></dls-select></p>
+                <p><label class="c-f f-w-l f-s-12 w-150 text-right h-30 pull-left must">数据留存有效期</label><input class="m-l-20 pull-left h-30 lh-30 w-150 p-l-10" type="text" placeholder="数据留存有效期" value={{dataStay}} ng-disabled="showAll"><dls-select select-disabled="selectDisabled" class="pull-left m-l-5" selected-label="dataStayUnit"></dls-select></p>
+            </div>
+        </div>
+        <div class="bg-3 p-b-50 b-t-dotted">
+            <div class="bg-3 p-b-50 b-t-dotted">
+                <div class="m-t-10 m-b-20">
+                    <p class="showAll"><label class="f-w-l f-s-12 w-150 text-right h-30 ver-top must">计费方式</label><dls-select select-disabled="selectDisabled" class="m-l-5 m-l-20 inline-block" datas="step7Select" selected-label="chargeType"></dls-select></p>
+                    <p><label class="c-f f-w-l f-s-12 w-150 text-right h-30 ver-top must">挂牌价格</label><input class="m-l-20 h-30 lh-30 w-150 p-l-10" type="text" placeholder="挂牌价格" value={{chargeNum}} ng-disabled="showAll">元</p>
+                </div>
+                <a class="btn btn-primary" ng-click="goBack()">返回</a>
+            </div>
+        </div>
+    </div>
+

@@ -1,0 +1,26 @@
+<div class="modal-dialog" role="document">
+        <div class="modal-header flex">
+            <h2 class="modal-title p-lr-10" id="myModalLabel" style="font-weight: bold;font-size: 14px;color: #0acca6"></span>业务编号详情</h2>
+            <span class="close" data-dismiss="modal" aria-label="Close" style="margin-left:460px;"><span aria-hidden="true" ng-click="$ctrl.cancel()">&times;</span></span>
+        </div>
+        <div class="modal-body" id="myModalBody">
+            <!-- <p style="height:40px;line-height:40px;margin-bottom:15px;">你好</p> -->
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr class="primary">
+                        <th>序号</th>
+                        <th>业务编号</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody style="text-align:center">
+                        <tr>
+                            <td>1</td>
+                            <td ng-bind = "modalDatas.busiId"></td>
+                            <!-- <td ng-bind = "modalDatas.note"></td> -->
+                            <td ><span ng-bind="modalDatas.description" uib-popover="{{modalDatas.description}}" popover-placement="auto bottom-left" popover-trigger="'mouseenter'" popover-popup-close-delay="0" style="width:200px;display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></span></td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+</div>

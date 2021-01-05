@@ -1,0 +1,30 @@
+		 <li class="param-list-li">
+					<p class="list-item">
+						<label class="list-item-label">参数名称：</label>
+						<input class="list-item-input" type="text" placeholder="参数名称" ng-model="name" name="name">
+					</p>
+					<p class="list-item">
+						<label class="list-item-label">参数类型：</label>
+						<select  class="inline-block list-item-input no-border-radius" style="width: 120px;" name="_valueType" ng-model="_valueType" ng-options="item.value as item.name  for item in valueType" required>
+						  <option value="" ng-if="false"></option>
+						</select>
+					</p>
+
+					<div class="list-item">
+						<p class="list-item-child">
+							<label class="list-item-label">参数范围：</label>
+							<select  class="inline-block list-item-input no-border-radius" style="width: 120px;" name="_valueType" ng-model="_valueType" ng-options="item.value as item.name  for item in valueType" required>
+							  <option value="" ng-if="false"></option>
+							</select>
+							<input class="list-item-input" type="text" placeholder="参数名称" ng-model="name" name="name">
+						</p>
+						<p class="list-item-child">
+							<label class="list-item-label">参数范围：</label>
+							<select  class="inline-block list-item-input no-border-radius" style="width: 120px;" name="_valueType" ng-model="_valueType" ng-options="item.value as item.name  for item in valueType" required>
+							  <option value="" ng-if="false"></option>
+							</select>
+							<input class="list-item-input" type="text" placeholder="参数名称" ng-model="name" name="name">
+						</p>
+						
+					</div>
+				</li>

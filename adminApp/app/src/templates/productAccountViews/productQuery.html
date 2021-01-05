@@ -1,0 +1,56 @@
+<article class="dls-admin bg-2">
+	<header class="h-50 dls-btn-default  lh-50" style="width: 1150px;">
+	    <span class="pull-left inline-block  lh-50 p-lr-20 f-s-16 f-col-2 f-w-b">产品账户信息</span>
+	</header>
+
+	<section class="flex-container">
+		<p class="item-title">账户信息</p>
+		<div class="p-l-10">
+
+			<p class="item-content">
+				<label class="infoLbl">机构名称：</label>
+				<span class="infoContent" ng-bind="datas.orgFullNameCN"></span>
+			</p>
+
+			<p class="item-content">
+				<label class="infoLbl">部门名称：</label>
+				<span class="infoContent" ng-bind="datas.deptName"></span>
+			</p>
+
+			<p class="item-content">
+				<label class="infoLbl">开户时间：</label>
+				<span class="infoContent" ng-bind="datas.createTime"></span>
+			</p>
+
+		</div>
+		<hr class="col-md-6"><br>
+
+
+
+
+		<p class="item-title">产品账户信息</p>
+		<div class="p-l-20" ng-repeat="item in datas.prdtAccountList">
+			<label class="item-title">{{item.prdtType | prdtTypeFilter }}账户</label>
+			<div class="flex flex-r p-l-20">
+				<p class="item-content">
+					<label class="infoLbl">账户号：</label>
+					<span class="infoContent" ng-bind="item.memPrdtId"></span>
+				</p>
+				<p class="item-content">
+					<label class="infoLbl">创建时间：</label>
+					<span class="infoContent" ng-bind="item.createTime"></span>
+				</p>
+				<p class="item-content">
+					<label class="infoLbl">状态：</label>
+					<span class="infoContent" ng-bind="item.status == '01' ? '可用' : '不可用' "></span>
+				</p>
+			</div>
+		</div>
+
+		<a href="" ng-if="addPrdtFlag" class="btn btn-link" ng-click="openModel('md')"><span class="glyphicon glyphicon-plus"></span>新增产品</a>
+
+            <p class="item-content" style="margin-bottom: 30px;"><a href="javascript:history.go(-1);" class="btn btn-primary back">返回</a></p>
+
+	</section>
+
+</article>

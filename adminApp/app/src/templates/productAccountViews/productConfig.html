@@ -1,0 +1,60 @@
+<article class="dls-admin bg-2" ng-controller="productConfigCtrl">
+	<header class="h-50 dls-btn-default  lh-50" style="width: 1150px;">
+	    <span class="pull-left inline-block  lh-50 p-lr-20 f-s-16 f-col-2 f-w-b">产品账户开户</span>
+	</header>
+
+	<section class="flex-container">
+		<p class="item-title">账户信息</p>
+		<div class="p-l-10">
+			
+			<p class="item-content">
+				<label class="infoLbl">机构名称：</label>
+				<span class="infoContent" ng-bind="quotaDatas.orgFullNameCN"></span>
+			</p>
+
+			<p class="item-content">
+				<label class="infoLbl">部门名称：</label>
+				<span class="infoContent" ng-bind="quotaDatas.deptName"></span>
+			</p>
+			
+			<p class="item-content">
+				<label class="infoLbl">开户时间：</label>
+				<span class="infoContent" ng-bind="quotaDatas.orgFullNameCN"></span>
+			</p>
+			<p class="item-content">
+				<label class="infoLbl">开户状态：</label>
+				<span class="infoContent" ng-bind="quotaDatas.orgFullNameCN"></span>
+			</p>
+			<p class="item-content">
+				<label class="infoLbl">业务账户号：</label>
+				<span class="infoContent" ng-bind="quotaDatas.orgFullNameCN"></span>
+			</p>
+		</div>
+		<hr class="col-md-6"><br>
+		
+		<p class="item-title">账户信息选择</p>
+		<div class="p-l-10">
+			<p class="item-content">
+				<label class="infoLbl">业务产品:</label>
+				
+			</p>
+		</div>
+
+
+		<p class="item-title">业务账户信息</p>
+		<div class="p-l-10">
+			<p class="item-content">
+				<label class="infoLbl">营销产品账户</label>
+				账户号：<span class="infoContent" ng-bind="quotaDatas.orgFullNameCN"></span>
+			</p>
+			<p class="item-content">
+				<label class="infoLbl">风控产品账户</label>
+				账户号：<span class="infoContent" ng-bind="quotaDatas.orgFullNameCN"></span>
+			</p>
+
+		</div>
+
+	</section>
+
+
+</article>

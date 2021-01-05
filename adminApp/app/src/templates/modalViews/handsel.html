@@ -1,0 +1,62 @@
+<div class="modal-header">
+    <h3 class="modal-title">赠送调整</h3>
+</div>
+<div class="modal-body">
+  <form  name='form' novalidate>
+    <p class="item-content">
+      <label class="infoLbl">机构名称：</label>
+      <span class="infoContent" ng-bind="modalDatas.orgFullNameCN"></span>
+    </p>
+    <p class="item-content">
+      <label class="infoLbl">部门名称：</label>
+      <span class="infoContent" ng-bind="modalDatas.deptName"></span>
+    </p>
+    <div class="flex">
+      <p class="item-content">
+        <label class="infoLbl">赠送额度：</label>
+        <span class="infoContent" ng-bind="modalDatas.accountData.handSelLmt"></span>元
+      </p>
+      <p class="item-content">
+        <label class="infoLbl">可用赠送额度：</label>
+        <span class="infoContent" ng-bind="modalDatas.accountData.avaHandSelLmtReal"></span>元
+      </p>
+    </div>
+
+
+    <div class="flex">
+      <p class="item-content">
+        <label class="infoLbl">调整金额:</label>
+        <select  class="form-control inline-block no-border-radius" style="width: 120px;" ng-model="modalDatas.changeType" name="changeType" required>
+          <option value="" ng-if="false"></option>
+          <option value="13" >赠送增加</option>
+          <option value="14" >赠送减少</option>
+        </select>
+      </p>
+        <input type="text" class="" ng-model="modalDatas.amt" name="amt" ng-pattern="DlsUtil.positiveNumPattern" required>元
+        <!-- <span class="help-inline" ng-if="form.changeType.$error.required">请选择类型</span> -->
+    </div>
+
+    <div class="item-content" style="margin-left: 74px;">
+        <span class="help-inline" ng-if="form.changeType.$error.required">请选择类型</span>
+        <span class="help-inline" ng-if="(form.amt.$error.pattern && form.amt.$dirty) || (form.amt.$error.required && form.amt.$dirty)">请输入正数,最多两位小数</span>
+    </div>
+
+<!--     <p class="item-content">
+      <label class="infoLbl">提现金额：</label>
+      <input type="text" class="">
+    </p> -->
+    <hr>
+    <p class="item-content" style="margin-bottom: 30px;">
+      <label class="infoLbl">备注：</label>
+      <textarea name="remarks"  cols="30" ng-model="modalDatas.remarks" ng-maxlength="255"></textarea>
+      <span class="help-inline" ng-show="form.remarks.$error.maxlength">最多为255个字符</span>
+    </p>
+    <div class="f-s-12 f-col-red m-t-50 m-l-20">* 说明：金额更新至{{modalDatas.nowTime}}可能会与实际交易金额有差异</div>
+  </form>
+
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-disabled="form.$invalid" ng-click="$ctrl.ok()">确定</button>
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">取消</button>
+</div>

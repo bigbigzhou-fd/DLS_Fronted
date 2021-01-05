@@ -1,0 +1,42 @@
+<div class="container-fluid clear-m-p" ng-controller="applySignUpCtrl">
+    <header class="h-80">
+        <section class="pull-left">
+            <a class="logo-md"></a>
+        </section>
+
+    </header>
+
+    <div class="flex dls-min-height">
+        <div class="flex-1 bg-2 relative ovf-h">
+            <header class="h-50 dls-btn-default  lh-50">
+                <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">成员申请</span>
+            </header>
+
+            <article class="flex-container f-s-12">
+                <p class="item-title">申请机构基本信息</p>
+                <form name="accApplyForm">
+                    <p class="h-30 lh-30 m-t-20"><label class="c-f f-w-l f-s-12 w-170 text-right h-30 ver-top must">机构全称</label><input class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="机构全称（中文）" ng-model="orgFullNameCN" name="orgFullNameCN"required><label class="f-col-red f-s-12 f-w-l p-l-10" ng-show="accApplyForm.orgFullNameCN.$dirty && accApplyForm.orgFullNameCN.$invalid">请正确填写机构全称</label></p>
+                    <p class="h-30 lh-30 m-t-20"><label class="c-f f-w-l f-s-12 w-170 text-right h-30 ver-top must">部门名称</label><input class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="部门名称" ng-model="deptName" name="deptName" required><label class="f-col-red f-s-12 f-w-l p-l-10" ng-show="accApplyForm.deptName.$dirty && accApplyForm.deptName.$invalid">请正确填写部门名称</label></p>
+                    <p class="h-30 lh-30 m-t-20"><label class="c-f f-w-l f-s-12 w-170 text-right h-30 ver-top must">业务联系人姓名</label><input class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="业务联系人姓名" ng-model="contactName" name="contactName" required><label class="f-col-red f-s-12 f-w-l p-l-10" ng-show="accApplyForm.contactName.$dirty && accApplyForm.contactName.$invalid">请正确填写业务联系人姓名</label></p>
+                    <p class="h-30 lh-30 m-t-20"><label class="c-f f-w-l f-s-12 w-170 text-right h-30 ver-top must">联系人电子邮箱</label><input class="m-l-20  h-30 lh-30 w-350 p-l-10" type="email" placeholder="联系人电子邮箱" ng-model="settEmailAddr" name="settEmailAddr" required><label class="f-col-red f-s-12 f-w-l p-l-10" ng-show="accApplyForm.settEmailAddr.$dirty && accApplyForm.settEmailAddr.$invalid">请正确填写邮箱地址</label><label class="f-s-12 f-w-l f-col-3 inline-block m-l-20">请填写企业邮箱,比如: username@chinadep.com</label></p>
+                    <p class="h-30 lh-30 m-t-20"><label class="c-f f-w-l f-s-12 w-170 text-right h-30 ver-top must">联系人电话</label><input class="m-l-20  h-30 lh-30 w-350 p-l-10" type="text" placeholder="联系人电话" ng-model="settContactPhone" name="settContactPhone" required><label class="f-col-red f-s-12 f-w-l p-l-10" ng-show="accApplyForm.settContactPhone.$dirty && accApplyForm.settContactPhone.$invalid">请正确联系人电话</label></p>
+                    <div class="m-l-170 m-t-30">
+                        <button class="btn btn-success" ng-click="applyMember()">申请成员</button>
+                        <button class="btn btn-primary m-l-20" ng-click="reset()">新的申请</button>
+                        <button class="btn btn-default f-col-3 m-l-20" ng-click="goBack()">取消</button>
+                    </div>
+                </form>
+
+            </article>
+            <footer class="dls-alert">
+                <p class="pull-right lh-50 p-r-40 f-s-12 clear-m-p">
+                    <span class="f-s-12 f-col-1">© 2016 上海数据交易中心有限公司</span>
+                    <a class="f-s-12" href="http://www.miibeian.gov.cn/" target="_blank">沪ICP备沪ICP备17003045号-1</a>
+                    <a href="http://www.sgs.gov.cn/shaic/" target="_blank">
+                        <img class='ver-mid' src="http://mcc.chinadep.com/static/chinadep/image/gongshang.png" alt="工商">
+                    </a>
+                </p>
+            </footer>
+        </div>
+    </div>
+</div>

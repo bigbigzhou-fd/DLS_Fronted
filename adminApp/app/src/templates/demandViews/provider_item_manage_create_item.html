@@ -1,0 +1,645 @@
+<div class="bg-2 p-lr-20 create-item p-b-50" ng-controller="providerCreateItemCtrl">
+    <header class="h-50 ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 f-s-16 f-col-2 f-w-b" ng-show="!isView">创建互联对象</span>
+        <span class="pull-left inline-block ver-mid lh-50 w-250 f-s-16 f-col-2 f-w-b" ng-show="isView">查看互联对象</span>
+    </header>
+
+    <div class="flex bg-3 flex-d-c p-lr-20" style="min-height: 768px;">
+        <nav class="c-f m-b-10" ng-show="!isView">
+            <ol class="breadcrumb h-34 lh-34">
+                <li ng-class="{'active':step === 1}"><span>1</span>选择交易品标签</li>
+                <li ng-class="{'active':step === 2}"><span>2</span>添加ID属性</li>
+                <li ng-class="{'active':step === 3}"><span>3</span>添加Key属性</li>
+                <li ng-class="{'active':step === 4}"><span>4</span>添加Value属性</li>
+                <li ng-class="{'active':step === 5}"><span>5</span>添加Limit属性</li>
+                <li ng-if="showType == 'cap'" ng-class="{'active':step === 6}"><span>6</span>添加Time属性</li>
+                <li ng-if="showType == 'crp'" ng-class="{'active':step === 6}"><span>6</span>添加Price属性</li>
+                <li ng-class="{'active':step === 7}"><span>7</span>确认生效交易品</li>
+            </ol>
+        </nav>
+
+        <div ng-show="step == 1 && !showAll" class="flex m-l--20">
+            <aside class="w-250 p-l-20">
+                <p class="p-10">全部交易品分类</p>
+                <div class="border p-10 bg-2" style="height: 100%;">
+                    <section class="bg-3 border" style="height: 100%;">
+                        <treecontrol class="tree-light"
+                                     tree-model="trade_label_type_btn_datas"
+                                     options="treeOptions"
+                                     on-selection="showSelected(node)"
+                                     selected-node="selectedNode">{{node.label}}
+                        </treecontrol>
+                    </section>
+                </div>
+            </aside>
+            <div class="flex-1">
+                <div class="p-t-10 p-r-40 bg-3">
+                    <div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                {{selectlabelText}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li ng-click="setLabelType('00')">全部</li>
+                                <li ng-click="setLabelType('02')">征信类产品</li>
+                                <li ng-click="setLabelType('03')">营销类产品</li>
+                            </ul>
+                        </div>
+                        <section class="search-label">
+                            <input type="text" placeholder="请输入想搜索的关键字" ng-keyup="searchItem($event)"
+                                   ng-model="searchText" style="height:34px;">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </section>
+                        <!--<section class="search-label-select"  ng-show="showItem == 'evaluation'">-->
+                        <!--<div class="btn-group">-->
+                        <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                        <!--{{selectEvaluationText}} <span class="caret"></span>-->
+                        <!--</button>-->
+                        <!--<ul class="dropdown-menu">-->
+                        <!--<li ng-click="setEvaluationType('1')">单值列表</li>-->
+                        <!--<li ng-click="setEvaluationType('2')">多值列表</li>-->
+                        <!--<li ng-click="setEvaluationType('3')">分段</li>-->
+                        <!--<li ng-click="setEvaluationType('4')">命中</li>-->
+                        <!--<li ng-click="setEvaluationType('5')">数据项</li>-->
+                        <!--</ul>-->
+                        <!--</div>-->
+                        <!--</section>-->
+                    </div>
+
+                    <div class="dls-grid m-t-10">
+                        <table class="table table-bordered table-hover table-striped" title="false">
+                            <thead>
+                            <tr class='grid-header-row'>
+                                <th>交易品编号</th>
+                                <th>产品类型</th>
+                                <th>交易品名称</th>
+                                <th>赋值类型</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="data in labelDatas" class="grid-body-row">
+                                <td class="grid-body-row-content">{{data.code}}</td>
+                                <td class="grid-body-row-content">{{data.tagType | tagTypeFilter}}</td>
+                                <td class="grid-body-row-content">{{data.name}}</td>
+                                <td class="grid-body-row-content">{{data.value_type_display}}</td>
+                                <td style="text-align: center">
+                                    <a ng-show="data.tagType === '03'" ng-click="goToStep2($index,'cap')"><span
+                                            class="create-item-btn">+</span>生成互联对象</a>
+                                    <a ng-show="data.tagType === '02'" ng-click="goToStep2($index,'crp')"><span
+                                            class="create-item-btn">+</span>生成互联对象</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <pagination class="m-l-20 m-t-50" options="pageOptions" cur-page="curPage"></pagination>
+
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="showType == 'cap'">
+            <div ng-show="step == 2 || showAll" class="bg-3 p-b-30">
+                <p><label class="f-w-l f-s-12 w-150 text-right">流通对象编号</label><label
+                        class="f-w-l f-s-12 p-l-20 f-col-3">{{fullData.connObjId}}</label></p>
+                <div><label class="f-w-l f-s-12 w-150 text-right must">ID属性</label>
+                    <div class="m-l-20 bg-3 tree-box-wrapper">
+                        <div class="tree-box">
+                            <treecontrol class="tree-light dotted"
+                                         tree-model="idAttr_str"
+                                         options="idAttrOptions"
+                                         selected-node="idAttrSelectedNode">{{node.name}}
+                            </treecontrol>
+                        </div>
+                        <div class="tree-selected p-t-10">
+                            <label class="f-w-l f-s-12 m-l-10 ver-mid">已选择</label>
+                            <ul>
+                                <li class="f-w-l f-s-12 p-l-10 selected-list" ng-repeat="data in selectedIdAttr">
+                                    {{data.name}}<span ng-show="!showAll" ng-click="removeIdAttr($index)"
+                                                       class="glyphicon glyphicon-trash trash-1"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="f-w-l f-s-12 step2-alert" ng-show="selectedIdAttr.length === 0">请选择该项的内容</p>
+                </div>
+
+                <section ng-show="!showAll" class="relative m-t-150">
+                    <hr class="footer-hr">
+                    <a class="inline-block m-l-40 btn btn-primary" ng-click="goToStep3()">下一步</a>
+                    <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+                </section>
+            </div>
+            <div ng-show="step == 3 || showAll" ng-class="{true:'p-b-30'}[!showAll]" class="bg-3">
+                <div>
+                    <p class="m-t-7 h-34 lh-34"><label class="f-w-l f-s-12 w-150 text-right">交易品分类</label><label
+                            class="f-w-l f-s-12 p-l-20">{{fullData.tagDict.tagTypeName}}</label></p>
+                    <p ng-class="{true:'p-t-10'}[showAll]" class="h-34 lh-34"><label
+                            class="f-w-l f-s-12 w-150 text-right">交易品名称</label><label class="f-w-l f-s-12 p-l-20">{{fullData.tagDict.tagName}}</label>
+                    </p>
+
+                    <p ng-show="!showAll" class="h-34 lh-34"><label
+                            class="f-w-l f-s-12 w-150 text-right must">互联对象编号</label><label
+                            class="f-w-l f-s-12 p-l-20 f-col-3">{{fullData.connObjId}}</label></p>
+                    <p class="m-t-10" ng-class="{'m-t-20': showAll}"><label
+                            class="f-w-l f-s-12 w-150 text-right ver-top must">互联对象描述</label><textarea cols="60"
+                                                                                                       rows="10"
+                                                                                                       class="ver-top p-l-10 m-l-20"
+                                                                                                       ng-model="prdtDesc"
+                                                                                                       ng-disabled="showAll"></textarea>
+                    </p>
+                    <p class="f-w-l f-s-12 step2-alert" ng-show="!prdtDesc">请填写该项的内容</p>
+                </div>
+
+                <section ng-show="!showAll" class="relative m-t-150 p-b-30">
+                    <hr class="footer-hr">
+                    <a class="btn border" ng-click="goBack(2)">上一步</a>
+                    <a class="inline-block m-l-40 btn btn-primary" ng-click="goToStep4()">下一步</a>
+                    <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+                </section>
+            </div>
+            <form name="createItemForm_step4" ng-show="step == 4 || showAll" ng-class="{true:'p-b-30'}[!showAll]"
+                  class="bg-3">
+                <div>
+                    <p ng-class="{true:'p-t-10'}[showAll]" class="h-34 lh-34"><label
+                            class="f-w-l f-s-12 w-150 text-right">Value类型</label><label class="f-w-l f-s-12 p-l-20">{{valueType}}</label>
+                    </p>
+                    <p ng-class="{'m-t-20': showAll}"><label
+                            class="f-w-l f-s-12 w-150 text-right ver-top must">Value赋值</label><textarea
+                            class="m-l-20 p-l-10" cols="60" rows="10" ng-disabled="showAll" ng-model="valueStr"
+                            name="valuestr" required></textarea><label class="ver-top p-l-10 f-w-l f-s-12 f-col-red"
+                                                                       ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                    </p>
+                    <p style="padding:10px 0 0 150px;">范例样式：{0,1}</p>
+                    <section ng-show="!showAll" class="relative m-t-150 p-b-30">
+                        <hr class="footer-hr">
+                        <a class="btn border" ng-click="goBack(3)">上一步</a>
+                        <a class="inline-block m-l-40 btn btn-primary" ng-click="goToStep5()" type="submit">下一步</a>
+                        <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+                    </section>
+                </div>
+            </form>
+            <div ng-show="step == 5 || showAll" ng-class="{true:'p-b-30'}[!showAll]" class="bg-3"
+                 style="padding-top:20px">
+                <hr class="cut-off-rule">
+                <p class="relative text-center m-t--10"><span class="bg-3 f-w-b">选择参数</span></p>
+                <div ng-repeat="item in paramter_str">
+                    <section class="m-t-10 m-l-30" ng-show="item.type == '01'">
+                        <p class="h-34 lh-34">
+                            <label class="must f-w-l f-s-12 w-120 text-right ver-top must pull-left">{{item.name}}</label>
+                        <div style="margin:-36px 0 0 130px;">
+                            <section class="m-t-10 m-l-20" ng-repeat="i in item.arr">
+                                <input type="number" style="width:70px;height:28px;line-height:28px;padding-left:5px;"
+                                       ng-model="i.min" ng-disabled="selectDisabled" placeholder="最小值">
+                                <input type="number" style="width:70px;height:28px;line-height:28px;padding-left:5px;"
+                                       ng-model="i.max" ng-disabled="selectDisabled" placeholder="最大值">
+                                <span ng-show='item.arr.length > 1 && !showAll' class="f-col-red p-l-30 cursor-pointer"
+                                      ng-click="removeItem(item, $index)">删除</span>
+                            </section>
+                        </div>
+
+                        </p>
+                        <!--<p style="padding:10px 0 0 100px;color:#40A3D3" ng-show="!showAll"><span class="cursor-pointer" ng-click="addSelection1()"><span class="create-item-btn">+</span>添加更多</span></p>-->
+                        <p style="padding:10px 0 0 150px;color:#40A3D3" class="f-w-l f-s-12">请填写 {{item.section}}
+                            区间内的范围！</p>
+                        <a ng-show="!showAll" class="btn-sm btn-primary m-l-160 m-t-10 inline-block"
+                           ng-click="addItem(item)">添加范围</a>
+                    </section>
+
+                    <section class="m-t-20 m-l-30" ng-show="item.type == '02'">
+                        <p class="h-34 lh-34">
+                            <label class="must f-w-l f-s-12 w-120 text-right ver-top must pull-left m-r-30">{{item.name}}</label>
+                            <label class="f-w-l f-s-12 m-r-10" ng-repeat="range in item.ranges"
+                                   style="display:inline-block">
+                                <input type="checkbox" name="checkbox_{{item.id}}" ng-value="range.name"
+                                       ng-disabled="selectDisabled" ng-model="range.setValue"> {{range.name}}
+                            </label>
+                        </p>
+                    </section>
+
+                    <form class="m-t-20 m-l-30" ng-show="item.type == '03'">
+                        <label class="must must f-w-l f-s-12 w-120 text-right ver-top must pull-left m-r-30">{{item.name}}</label>
+                        <p style="display:inline-block;">
+                            <section style="display:inline-block;width:400px;border:1px solid #CCC;" ng-show="!showAll">
+                                <input name='range' type="file" ng-disabled="selectDisabled">
+                            </section>
+                            <button type="submit" class="btn btn-default m-l-40 m-r-10"
+                                    ng-click="uploadFile(item, $event)" ng-show="!showAll">上传
+                            </button>
+                            <a class="btn btn-default" href="../../api{{item.setValue}}" target="_blank"
+                               ng-if="item.setValue">查看</a>
+                        </p>
+                    </form>
+                </div>
+                <p class="f-w-l f-s-12 f-col-red m-l-170 m-t-20" ng-show="param_flag">请完整填写该项内容！</p>
+                <p class="m-t-30">
+                <hr class="cut-off-rule">
+                <p class="relative text-center m-t--10"><span class="bg-3 f-w-b">数据来源证明</span></p>
+                <section class="m-t-20 m-l-30">
+                    <label class="f-w-l f-s-12 w-120 text-right ver-top must pull-left">数据来源资质证明</label>
+                    <div class="m-l-20 bg-3 tree-box-wrapper">
+                        <div class="tree-box">
+                            <treecontrol class="tree-light dotted"
+                                         tree-model="dataOrigin_str"
+                                         options="dataOriginOptions"
+                                         selected-node="selectedDataOriginNode">{{node.name}}
+                            </treecontrol>
+                        </div>
+                        <div class="tree-selected p-t-10">
+                            <label class="f-w-l f-s-12 m-l-10 ver-mid">已选择</label>
+                            <ul>
+                                <li class="f-w-l f-s-12 p-l-10 selected-list" ng-repeat="data in selectedDataOrigin">
+                                    {{data.name}}<span ng-show="!showAll" ng-click="removeDataOrigin($index)"
+                                                       class="glyphicon glyphicon-trash trash-1"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <label ng-show="selectedDataOrigin.length === 0" class="m-l-170 f-s-12 f-w-l f-col-red">该项为必填项</label>
+                </p>
+
+                <p class="m-t-30">
+                <hr class="cut-off-rule">
+                <p class="relative text-center m-t--10"><span class="bg-3 f-w-b">质量评估</span></p>
+                <p class="h-34 lh-34 p-l-50">
+                    <span class="must p-r-30 f-w-l f-s-12">是否加入质量评估</span>
+                    <input type="radio" name="capEvaluation" value="01" ng-disabled="selectDisabled" checked> 加入
+                    <input type="radio" name="capEvaluation" value="02" ng-disabled="selectDisabled"> 不加入
+                </p>
+                </p>
+
+                <p class="m-t-15">
+                <hr class="cut-off-rule">
+                <p class="relative text-center m-t--10"><span class="bg-3 f-w-b">应用场景</span></p>
+                <section class="m-t-20">
+                    <label class="f-w-l f-s-12 w-150 text-right ver-top pull-left must">应用场景限定</label>
+                    <div class="m-l-20 bg-3 tree-box-wrapper">
+                        <div class="tree-box">
+                            <treecontrol class="tree-light dotted"
+                                         tree-model="dataScene_str"
+                                         options="applySceneOptions"
+                                         selected-node="applySceneNode">{{node.name}}
+                            </treecontrol>
+                        </div>
+                        <div class="tree-selected p-t-10">
+                            <label class="f-w-l f-s-12 m-l-10 ver-mid">已选择</label>
+                            <ul>
+                                <li class="f-w-l f-s-12 p-l-10 selected-list" ng-repeat="data in selectedApplyScene">
+                                    {{data.name}}<span ng-show="!showAll" ng-click="removeApplyScene($index)"
+                                                       class="glyphicon glyphicon-trash trash-1"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                </p>
+                <label class="m-l-170 f-s-12 f-w-l f-col-red h-30 lh-30"><span
+                        ng-show="selectedApplyScene.length === 0">该项为必填项</span></label>
+
+                <hr class="cut-off-rule">
+                <p class="relative text-center m-t--10"><span class="bg-3 f-w-b">覆盖约束</span></p>
+                <div id="providerCoverageConstraints">
+                    <p class="m-t-15"><label class="c-f f-w-l f-s-12 w-150 text-right h-30">覆盖总数</label><input
+                            ng-model="coverAreaSum" class="m-l-20 h-30 lh-30 w-150 p-l-10" type="text"
+                            placeholder="覆盖总数" ng-disabled="showAll"><label class="f-w-l f-s-12 f-col-red"
+                                                                            ng-show="!coverAreaSumIsRight">请正确填写该项！</label>
+                    </p>
+                    <section class="m-t-20 m-l-30">
+                        <label class="f-w-l f-s-12 w-120 text-right ver-top pull-left">覆盖地域(默认全国)</label>
+                        <div class="m-l-20 bg-3 tree-box-wrapper">
+                            <div class="tree-box">
+                                <treecontrol class="tree-light dotted"
+                                             tree-model="map"
+                                             options="create_options"
+                                             selected-node="selectedDataOriginNode">{{node.name}}
+                                </treecontrol>
+                            </div>
+                            <div class="tree-selected p-t-10">
+                                <label class="f-w-l f-s-12 m-l-10 ver-mid">已选择</label>
+                                <ul>
+                                    <li class="f-w-l f-s-12 p-l-10 selected-list" ng-repeat="data in selectedArea">
+                                        {{data.name}}<span ng-show="!showAll" ng-click="removeSelectedArea($index)"
+                                                           class="glyphicon glyphicon-trash trash-1"></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <section ng-show="!showAll" class="relative m-t-150 p-b-30">
+                    <hr class="footer-hr">
+                    <a class="btn border" ng-click="goBack(4)">上一步</a>
+                    <a class="inline-block m-l-40 btn btn-primary" ng-click="goToStep6()" type="submit">下一步</a>
+                    <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+                </section>
+            </div>
+            <form name="createItemForm_step6" ng-show="step == 6 || showAll"
+                  ng-class="{true:'p-b-30',false:'m-t-10'}[!showAll]" class="bg-3">
+                <div>
+                    <p class="h-30 lh-30"><label
+                            class="f-w-l f-s-12 w-150 text-right h-30 pull-left must">更新频率</label><input
+                            class="m-l-20 pull-left h-30 lh-30 w-150 p-l-10" type="text" placeholder="更新频率"
+                            ng-model="freqLoop" name="freqloop" ng-disabled="showAll" required ng-pattern="/^[0-9]*$/">
+                        <dls-select select-disabled="selectDisabled" class="pull-left m-l-5" datas="timeLabel"
+                                    selected-label="freqLoopUnit" value="freqLoopUnitVal"></dls-select>
+                        <label class="f-col-red f-s-12 f-w-l p-l-10" ng-show="createItemForm.freqloop.$invalid">该项为必填项,且为数字</label>
+                    </p>
+                    <p class="h-30 lh-30"><label
+                            class="c-f f-w-l f-s-12 w-150 text-right h-30 pull-left must">数据留存有效期</label><input
+                            class="m-l-20 pull-left h-30 lh-30 w-150 p-l-10" type="text" placeholder="数据留存有效期"
+                            ng-model="dataStay" name="datastay" ng-disabled="showAll" required ng-pattern="/^[0-9]*$/">
+                        <dls-select select-disabled="selectDisabled" class="pull-left m-l-5" datas="timeLabel"
+                                    selected-label="dataStayUnit" value="dataStayUnitVal"></dls-select>
+                        <label class="f-col-red f-s-12 f-w-l p-l-10" style="margin-top:13px"
+                               ng-show="createItemForm.datastay.$invalid">该项为必填项,且为数字</label></p>
+                    <section ng-show="!showAll" class="relative m-t-150 p-b-30">
+                        <hr class="footer-hr">
+                        <a class="btn border" ng-click="goBack(5)">上一步</a>
+                        <a class="inline-block m-l-40 btn btn-primary" ng-click="goToStep7()" type="submit">下一步</a>
+                        <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+                    </section>
+                </div>
+            </form>
+            <div ng-show="step == 7" class="m-t-50 m-b-50">
+                <hr class="footer-hr">
+                <a class="btn border" ng-click="goBack(6)">上一步</a>
+                <a class="inline-block m-l-40 btn btn-primary" ng-click="submitData()" type="submit">提交</a>
+                <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+            </div>
+        </div>
+
+        <div ng-show="showType == 'crp'">
+            <div ng-show="step == 2 || showAll" class="bg-3 p-b-30">
+                <p>
+                    <label class="f-w-l f-s-12 w-150 text-right must">必选ID</label>
+                    <section style="margin:-28px 0 0 150px">
+                <p class="f-w-l f-s-12 p-l-20 h-30 lh-30" ng-repeat="item in idCdList">
+                    <span class="inline-block text-left">{{item.name}}：</span>{{item.id}}
+                </p>
+                </section>
+                </p>
+                <div class="m-t-20" ng-show="isIDSel === 1"><label
+                        class="f-w-l f-s-12 w-150 text-right must">可选ID属性</label>
+                    <div class="m-l-20 bg-3 tree-box-wrapper">
+                        <div class="tree-box">
+                            <treecontrol class="tree-light dotted"
+                                         tree-model="IdAttr_str"
+                                         options="idAttrOptions"
+                                         selected-node="idAttrSelectedNode">{{node.name}}
+                            </treecontrol>
+                        </div>
+                        <div class="tree-selected p-t-10">
+                            <label class="f-w-l f-s-12 m-l-10 ver-mid">已选择</label>
+                            <ul>
+                                <li class="f-w-l f-s-12 p-l-10 selected-list" ng-repeat="data in selectedIdAttr">
+                                    {{data.name}}<span ng-show="!showAll" ng-click="removeIdAttr($index)"
+                                                       class="glyphicon glyphicon-trash trash-1"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-t-20">
+                    <label class="f-w-l f-s-12 w-150 text-right must m-r-20">支持查询ID类型</label>
+                    <input type="checkbox" name="idMode" ng-model="selectedEXID" ng-disabled="showAll"> EXID
+                    <input type="checkbox" name="idMode" ng-model="selectedXID" ng-disabled="showAll"> XID
+                    <p class="m-l-170 m-t-10 f-col-red" ng-if="!selectedEXID && !selectedXID">请选择该项！</p>
+                </div>
+                <section ng-show="!showAll" class="relative m-t-150">
+                    <hr class="footer-hr">
+                    <a class="inline-block m-l-40 btn btn-primary" ng-click="goToStep3()">下一步</a>
+                    <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+                </section>
+            </div>
+            <div ng-show="step == 3 || showAll" ng-class="{true:'p-b-30'}[!showAll]" class="bg-3">
+                <div>
+                    <p class="m-t-7 h-34 lh-34"><label class="f-w-l f-s-12 w-150 text-right">交易品分类</label><label
+                            class="f-w-l f-s-12 p-l-20">{{fullData.tagDict.tagTypeName}}</label></p>
+                    <p ng-class="{true:'p-t-10'}[showAll]" class="h-34 lh-34"><label
+                            class="f-w-l f-s-12 w-150 text-right">交易品名称</label><label class="f-w-l f-s-12 p-l-20">{{fullData.tagDict.tagName}}</label>
+                    </p>
+
+                    <p ng-show="!showAll" class="h-34 lh-34"><label
+                            class="f-w-l f-s-12 w-150 text-right must">互联对象编号</label><label
+                            class="f-w-l f-s-12 p-l-20 f-col-3">{{fullData.connObjId}}</label></p>
+                    <p class="m-t-10" ng-class="{'m-t-20': showAll}"><label
+                            class="f-w-l f-s-12 w-150 text-right ver-top must">互联对象描述</label><textarea cols="60"
+                                                                                                       rows="10"
+                                                                                                       class="ver-top p-l-10 m-l-20"
+                                                                                                       ng-model="prdtDesc"
+                                                                                                       ng-disabled="showAll"></textarea>
+                    </p>
+                    <label ng-show="!prdtDesc" class="m-l-170 f-s-12 f-w-l f-col-red">该项为必填项</label>
+                </div>
+
+                <section ng-show="!showAll" class="relative m-t-150 p-b-30">
+                    <hr class="footer-hr">
+                    <a class="btn border" ng-click="goBack(2)">上一步</a>
+                    <a class="inline-block m-l-40 btn btn-primary" ng-click="goToStep4()">下一步</a>
+                    <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+                </section>
+            </div>
+            <div ng-show="step == 4 || showAll" ng-class="{true:'p-b-30'}[!showAll]" class="bg-3">
+                <div>
+                    <p ng-class="{true:'p-t-10'}[showAll]" class="h-34 lh-34"><label
+                            class="f-w-l f-s-12 w-150 text-right">Value类型</label><label class="f-w-l f-s-12 p-l-20">{{fullData.tagDict.valueType
+                        | valueType}}</label></p>
+                    <p class = "m-t-20"><label
+                            class="f-w-l f-s-12 w-150 text-right ver-top must">Value赋值</label><textarea
+                            class="m-l-20 p-l-10" cols="60" rows="3" ng-disabled="showAll" ng-model="valueStr"
+                            name="valuestr" required></textarea><label class="ver-top p-l-10 f-w-l f-s-12 f-col-red"
+                                                                       ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                    </p>
+                    <p style="padding:5px 0 5px 168px;">范例样式：{1 - 一致 ， 2 - 不一致 ， 3 - 未知}</p>
+                    <p class="f-w-l f-s-12 f-col-red h-30 lh-30 m-l-170" ng-if="!valueStr">该项为必填项！</p>
+                    <p class = "m-t-20"><label
+                            class="f-w-l f-s-12 w-150 text-right ver-top must">报文样例</label><textarea
+                            class="m-l-20 p-l-10" cols="60" rows="3" ng-disabled="showAll" ng-model="msgSample"
+                            name="msgSample" required></textarea><label class="ver-top p-l-10 f-w-l f-s-12 f-col-red"
+                                                                        ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                    </p>
+                    <p class="f-w-l f-s-12 f-col-red h-30 lh-30 m-l-170" ng-if="!msgSample">该项为必填项！</p>
+                    <p class = "m-t-20"><label
+                            class="f-w-l f-s-12 w-150 text-right ver-top must">返回错误代码列表</label><textarea
+                            class="m-l-20 p-l-10" cols="60" rows="3" ng-disabled="showAll" ng-model="errCodeList"
+                            name="errCodeList" required></textarea><label class="ver-top p-l-10 f-w-l f-s-12 f-col-red"
+                                                                          ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                    </p>
+                    <p class="f-w-l f-s-12 f-col-red h-30 lh-30 m-l-170" ng-if="!errCodeList">该项为必填项！</p>
+                    <form name="uploadAPI" class="m-t-20" style="margin-left:73px;">
+                        <label class="must p-r-20 inline-block f-w-l f-s-12 must">API文档附件</label>
+                        <p style="display:inline-block;">
+                            <section style="display:inline-block;width:400px;border:1px solid #CCC;" ng-show="!showAll">
+                                <input name="apiDoc" type="file" ng-disabled="selectDisabled">
+                            </section>
+                            <button class="btn btn-default m-l-40 m-r-10" ng-click="uploadAPIFile()" ng-show="!showAll">
+                                上传
+                            </button>
+                            <a class="btn btn-default" target="_blank" href="../../api{{apiFileHref}}"
+                               ng-if="apiFileHref">查看</a>
+                        </p>
+                    </form>
+                    <p class="f-w-l f-s-12 f-col-red h-30 lh-30 m-l-170"><span ng-if="!haveApiFile">该项为必填项,</span><span>仅支持word和pdf类型文档！</span>
+                    </p>
+                    <section ng-show="!showAll" class="relative m-t-150 p-b-30">
+                        <hr class="footer-hr">
+                        <a class="btn border" ng-click="goBack(3)">上一步</a>
+                        <a class="inline-block m-l-40 btn btn-primary" ng-click="goToStep5()" type="submit">下一步</a>
+                        <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+                    </section>
+                </div>
+            </div>
+            <form name="crp_step5" ng-show="step == 5 || showAll" ng-class="{true:'p-b-30'}[!showAll]" class="bg-3"
+                  style="padding-top:20px">
+                <section class="m-t-10" style="margin-left:66px">
+                    <p class="h-34 lh-34">
+                        <label class="must inline-block f-w-l f-s-12 w-100 text-right"
+                               style="padding-right:17px">最长延时值</label>
+                        <input type="text" style="height:28px;line-height:28px;" ng-disabled="selectDisabled"
+                               ng-model="maxDelayTime" name="maxDT" required ng-pattern="/^[1-9]\d*$/">
+                        <select name="maxDelayTime" ng-options="item.value as item.label for item in selection_1"
+                                ng-model="selection_1_val" ng-disabled="selectDisabled">
+                            <option value="">--请选择--</option>
+                        </select>
+                        <label class="f-col-red f-w-l f-s-12">说明：当延时值超过此数值时，返回超时报错，不计费</label>
+                    </p>
+                    <p class="f-w-l f-s-12 f-col-red h-30 lh-30 m-l-120" ng-if="crp_step5.maxDT.$invalid">
+                        该项为必填项，且为正整数！</p>
+                </section>
+
+                <section class="m-t-10" style="margin-left:66px">
+                    <p class="h-34 lh-34">
+                        <label class="must inline-block f-w-l f-s-12 w-100 text-right"
+                               style="padding-right:17px">并发量</label>
+                        <input type="text" style="height:28px;line-height:28px;" ng-disabled="selectDisabled"
+                               ng-model="concurrency" name="cc" required ng-pattern="/^[1-9]\d*$/">
+                        <select name="concurrency" ng-options="item.value as item.label for item in selection_2"
+                                ng-model="selection_2_val" ng-disabled="selectDisabled">
+                            <option value="">--请选择--</option>
+                        </select>
+                    </p>
+                    <p class="f-w-l f-s-12 f-col-red h-30 lh-30 m-l-120" ng-if="!concurrency">该项为必填项，且为正整数！</p>
+                </section>
+
+                <p class="m-t-15">
+                    <section class="m-t-20">
+                        <label class="f-w-l f-s-12 w-150 text-right ver-top pull-left must">应用行业</label>
+                        <div class="m-l-20 bg-3 tree-box-wrapper">
+                            <div class="tree-box">
+                                <treecontrol class="tree-light dotted"
+                                             tree-model="applicationIndustry"
+                                             options="applicationIndustrySelOptions"
+                                             selected-node="step5_3SelectedNode">{{node.name}}
+                                </treecontrol>
+                            </div>
+                            <div class="tree-selected p-t-10">
+                                <label class="f-w-l f-s-12 m-l-10 ver-mid">已选择</label>
+                                <ul>
+                                    <li class="f-w-l f-s-12 p-l-10 selected-list"
+                                        ng-repeat="data in applicationIndustrySelSelected">{{data.name}}<span
+                                            ng-show="!showAll" ng-click="removeapplicationIndustry($index)"
+                                            class="glyphicon glyphicon-trash trash-1"></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </p>
+
+                <label ng-show="applicationIndustrySelSelected.length === 0" class="m-l-170 f-s-12 f-w-l f-col-red">该项为必填项</label>
+
+                <p class="m-t-30">
+                <hr class="cut-off-rule">
+                <p class="relative text-center m-t--10"><span class="bg-3 f-w-b">质量评估</span></p>
+                <p class="h-34 lh-34 p-l-50">
+                    <span class="must p-r-30 f-w-l f-s-12">是否加入质量评估</span>
+                    <input type="radio" name="crpEvaluation" value="01" ng-disabled="selectDisabled"
+                           ng-model="qltEvlStatus"> 加入
+                    <input type="radio" name="crpEvaluation" value="02" ng-disabled="selectDisabled"
+                           ng-model="qltEvlStatus"> 不加入
+                </p>
+                </p>
+
+                <p class="m-t-15">
+                <hr class="cut-off-rule">
+                <p class="relative text-center m-t--10"><span class="bg-3 f-w-b">应用场景</span></p>
+                <section class="m-t-20">
+                    <label class="f-w-l f-s-12 w-150 text-right ver-top pull-left must">应用场景限定</label>
+                    <div class="m-l-20 bg-3 tree-box-wrapper">
+                        <div class="tree-box">
+                            <treecontrol class="tree-light dotted"
+                                         tree-model="dataScene_str"
+                                         options="applySceneOptions"
+                                         selected-node="applySceneNode">{{node.name}}
+                            </treecontrol>
+                        </div>
+                        <div class="tree-selected p-t-10">
+                            <label class="f-w-l f-s-12 m-l-10 ver-mid">已选择</label>
+                            <ul>
+                                <li class="f-w-l f-s-12 p-l-10 selected-list" ng-repeat="data in selectedApplyScene">
+                                    {{data.name}}<span ng-show="!showAll" ng-click="removeApplyScene($index)"
+                                                       class="glyphicon glyphicon-trash trash-1"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                </p>
+                </p>
+                <label ng-show="selectedApplyScene.length === 0" class="m-l-170 f-s-12 f-w-l f-col-red">该项为必填项</label>
+
+                <section ng-show="!showAll" class="relative m-t-150 p-b-30">
+                    <hr class="footer-hr">
+                    <a class="btn border" ng-click="goBack(4)">上一步</a>
+                    <a class="inline-block m-l-40 btn btn-primary" ng-click="goToStep6()" type="submit">下一步</a>
+                    <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+                </section>
+            </form>
+            <div ng-show="step == 6 || showAll" ng-class="{true:'p-b-30',false:'m-t-10'}[!showAll]" class="bg-3">
+                <label class="f-w-l f-s-12 w-150 text-right h-30 must">收费报文代码</label>
+                <section style="margin:-45px 0 0 160px">
+                    <div ng-repeat="item in feeCode">
+                        <input class="h-30 lh-30 w-150 p-l-10 m-l-20 m-t-7" type="text" ng-model="item.value"
+                               ng-disabled="showAll" required><span
+                            class="f-col-red cursor-pointer glyphicon glyphicon-minus" ng-show="!showAll"
+                            ng-click="deleteFeeItem($index)"></span>
+                    </div>
+                </section>
+                <p class="f-w-l f-s-12 f-col-red h-30 lh-30 m-l-170" ng-if="feeCodeIsEmpty">该项为必填项！</p>
+                <p style="padding:5px 0 5px 180px;color:#40A3D3" ng-show="!showAll"><span class="cursor-pointer"
+                                                                                          ng-click="addFeeCode()"><span
+                        class="create-item-btn">+</span>添加更多</span></p>
+
+                <label class="f-w-l f-s-12 w-150 text-right h-30 must" ng-class="{'m-t-10':showAll}">不收费报文代码</label>
+                <section style="margin:-45px 0 0 160px">
+                    <div ng-repeat="item in nonFeeCode">
+                        <input class="h-30 lh-30 w-150 p-l-10 m-l-20 m-t-7" type="text" ng-model="item.value"
+                               ng-disabled="showAll" required><span
+                            class="f-col-red cursor-pointer glyphicon glyphicon-minus" ng-show="!showAll"
+                            ng-click="deleteNonFeeItem($index)"></span>
+                    </div>
+                </section>
+                <p class="f-w-l f-s-12 f-col-red h-30 lh-30 m-l-170" ng-if="nonFeeCodeIsEmpty">该项为必填项！</p>
+                <p style="padding:5px 0 5px 180px;color:#40A3D3" ng-show="!showAll"><span class="cursor-pointer"
+                                                                                          ng-click="addNonFeeCode()"><span
+                        class="create-item-btn">+</span>添加更多</span></p>
+
+                <section ng-show="!showAll" class="relative m-t-150 p-b-30">
+                    <hr class="footer-hr">
+                    <a class="btn border" ng-click="goBack(5)">上一步</a>
+                    <a class="inline-block m-l-40 btn btn-primary" ng-click="goToStep7()" type="submit">下一步</a>
+                    <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+                </section>
+            </div>
+            <div ng-show="step == 7" class="m-t-50 m-b-50">
+                <hr class="footer-hr">
+                <a class="btn border" ng-click="goBack(6)">上一步</a>
+                <a class="inline-block m-l-40 btn btn-primary" ng-click="submitData()" type="submit">提交</a>
+                <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+            </div>
+        </div>
+
+        <div ng-show="isView" class="m-t-20 m-b-10 m-l-170">
+            <a class="btn btn-primary" ng-click="back()">返回</a>
+        </div>
+    </div>
+</div>
+

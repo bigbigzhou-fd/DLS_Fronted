@@ -1,0 +1,355 @@
+<div class="bg-2 p-b-80 p-lr-20" ng-controller="demPublishCtrl">
+    <header class="flex-between">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 f-s-16 f-col-2 f-w-b">需求发布</span>
+    </header>
+
+    <div class="f-s-12">
+        <p>
+            <label>基本信息：</label>
+        </p>
+        <p class="h-34 lh-34">
+            <span class="ver-top w-100 inline-block text-right"><span class="must ver-top">应用场景</span>：</span>
+            <input type="checkbox" name="scene" class="ver-sub" ng-disabled="type === 'view'" ng-model="scene.s01"
+                   ng-true-value="'03'" ng-false-value=""> 智慧城市
+            <input type="checkbox" name="scene" class="ver-sub m-l-20" ng-disabled="type === 'view'"
+                   ng-model="scene.s02" ng-true-value="'02'" ng-false-value=""> 营销
+            <input type="checkbox" name="scene" class="ver-sub m-l-20" ng-disabled="type === 'view'"
+                   ng-model="scene.s03" ng-true-value="'04'" ng-false-value=""> 征信
+            <input type="checkbox" name="scene" class="ver-sub m-l-20" ng-disabled="type === 'view'"
+                   ng-model="scene.s04" ng-true-value="'99'" ng-false-value=""> 其他
+        </p>
+        <p class="m-t-10">
+            <span class="ver-top w-100 inline-block text-right"><span class="must ver-top">需求描述</span>：</span>
+            <textarea cols="80" rows="6" placeholder="请输入500字以内的描述" class="p-l-3" ng-disabled="type === 'view'"
+                  ng-model="demDesc"></textarea>
+        <p class="f-s-12 m-l-100"> {{demDescNum}} / 500 </p>
+        </p>
+        <p class="m-t-10">
+            <span class="ver-top w-100 inline-block text-right"><span class="must ver-top">关键字</span>：</span>
+            <textarea cols="80" rows="2" placeholder="请输入150字以内的描述，并用空格隔开" class="p-l-3" ng-disabled="type === 'view'"
+                  ng-model="keyword"></textarea>
+        <p class="f-s-12 m-l-100"> {{keywordNum}} / 150</p>
+        </p>
+        <p class="m-t-10">
+            <span class=" w-100 inline-block text-right">联系人姓名：</span>
+            <input type="text" class="h-30 lh-30 w-225 p-l-3" placeholder="请输入联系人姓名" ng-disabled="type === 'view'"
+                   ng-model="contactName" required>
+        </p>
+        <p class="m-t-10">
+            <span class=" w-100 inline-block text-right">联系方式：</span>
+            <input type="text" class="h-30 lh-30 w-225 p-l-3" placeholder="请输入联系方式，如邮箱、电话等"
+                   ng-disabled="type === 'view'" ng-model="contact">
+        </p>
+    </div>
+
+    <div class="f-s-12 m-t-30">
+        <p>
+            <label>补充信息：(展开即可填写更多需求信息)</label>
+        </p>
+
+        <div style="width: 100%; padding: 2rem 10% 2rem 2rem;">
+            <div class="dls-new-panel" dls-panel initial="{{type === 'new' ? 'retract' : ''}}">
+                <div class="dls-new-panel-header">
+                    <section>
+                        <span class="glyphicon glyphicon-chevron-right m-l-5" data-toggle="retract"></span>
+                        <span class="glyphicon glyphicon-chevron-down m-l-5" data-toggle="launch"></span>
+                        <span class="m-l-5">查询标识（ID）</span>
+                    </section>
+                    <section ng-hide="type === 'view'">
+                        <button class="btn btn-default panel-btn m-r-20 non-edit-btn" ng-click="remove(1)">取消</button>
+                        <button class="btn btn-primary panel-btn m-r-20 non-edit-btn" ng-click="submit(1)">保存</button>
+                        <button class="btn btn-primary panel-btn m-r-20 edit-btn">编辑</button>
+                    </section>
+                </div>
+                <div class="dls-new-panel-body">
+                    <span class="f-w-l f-s-12 w-120 inline-block text-right">ID属性:</span>
+                    <div class="m-l-20 bg-3 tree-box-wrapper">
+                        <div class="tree-box">
+                            <treecontrol
+                                    class="tree-light dotted"
+                                    tree-model="idAttr_str"
+                                    options="idAttrOptions"
+                                    selected-node="idAttrSelectedNode">{{node.name}}
+                            </treecontrol>
+                        </div>
+                        <div class="tree-selected p-t-10">
+                            <label class="f-w-l f-s-12 m-l-10 ver-mid">已选择</label>
+                            <ul style="height:180px;overflow-y:auto;">
+                                <li class="f-w-l f-s-12 p-l-10 selected-list" ng-repeat="data in selectedIdAttr">
+                                    {{data.name}}
+                                <span
+                                        ng-show="!showAll"
+                                        ng-click="removeIdAttr($index)"
+                                        class="glyphicon glyphicon-trash trash-1">
+                                </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 100%; padding: 2rem 10% 2rem 2rem;">
+            <form name="timeForm" novalidate>
+                <div class="dls-new-panel" dls-panel initial="{{type === 'new' ? 'retract' : ''}}">
+                    <div class="dls-new-panel-header">
+                        <section>
+                            <span class="glyphicon glyphicon-chevron-right m-l-5" data-toggle="retract"></span>
+                            <span class="glyphicon glyphicon-chevron-down m-l-5" data-toggle="launch"></span>
+                            <span class="m-l-5">时间轴元素（TIME）</span>
+                        </section>
+                        <section ng-hide="type === 'view'">
+                            <button class="btn btn-default panel-btn m-r-20 non-edit-btn" ng-click="remove(2)">取消</button>
+                            <button class="btn btn-primary panel-btn m-r-20 non-edit-btn"
+                                    ng-click="submit(2)"
+                                    ng-disabled="timeForm.frequency.$invalid || timeForm.period.$invalid">保存</button>
+                            <button class="btn btn-primary panel-btn m-r-20 edit-btn">编辑</button>
+                        </section>
+                    </div>
+                    <div class="dls-new-panel-body">
+                        <p class="h-30 lh-30">
+                            <span class='w-120 text-right inline-block'>更新频率：</span>
+                            <input type="text" name="frequency" ng-model="frequency" ng-pattern="/^(\d)*(\.\d+)?$/" ng-disabled="type === 'view'">
+                            <select class="h-34 lh-34"
+                                    ng-options="item.value as item.name for item in timeArr"
+                                    ng-model="freUnit"
+                                    ng-disabled="type === 'view'">
+                            </select>
+                            <p ng-show="timeForm.frequency.$error.pattern" class="f-s-12 f-col-red m-l-120 m-t-10">请正确填写更新频率</p>
+                        </p>
+                        <p class="h-30 lh-30 m-t-10">
+                            <span class='w-120 text-right inline-block'>统计周期：</span>
+                            <input type="text" name="period" ng-model="period" ng-pattern="/^(\d)*(\.\d+)?$/" ng-disabled="type === 'view'">
+                            <select class="h-34 lh-34"
+                                    ng-options="item.value as item.name for item in timeArr1"
+                                    ng-model="perUnit"
+                                    ng-disabled="type === 'view'"
+                            ></select>
+                            <p ng-show="timeForm.period.$error.pattern" class="f-s-12 f-col-red m-l-120 m-t-10">请正确填写统计周期</p>
+                        </p>
+                        <div class="flex m-t-10 f-s-12">
+                            <div>
+                                <span class='w-120 text-right inline-block'>统计时间范围：</span>
+                                <date-picker
+                                        class="inline-block w-150 m-r-10 datePicker ver-mid"
+                                        dt="startDt"
+                                        mindt="1970, 5, 22"
+                                        ng-class="{'click-disabled': type === 'view'}"
+                                ></date-picker>
+                                <span> ~ </span>
+                                <date-picker
+                                        class="inline-block w-150 m-l-10 datePicker ver-mid"
+                                        dt="endDt"
+                                        mindt="1970, 5, 22"
+                                        ng-class="{'click-disabled': type === 'view'}">
+                                </date-picker>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div style="width: 100%; padding: 2rem 10% 2rem 2rem;">
+            <form name="priceForm">
+                <div class="dls-new-panel" dls-panel initial="{{type === 'new' ? 'retract' : ''}}">
+                    <div class="dls-new-panel-header">
+                        <section>
+                            <span class="glyphicon glyphicon-chevron-right m-l-5" data-toggle="retract"></span>
+                            <span class="glyphicon glyphicon-chevron-down m-l-5" data-toggle="launch"></span>
+                            <span class="m-l-5">价格元素（PRICE）</span>
+                        </section>
+                        <section ng-hide="type === 'view'">
+                            <button class="btn btn-default panel-btn m-r-20 non-edit-btn" ng-click="remove(3)">取消</button>
+                            <button class="btn btn-primary panel-btn m-r-20 non-edit-btn" ng-click="submit(3)"
+                                    ng-disabled="priceForm.price1.$invalid || priceForm.price2.$invalid">保存</button>
+                            <button class="btn btn-primary panel-btn m-r-20 edit-btn">编辑</button>
+                        </section>
+                    </div>
+                    <div class="dls-new-panel-body">
+                        <p class="h-30 lh-30">
+                            <span class='w-120 text-right inline-block'>单位：</span>
+                            <select class="h-34 lh-34" ng-options="item.value as item.name for item in priceTimesArr"
+                                    ng-model="unit1" ng-disabled="type === 'view'"></select>
+                            <select class="h-34 lh-34" ng-options="item.value as item.name for item in priceModeArr"
+                                    ng-model="unit2" ng-disabled="type === 'view'"></select>
+                        </p>
+                        <p class="h-30 lh-30 m-t-10">
+                            <span class='w-120 text-right inline-block'>期望价格：</span>
+                            <input type="text" name="price1" ng-model="price[0]" ng-pattern="/^(\d)*(\.\d+)?$/" ng-disabled="type === 'view'">
+                            <span> ~ </span>
+                            <input type="text" name="price2" ng-model="price[1]" ng-pattern="/^(\d)*(\.\d+)?$/" ng-disabled="type === 'view'">
+                            <span> 元 </span>
+                        </p>
+                        <p ng-show="priceForm.price1.$error.pattern || priceForm.price2.$error.pattern" class="f-s-12 f-col-red m-l-120 m-t-10">请正确填写期望价格</p>
+                        <p class="m-t-10">
+                            <span class='w-120 ver-top text-right inline-block'>备注：</span>
+                            <textarea class="p-l-3" cols="80" rows="3" placeholder="请输入价格备注信息" ng-disabled="type === 'view'"
+                                  ng-model="priceNotes"></textarea>
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div style="width: 100%; padding: 2rem 10% 2rem 2rem;">
+            <div class="dls-new-panel" dls-panel initial="{{type === 'new' ? 'retract' : ''}}">
+                <div class="dls-new-panel-header">
+                    <section>
+                        <span class="glyphicon glyphicon-chevron-right m-l-5" data-toggle="retract"></span>
+                        <span class="glyphicon glyphicon-chevron-down m-l-5" data-toggle="launch"></span>
+                        <span class="m-l-5">赋值要求（VALUE）</span>
+                    </section>
+                    <section ng-hide="type === 'view'">
+                        <button class="btn btn-default panel-btn m-r-20 non-edit-btn" ng-click="remove(4)">取消</button>
+                        <button class="btn btn-primary panel-btn m-r-20 non-edit-btn" ng-click="submit(4)">保存</button>
+                        <button class="btn btn-primary panel-btn m-r-20 edit-btn">编辑</button>
+                    </section>
+                </div>
+                <div class="dls-new-panel-body">
+                    <p class="h-30 lh-30">
+                        <span class='w-120 text-right inline-block'>赋值类型：</span>
+                        <select class="h-34 lh-34" ng-options="item.value as item.name for item in valueTypeArr"
+                                ng-model="valueType" ng-disabled="type === 'view'"></select>
+                    </p>
+                    <p class="m-t-10">
+                        <span class='w-120 ver-top text-right inline-block'>备注：</span>
+                        <textarea class="p-l-3" cols="80" rows="3" placeholder="0-低档; 1-中档; 2-高档"
+                                  ng-disabled="type === 'view'" ng-model="valueNotes"></textarea>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 100%; padding: 2rem 10% 2rem 2rem;">
+            <form name="limitForm">
+                <div class="dls-new-panel" dls-panel initial="{{type === 'new' ? 'retract' : ''}}">
+                    <div class="dls-new-panel-header">
+                        <section>
+                            <span class="glyphicon glyphicon-chevron-right m-l-5" data-toggle="retract"></span>
+                            <span class="glyphicon glyphicon-chevron-down m-l-5" data-toggle="launch"></span>
+                            <span class="m-l-5">限定性条件（LIMIT）</span>
+                        </section>
+                        <section ng-hide="type === 'view'">
+                            <button class="btn btn-default panel-btn m-r-20 non-edit-btn" ng-click="remove(5)">取消</button>
+                            <button class="btn btn-primary panel-btn m-r-20 non-edit-btn"
+                                    ng-click="submit(5)"
+                                    ng-disabled="limitForm.maxDelayTime.$invalid || limitForm.concurrency.$invalid
+                                                    || limitForm.expectCoverTot.$invalid || limitForm.expectData.$invalid">保存</button>
+                            <button class="btn btn-primary panel-btn m-r-20 edit-btn">编辑</button>
+                        </section>
+                    </div>
+                    <div class="dls-new-panel-body">
+                        <label class="f-w-l f-s-12 w-120 text-right">来源行业:</label>
+                        <div class="bg-3 tree-box-wrapper">
+                            <div class="tree-box">
+                                <treecontrol
+                                        class="tree-light dotted"
+                                        tree-model="industryTree"
+                                        options="industryOptions"
+                                        selected-node="idAttrSelectedNode">{{node.name}}
+                                </treecontrol>
+                            </div>
+                            <div class="tree-selected p-t-10">
+                                <label class="f-w-l f-s-12 m-l-10 ver-mid">已选择</label>
+                                <ul style="height:180px;overflow-y:auto;">
+                                    <li class="f-w-l f-s-12 p-l-10 selected-list" ng-repeat="data in selectedIndustryAttr">
+                                        {{data.name}}
+                                <span
+                                        ng-show="!showAll"
+                                        ng-click="removeIndustryAttr($index)"
+                                        class="glyphicon glyphicon-trash trash-1">
+                                </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="h-30 lh-30 m-t-10">
+                            <span class='w-120 text-right inline-block'>最长延时值：</span>
+                            <input type="text" ng-model="maxDelayTime" name="maxDelayTime" ng-pattern="/^(\d)*$/" ng-disabled="type === 'view'"> ms
+                            <p ng-show="limitForm.maxDelayTime.$error.pattern" class="f-s-12 f-col-red m-l-120 m-t-10">请正确填写最长延时值</p>
+                        <!--<select class="h-34 lh-34" ng-options="item.value as item.name for item in longestDelayArr"-->
+                            <!--ng-model="delayTimeUnit" ng-disabled="type === 'view'"></select>-->
+                        </p>
+                        <p class="h-30 lh-30 m-t-10">
+                            <span class='w-120 text-right inline-block'>期望并发量：</span>
+                            <input type="text" ng-model="concurrency" name="concurrency" ng-pattern="/^(\d)*$/" ng-disabled="type === 'view'"> 条/ms
+                            <p ng-show="limitForm.concurrency.$error.pattern" class="f-s-12 f-col-red m-l-120 m-t-10">请正确填写期望并发量</p>
+
+                        <!--<select class="h-34 lh-34" ng-options="item.value as item.name for item in currentArr"-->
+                            <!--ng-model="concurrencyUnit" ng-disabled="type === 'view'"></select>-->
+                        </p>
+                        <p class="h-30 lh-30  m-t-10">
+                            <span class="ver-top w-120 inline-block text-right">加工方式：</span>
+                            <!--<input type="radio" name="workingMode" class="ver-sub" ng-disabled="type === 'view'"-->
+                            <!--ng-model="processWay" ng-value="'01'"> 直接计算-->
+                            <!--<input type="radio" name="workingMode" class="ver-sub m-l-20" ng-disabled="type === 'view'"-->
+                            <!--ng-model="processWay" ng-value="'02'"> 间接计算-->
+                            <input type="checkbox" name="workingMode" class="ver-sub" ng-disabled="type === 'view'"
+                                   ng-model="processWay[0]" ng-true-value="'01'" ng-false-value=""> 直接计算
+                            <input type="checkbox" name="workingMode" class="ver-sub" ng-disabled="type === 'view'"
+                                   ng-model="processWay[1]" ng-true-value="'02'" ng-false-value=""> 间接计算
+                        </p>
+                        <div>
+                            <span class='w-120 text-right inline-block'>覆盖地域：</span>
+                            <div class="bg-3 tree-box-wrapper flex">
+                                <div class="tree-box">
+                                    <treecontrol
+                                            class="tree-light dotted"
+                                            tree-model="areaTree"
+                                            options="areaTreeOptions"
+                                            selected-node="idAttrSelectedNode">{{node.name}}
+                                    </treecontrol>
+                                </div>
+                                <div class="tree-selected p-t-10">
+                                    <label class="f-w-l f-s-12 m-l-10 ver-mid">已选择</label>
+                                    <ul style="height:180px;overflow-y:auto;">
+                                        <li class="f-w-l f-s-12 p-l-10 selected-list" ng-repeat="data in selectedAreaAttr">
+                                            {{data.name}}
+                                    <span
+                                            ng-show="!showAll"
+                                            ng-click="removeAreaAttr($index)"
+                                            class="glyphicon glyphicon-trash trash-1">
+                                    </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="m-t-10">
+                            <span class='w-120 ver-top text-right inline-block'>覆盖地域备注：</span>
+                        <textarea class="p-l-3" cols="80" rows="3" placeholder="输入覆盖地域备注信息"
+                                  ng-disabled="type === 'view'" ng-model="coverAreaNotes"></textarea>
+                        </p>
+                        <p class="h-30 lh-30 m-t-10">
+                            <span class='w-120 text-right inline-block'>期望覆盖总量：</span>
+                            <input type="text" ng-model="expectCoverTot" name="expectCoverTot" ng-pattern="/^(\d)*$/" ng-disabled="type === 'view'"> 条
+                            <p ng-show="limitForm.expectCoverTot.$error.pattern" class="f-s-12 f-col-red m-l-120 m-t-10">请正确填写期望覆盖总量</p>
+                        <!--<select class="h-34 lh-34" ng-options="item.value as item.name for item in amountArr"-->
+                            <!--ng-model="expectCoverTotUnit" ng-disabled="type === 'view'"></select>-->
+                        </p>
+                        <p class="h-30 lh-30 m-t-10">
+                            <span class='w-120 text-right inline-block'>预计数据规模：</span>
+                            <input type="text" ng-model="expectData" name="expectData" ng-pattern="/^(\d)*$/" ng-disabled="type === 'view'"> 条
+                            <p ng-show="limitForm.expectData.$error.pattern" class="f-s-12 f-col-red m-l-120 m-t-10">请正确填写预计数据规模</p>
+                        <!--<select class="h-34 lh-34" ng-options="item.value as item.name for item in amountArr"-->
+                            <!--ng-model="expectDataUnit" ng-disabled="type === 'view'"></select>-->
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="flex flex-center">
+        <button class="btn btn-primary"
+                ng-click="submit('all')"
+                ng-disabled="limitForm.maxDelayTime.$invalid || limitForm.concurrency.$invalid
+                            || limitForm.expectCoverTot.$invalid || limitForm.expectData.$invalid
+                            || priceForm.price1.$invalid || priceForm.price2.$invalid
+                            || timeForm.frequency.$invalid || timeForm.period.$invalid
+                            ">需求发布</button>
+        <button class="btn btn-default m-l-120" ng-click="cancel()">取消</button>
+    </div>
+</div>

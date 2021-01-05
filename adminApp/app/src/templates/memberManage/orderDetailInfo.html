@@ -1,0 +1,75 @@
+<article class="bg-2" ng-controller="orderDetailInfoCtrl">
+    <header class="h-50 dls-btn-default  lh-50">
+        <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">订单详情</span>
+    </header>
+
+    <section class="flex-container f-s-12">
+        <p class="item-content">
+            <label class="infoLbl">需方机构名称：</label>
+            <span class="infoContent" ng-bind="demMemName"></span>
+        </p>
+        <p class="item-content">
+            <label class="infoLbl">需方部门名称：</label>
+            <span class="infoContent" ng-bind="demDeptName"></span>
+        </p>
+        <p class="item-content">
+            <label class="infoLbl">供方机构名称：</label>
+            <span class="infoContent" ng-bind="supMemName"></span>
+        </p>
+        <p class="item-content">
+            <label class="infoLbl">供方部门名称：</label>
+            <span class="infoContent" ng-bind="supDeptName"></span>
+        </p>
+
+        <!-- <p class="item-title">订单详情</p> -->
+        <div class="flex-s-c flex-d-r">
+            <p class="item-content item-content-inline">
+                <label class="infoLbl">订单编号：</label>
+                <span class="infoContent" ng-bind="orderId"></span>
+                <label class="infoLbl">订单状态：</label>
+                <span class="infoContent" style="color: #41ad6f;" ng-bind="status  | orderStateFilter"></span>
+                <label class="infoLbl">清算类型：</label>
+                <span class="infoContent" ng-if="settModCd=='01'">双边清算</span>
+                <span class="infoContent" ng-if="settModCd=='02'">集中清算</span>
+
+                <label class="infoLbl">起始日期：</label>
+                <span class="date" ng-bind="orderEffectDate"></span>
+
+                <label class="infoLbl">终止日期：</label>
+                <span class="date" ng-bind="orderExpiryDate"></span>
+                <br>
+                <label class="infoLbl" ng-show="status === '02'">供方确认剩余时间：</label>
+                <span class="date" ng-bind="orderLeftTime" ng-show="status === '02'"></span>
+            </p>
+        </div>
+
+        <div class="dls-tab">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr class="primary">
+                    <th ng-repeat="title in orderDetailTitles">{{title}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in orderDtlInfoList">
+                    <td ng-bind="item.connObjId"></td>
+                    <td ng-bind="item.taskId"></td>
+                    <td ng-bind="item.connObjCatCd | connObjCatCdFilter"></td>
+                    <td ng-bind="item.prdtName"></td>
+                    <td ng-bind="item.getConnObjVer"></td>
+                    <td ng-bind="item.getTag_name"></td>
+                    <td ng-bind="item.prdtIdCd"></td>
+                    <td>{{item.valuationModeCd | valuationState}}</td>
+                    <td ng-bind="item.expectPrice"></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+
+        <p class="item-content"><a href="javascript:history.go(-1);" class="btn btn-primary back">返回</a></p>
+
+        <!-- <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination> -->
+    </section>
+</article>

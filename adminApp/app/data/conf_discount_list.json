@@ -1,0 +1,20 @@
+{
+    "status": 1,
+    "data": [
+        {
+            "id": "id",
+            "memId": "memId",
+            "memRole": "01",
+            "prdtType": "02",
+            "memDiscount": "0.8"
+        },
+        {
+            "id": "id",
+            "memId": "memId",
+            "memRole": "03",
+            "prdtType": "01",
+            "memDiscount": "0.78"
+        }
+    ],
+    "error": ""
+}

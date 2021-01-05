@@ -1,0 +1,47 @@
+<article class="bg-2" ng-controller="connDetailCtrl">
+    <header class="h-50 dls-btn-default  lh-50">
+        <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">业务日志 >> {{title}}</span>
+    </header>
+
+    <section class="flex-container f-s-14">
+        <p class="h-34 lh-34"><label class="w-100 f-w-l">交易品名称：</label><label class="f-w-l">{{prdtName}}</label></p>
+        <p class="h-34 lh-34"><label class="w-100 f-w-l">互联{{subTitle}}数量：</label><label class="f-w-l">{{num}}</label></p>
+        <!--<p class="h-34 lh-34" ng-show="isSupCap"><label class="w-100 f-w-l">分成供方数量：</label><label class="f-w-l">{{sharedSupNum}}</label></p>-->
+        <!--<p class="h-34 lh-34" ng-show="isSupCap"><label class="w-100 f-w-l">买断供方数量：</label><label class="f-w-l">{{buyOutSupNum}}</label></p>-->
+        <div class="dls-grid m-l-0 m-t-10 p-r-10">
+
+            <!--<p class="h-34 lh-34 pull-right" ng-show="isSupCap">-->
+                <!--<input type="radio" ng-model="supType" value="1"> 分成供方-->
+                <!--<input type="radio" ng-model="supType" value="2"> 买断供方-->
+            <!--</p>-->
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr class='grid-header-row'>
+                    <th>序号</th>
+                    <th ng-repeat="col in connDetailGrid.columnDefs">
+                        {{col.displayName}}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="data in originDatas" class="grid-body-row">
+                    <td class="grid-body-row-content">{{$index+1}}</td>
+                    <td ng-if="supType != '2'" ng-repeat="col in connDetailGrid.columnDefs" class="grid-body-row-content">
+                        <span ng-if="'orderId' == col.field" class="f-col-3" ng-click="listDetail(data)">{{data[col.field]}}</span>
+                        <span ng-if="'orderId' != col.field && 'settType' != col.field && 'role' != col.field">{{data[col.field]}}</span>
+                        <span ng-if="'settType' == col.field">{{data[col.field] | prdtTypeFilter}}</span>
+                        <!--<span ng-if="'role' == col.field">{{data[col.field] | roleTypeFilter}}</span>-->
+                    </td>
+                    <td ng-if="supType == '2'" ng-repeat="col in connDetailGrid.columnDefs" class="grid-body-row-content">
+                        <span ng-if="'paySupAmtAct' == col.field" class="f-col-3" ng-click="listDetail(data)">{{data[col.field]}}</span>
+                        <span ng-if="'paySupAmtAct' != col.field && 'settType' != col.field && 'role' != col.field">{{data[col.field]}}</span>
+                        <span ng-if="'settType' == col.field">{{data[col.field] | prdtTypeFilter}}</span>
+                        <!--<span ng-if="'role' == col.field">{{data[col.field] | roleTypeFilter}}</span>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems" class="m-l-20"></pagination>
+        </div>
+    </section>
+</article>

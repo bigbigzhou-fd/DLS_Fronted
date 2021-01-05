@@ -1,0 +1,73 @@
+<article class="bg-2" ng-controller="tradeOrderDetailCtrl">
+	<header class="h-50 dls-btn-default  lh-50">
+	    <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">订单详情</span>
+	</header>
+
+	<section class="flex-container f-s-12">
+		<p class="item-content">
+			<label class="infoLbl">需方机构名称：</label>
+			<span class="infoContent" ng-bind="orderDatas.demInfoFullNameCN | textEmptyFilter"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">需方部门名称：</label>
+			<span class="infoContent" ng-bind="orderDatas.demInfoDeptName | textEmptyFilter"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">供方机构名称：</label>
+			<span class="infoContent" ng-bind="orderDatas.supInfoFullNameCN | textEmptyFilter"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">供方部门名称：</label>
+			<span class="infoContent" ng-bind="orderDatas.supInfoDeptName | textEmptyFilter"></span>
+		</p>
+
+		<!-- <p class="item-title">订单详情</p> -->
+		<div class="flex-s-c flex-d-r">
+			<p class="item-content item-content-inline">
+				<label class="infoLbl">订单编号：</label>
+				<span class="infoContent" ng-bind="orderDatas.orderId"></span>
+				<label class="infoLbl">订单状态：</label>
+				<span class="infoContent" style="color: #41ad6f;" ng-bind="orderDatas.status  | orderStateFilter"></span>
+				<label class="infoLbl">清算类型：</label>
+				<span class="infoContent" ng-bind="orderDatas.settModCdDisplay | textEmptyFilter"></span>
+
+				<label class="infoLbl">起始日期：</label>
+				<span class="date" ng-bind="orderDatas.orderEffectDate"></span>
+
+				<label class="infoLbl">终止日期：</label>
+				<span class="date" ng-bind="orderDatas.orderExpiryDate"></span>
+				<br>
+				<label class="infoLbl" ng-show="orderDatas.status === '02'">供方确认剩余时间：</label>
+				<span class="date" ng-bind="orderDatas.leftTime" ng-show="orderDatas.status === '02'"> </span>
+			</p>
+		</div>
+		<div class="dls-tab">
+			<table class="table table-bordered table-striped">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in orderDetailTitles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in orderDtlInfoList">
+		          <td ng-bind="item.connObjId | textEmptyFilter"></td>
+		          <td ng-bind="item.taskId | textEmptyFilter"></td>
+		          <td ng-bind="item.connObjCatCd | connObjCatCdFilter"></td>
+		          <td ng-bind="item.prdtBaseInfo.prdtName | textEmptyFilter"></td>
+		          <td ng-bind="item.prdtBaseInfo.connObjVer | connObjVerFilter"></td>
+		          <td ng-bind="item.tagName | textEmptyFilter"></td>
+		          <td ng-bind="item.prdtBaseInfo.prdtIdCd | textEmptyFilter"></td>
+		          <td ng-bind="item.valuationModeCdDisplay | textEmptyFilter"></td>
+		          <td ng-bind="item.expectPrice | moneyEmptyFilter"> </td>
+		        </tr>
+
+		      </tbody>
+		    </table>
+		</div>
+
+
+		<p class="item-content"><a href="javascript:history.go(-1);" class="btn btn-primary back">返回</a></p>
+
+		 <!-- <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination> -->
+	</section>
+</article>

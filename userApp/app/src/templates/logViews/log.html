@@ -1,0 +1,49 @@
+<div class="bg-2 p-b-80 p-lr-20">
+    <header class="h-50 dls-btn-default ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 f-s-16 f-col-2 f-w-b">业务日志查询</span>
+        <a ng-show="!isCapSup" class="btn-dowmload" href={{"../../api/"+download+"/?startTime="+start+"&endTime="+end}}><span class="iconfont icon-download p-r-10"></span>业务日志下载</a>
+        <a ng-show="isCapSup" class="btn-dowmload" href={{"../../api/"+download+"/?startTime="+start+"&endTime="+end+"&mode="+mode}}><span class="iconfont icon-download p-r-10"></span>业务日志下载</a>
+    </header>
+    <div class="bg-3">
+        <p class="h-30 lh-30 f-s-12"><label class="w-80 text-right f-s-12">机构名称：</label>{{memName}}</p>
+        <p class="h-30 lh-30 f-s-12"><label class="w-80 text-right f-s-12">部门名称：</label>{{deptName}}</p>
+        <!--<p class="h-30 lh-30 f-s-12" ng-show="isCapSup"><label class="w-80 text-right f-s-12">合作模式：</label>{{supType}}</p>-->
+        <p class="h-30 lh-30 ver-top">
+            <label class="w-80 text-right f-s-12">查询日期：</label>
+            <date-picker class="inline-block w-150 m-r-10 datePicker ver-mid" dt="startDt" mindt="1970, 5, 22"></date-picker>
+            <span> ~ </span>
+            <date-picker class="inline-block w-150 m-l-10 datePicker ver-mid" dt="endDt" mindt="1970, 5, 22"></date-picker>
+            <button class="btn btn-success h-34" ng-click="getData()">查询</button>
+        </p>
+        <div class="m-t-20 p-l-20">
+            <p class="f-col-red f-s-12">交易中心每日00:00进行业务日志统计，当前数据更新至*{{updateTime}}*</p>
+            <div class="dls-grid m-l-0 m-t-10 p-r-10">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                    <tr class='grid-header-row'>
+                        <th>序号</th>
+                        <th ng-repeat="col in logGrid.columnDefs">
+                            {{col.displayName}}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="data in originDatas" class="grid-body-row">
+                        <td class="grid-body-row-content">{{$index+1}}</td>
+                        <td ng-repeat="col in logGrid.columnDefs" class="grid-body-row-content">
+                            <span ng-if="'orderId' == col.field" class="f-col-3" ng-click="listDetail(data)">{{data[col.field]}}</span>
+                            <span ng-if="'orderId' != col.field">{{data[col.field]}}</span>
+                        </td>
+                    </tr>
+                    <tr class="text-center" ng-show="originDatas.length === 0">
+                        <td ng-if="!isCapSup" colspan="6">暂无数据</td>
+                        <td ng-if="isCapSup" colspan="8">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems" class="m-l-20"></pagination>
+    </div>
+</div>

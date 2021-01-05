@@ -1,0 +1,87 @@
+<article class="bg-2" ng-controller="demandGoodsItemCtrl">
+	<header class="h-50 dls-btn-default ver-mid lh-50">
+	    <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">交易品</span>
+
+	    
+	</header>
+	
+	<section class="flex-container">
+		<p class="cart-item">
+			<span>交易品名称:</span>
+			<span class="cart-item-content" ng-bind="detail.prdtIdName | textEmptyFilter"></span>
+		</p>
+		<p class="cart-item">
+			<span>供方数量:</span>
+			<span class="cart-item-content" ng-bind="detail.responseNum | textEmptyFilter"></span>
+		</p>
+		<p class="cart-item">
+			<span>最高相似度:</span>
+			<span class="cart-item-content" ng-bind="detail.simiDegree | textEmptyFilter"></span>
+			<span ng-show="!!detail.simiDegree">%</span>
+		</p>
+
+		
+		<div class="pull-right lh-50">
+		    <!-- <button class="btn btn-primary inline-block ver-mid m-r-0 no-border-radius" ng-click="addToCart()">数据订购</button> -->
+		    <a href="javascript:history.go(-1);" class="btn btn-primary no-border-radius back" style="margin-left: 10px;">返回</a>
+		</div>
+		<div class="dls-tab" style="width: 100%">
+		    <table class="table table-bordered table-striped" style="min-width: 135%;">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in titles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in datas">
+						  <td><span ng-bind="item.simiDegree | textEmptyFilter"></span><span ng-show="!!item.simiDegree">%</span></td>
+		          <td>{{item.prdtType | prdtTypeFilter | textEmptyFilter}}</td>
+		          <td>{{item.connObjId | textEmptyFilter | textEmptyFilter}}</td>
+		          <td><span ng-click="verDetail(item,prdtIdcd)" class="f-col-3 cursor-pointer">{{item.connObjVer | connVerFilter | textEmptyFilter}}</span></td>
+		          <td>{{item.supMemName | textEmptyFilter}}</td>
+		          <td>{{item.supMemDept | textEmptyFilter}}</td>
+		          <td>{{item.valuationPrice | moneyEmptyFilter}}</td>
+		          <td>{{ item.valuationCountCd | valuationModeCdFilter}}; {{item.valuationModeCd | valuationCountCdFilter }}</td>
+		        </tr>
+		        <tr ng-show="!datas.length">
+		            <td colspan="{{titles.length+2}}">没有任何数据</td>
+		        </tr>
+		      </tbody>
+		    </table>
+		</div>
+
+		<div class="dls-tab" style="width: 100%" ng-if=" '02' === prdtType">
+		    <table class="table table-bordered table-striped" style="min-width: 135%;">
+		      <thead>
+		        <tr class="primary">
+		        	<th></th>
+		          <th>序号</th>
+		          <th ng-repeat="title in titles.creditItemTitles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in datas.list">
+		        	<td style="width: 140px;"><a class="add-cart" ng-class="{true : 'disabledBtn'}[item.isInCart]" disabled={{item.isInCart}} ng-click="addToCart($index,item)"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><label class="add-cart-text">加入购物车</label></a></td>
+		          <td>{{$index+1}}</td>
+		          <td>{{item.connObjId | textEmptyFilter}}</td>
+		          <td><span class="f-col-3 cursor-pointer" ng-bind="item.version" ng-click="detail(item)"></span></td>
+		          <td>{{item.supMemId | textEmptyFilter}}</td>
+		          <td>{{item.supMemDept | textEmptyFilter}}</td>
+		          <td>{{item.optionalId | emptyFilter}}</td>
+		          <td>{{item.idType | textEmptyFilter}}</td>
+		          <td>{{item.price | moneyEmptyFilter}}</td>
+		          <td>{{item.countMethod}}</td>
+		        </tr>
+		        <tr ng-show="!datas.list.length">
+		            <td colspan="{{titles.marketingItemTitles.length+2}}">没有任何数据</td>
+		        </tr>
+		      </tbody>
+		    </table>
+		</div>
+
+		
+
+		<pagination class="m-l-20 m-t-50" options="pageOptions" cur-page="curPage"></pagination>
+	</section>
+
+</article>

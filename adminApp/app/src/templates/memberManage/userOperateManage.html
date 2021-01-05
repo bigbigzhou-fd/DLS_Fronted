@@ -1,0 +1,52 @@
+<article class="bg-2" ng-controller="userOperateManageCtrl">
+    <header class="h-50 dls-btn-default  lh-50">
+        <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">用户操作记录</span>
+    </header>
+
+    <div>
+        <label class="f-s-12 f-w-l ver-mid p-r-10 h-34 lh-34 m-l-20 pull-left" >搜索</label>
+        <div class="relative inline-block w-225 pull-left" >
+            <span class="iconfont icon-search" ng-click="search()"></span>
+            <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" placeholder="请输入想搜索的关键字" ng-model="searchText">
+            <span class="p-r-10 iconfont icon-enter" ng-click="search()"></span>
+        </div>
+        <div class="cart-item flex flex-d-r w-400 pull-left m-l-20">
+            <date-picker class="inline-block w-150 m-r-10 datePicker" dt="startTime" mindt="1970, 5, 22"></date-picker>
+            <span> ~ </span>
+            <date-picker class="inline-block w-150 m-l-10 datePicker" dt="endTime" mindt="1970, 5, 22"></date-picker>
+            <button class=" btn btn-primary m-l-10" ng-click="search()">查询</button>
+        </div>
+
+        <a class="btn btn-success m-l-40" target="_blank" href="../../api/opt_logs_export/?text={{searchText}}&startDate={{st}}&endDate={{et}}">导出</a>
+    </div>
+
+    <div class="dls-tab p-lr-20 c-f" style="overflow: auto">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr class="primary">
+                <th>操作人</th>
+                <th>模块</th>
+                <th>操作是否成功</th>
+                <th>操作信息</th>
+                <th>操作人IP</th>
+                <th>操作时间</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in operateDatas">
+                    <td ng-bind="item.opt_user | textEmptyFilter"></td>
+                    <td ng-bind="item.module | textEmptyFilter"></td>
+                    <td ng-bind="item.mark | textEmptyFilter"></td>
+                    <td ng-bind="item.opt_msg | textEmptyFilter"></td>
+                    <td ng-bind="item.ip | textEmptyFilter"></td>
+                    <td ng-bind="item.created | textEmptyFilter"></td>
+                </tr>
+                <tr ng-show="operateDatas.length == 0">
+                    <td colspan="6">暂无数据</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+     <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems" class="m-l-20"></pagination>
+
+</article>

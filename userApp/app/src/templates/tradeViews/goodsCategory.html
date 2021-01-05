@@ -1,0 +1,110 @@
+<article class="tradeMallPanel" ng-controller="goodsCategoryCtrl">
+
+    <section class="p-t-10" style="min-width:740px">
+        <div class="relative inline-block w-350">
+            <span class="iconfont icon-search"></span>
+            <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" ng-model="searchText" ng-change="modelChanged()" ng-keyup="searchItem($event)"  placeholder="请输入想搜索的关键字或交易品名称">
+            <span class="iconfont icon-enter" ng-click="getDatas()"></span>
+        </div>
+        <!-- <button class="btn btn-info" ng-click="getDatas()">搜索</button> -->
+
+        <section class="btn-middle inline-block lh-50 m-l-20" ng-show = "transactionSwitchValue=='01'">
+            <div class="btn-group ratio-btns">
+                <label class="btn btn-success  no-border-radius" ng-model="tradeScenarioValue" uib-btn-radio="'03'">营销类数据</label>
+                <label class="btn btn-success  no-border-radius" ng-model="tradeScenarioValue" uib-btn-radio="'02'">征信类数据</label>
+            </div>
+        </section>
+    </section>
+    <section ng-if=" '03' === tradeScenarioValue && transactionSwitchValue=='01'">
+
+        <div class="dls-tab" style="width: 100%">
+            <table class="table table-bordered table-striped" style="min-width: 100%;">
+              <thead>
+                <tr class="primary">
+                  <th>序号</th>
+                  <th ng-repeat="title in tradeMallTitles.marketingTitles">{{title}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in datas">
+                  <td>{{$index+1}}</td>
+                  <td><a class="btn btn-link" ui-sref="dls.trade.goodsItem({type:tradeScenarioValue,prdtId:item.prdtIdCd,transactionSwitchValue:transactionSwitchValue})" ng-bind="item.name" href="javascript:void(0);" ng-click="setData(item)"></a></td>
+                  <td style="min-width: 80px;" ng-bind="item.supMemCount"></td>
+                  <td ng-bind="item.maxPrice | moneyEmptyFilter"></td>
+                  <td ng-bind="item.avgPrice | moneyEmptyFilter"></td>
+                  <td ng-bind="item.minPrice | moneyEmptyFilter"></td>
+                </tr>
+                <tr ng-show="!datas">
+                    <td colspan="{{tradeMallTitles.marketingTitles.length+1}}">没有任何数据</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
+        <!-- <pagination class="m-l-20 m-t-50" options="pageOptions" cur-page="curPage"></pagination> -->
+    </section>
+
+    <!-- 征信类产品 -->
+    <section ng-if=" '02' === tradeScenarioValue && transactionSwitchValue=='01'">
+        <div class="dls-tab" style="width: 100%">
+            <table class="table table-bordered table-striped" style="min-width: 135%;">
+              <thead>
+                <tr class="primary">
+                  <th>序号</th>
+                  <th ng-repeat="title in tradeMallTitles.creditTitles">{{title}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in datas">
+                  <td>{{$index+1}}</td>
+                  <td><a class="btn btn-link" ui-sref="dls.trade.goodsItem({type:tradeScenarioValue,prdtId:item.prdtIdCd,transactionSwitchValue:transactionSwitchValue})" ng-bind="item.name" href="javascript:void(0);" ng-click="setData(item)"></a></td>
+                  <td ng-bind="item.idType | textEmptyFilter"></td>
+                  <!-- <td ng-bind="item.valueDesc"></td> -->
+                  <td><span ng-bind="item.valueDesc" uib-popover="{{item.valueDesc}}" popover-placement="auto bottom-left" popover-trigger="'mouseenter'" popover-popup-close-delay="0" style="width: 120px;display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></span></td>
+                  <td style="min-width: 80px;" ng-bind="item.supMemCount"></td>
+
+                  <td ng-bind="item.maxPrice | moneyEmptyFilter"></td>
+                  <td ng-bind="item.avgPrice | moneyEmptyFilter"></td>
+                  <td ng-bind="item.minPrice | moneyEmptyFilter"></td>
+                  <td ><span ng-bind="item.prdtDesc" uib-popover="{{item.prdtDesc}}" popover-placement="auto bottom-left" popover-trigger="'mouseenter'" popover-popup-close-delay="0" style="width: 120px;display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></span></td>
+                </tr>
+                <tr ng-show="!datas">
+                    <td colspan="{{tradeMallTitles.creditTitles.length+1}}">没有任何数据</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
+    </section>
+    <!-- 算法产品 -->
+    <section ng-if = "transactionSwitchValue=='02'">
+        <div class="dls-tab" style="width: 100%">
+            <table class="table table-bordered table-striped" style="min-width: 135%;">
+                <thead>
+                <tr class="primary">
+                    <th>序号</th>
+                    <th ng-repeat="title in tradeMallTitles.algorithmTitles">{{title}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in datas">
+                    <td>{{$index+1}}</td>
+                    <td><a class="btn btn-link" ui-sref="dls.trade.goodsItem({type:tradeScenarioValue,prdtId:item.prdtIdCd,transactionSwitchValue:transactionSwitchValue})" ng-bind="item.name" href="javascript:void(0);" ng-click="setData(item)"></a></td>
+                    <td ng-bind="item.supMemCount"></td>
+                    <!-- <td><span ng-bind="item.valueDesc" uib-popover="{{item.valueDesc}}" popover-placement="auto bottom-left" popover-trigger="'mouseenter'" popover-popup-close-delay="0" style="width: 120px;display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></span></td> -->
+                    <td ng-bind="item.maxPrice | moneyEmptyFilter"></td>
+                    <td ng-bind="item.avgPrice | moneyEmptyFilter"></td>
+                    <td ng-bind="item.minPrice | moneyEmptyFilter"></td>
+                </tr>
+                <tr ng-show="!datas">
+                    <td colspan="{{tradeMallTitles.creditTitles.length+1}}">没有任何数据</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+
+    <pagination class="m-l-20 m-t-50" options="pageOptions" cur-page="curPage"></pagination>
+
+</article>

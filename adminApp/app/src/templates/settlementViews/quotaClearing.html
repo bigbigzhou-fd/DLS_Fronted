@@ -1,0 +1,33 @@
+<article class="bg-2" ng-controller="quotaClearingCtrl">
+	<header class="h-50 dls-btn-default  lh-50">
+	    <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">会员结算</span>
+	</header>
+
+	<section class="flex-container f-s-12">
+		<p class="item-title">会员结算列表</p>
+
+		<div class="dls-tab">
+			<table class="table table-bordered table-striped">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in quotaCheckTitles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in quotaCheckDatas">
+		          <td ng-bind="1+$index"></td>
+		          <td ng-bind="item.memId"></td>
+		          <td ng-bind="item.orgFullNameCN"></td>
+		          <td ng-bind="item.orgFullNameEN"></td>
+		          <!-- <td ng-bind="item.lmtAdjType | quotaAdjTypeFilter"></td> -->
+		          <td ><sign-currency data="item.getMemLmtBalance_totLmt" type="item.lmtAdjType "}}></sign-currency></td>
+		          <td><a ui-sref="dls.quota.setment({memId:item.memId})">查看明细</a></td>
+		        </tr>
+
+		      </tbody>
+		    </table>
+		</div>
+
+		<pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination>
+	</section>
+</article>

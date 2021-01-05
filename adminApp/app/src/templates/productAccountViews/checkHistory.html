@@ -1,0 +1,114 @@
+<article class="dls-admin bg-2" ng-controller="productAccountCheckHistoryCtrl">
+	<header class="h-50 dls-btn-default  lh-50" style="width: 1150px;">
+	    <span class="pull-left inline-block  lh-50 p-lr-20 f-s-16 f-col-2 f-w-b">审核历史</span>
+	</header>
+
+	<section class="flex-container">
+		<div class="cart-item flex flex-d-r">
+			<div class="flex flex-d-r flex-1">
+				<!-- <label class="header-tag">搜索:</label> -->
+				<select  class="form-control inline-block no-border-radius" style="width: 120px;" ng-model="type " ng-options="item.value as item.name  for item in searchDates" >
+				  <option value="" ng-if="false"></option>
+				</select>
+
+				<div class="cart-item flex flex-d-r m-l-10">
+					<div class="form-control inline-block w-120 no-border-radius" moment-picker="beginTime" ng-bind="beginTime" locale="zh-cn" format="YYYY-MM-DD" min-date="minDateMoment" ></div>
+					<span> ~ </span>
+					<div class="form-control inline-block m-l-130 w-120 no-border-radius" moment-picker="endTime" ng-bind="endTime" ng-disabled="!beginTime" locale="zh-cn" format="YYYY-MM-DD" min-date="beginTime"></div>
+					<button class=" btn btn-primary m-l-10" ng-click="getDatas(curPageNum,type,beginTime,endTime,status)">查询</button>
+				</div>
+			</div>
+
+
+			<div>
+				<label class="header-tag">审核状态:</label>
+				<select  class="form-control inline-block no-border-radius" style="width: 120px;" ng-model="status" ng-options="item.value as item.name  for item in checkStates" >
+				  <option value="" ng-if="false"></option>
+				</select>
+			</div>
+		</div>
+
+
+
+		<!-- <p class="item-title">共有<span>{{totalItems}}</span>家机构结算单信息</p> -->
+		<div class="dls-tab">
+			<table class="table table-bordered table-striped">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in titles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in datas.list">
+		          <td>{{$index+1}}</td>
+		          <td>{{item.applyNo | textEmptyFilter}}</td>
+		          <td>{{item.applyTime | textEmptyFilter}}</td>
+		          <td>{{item.reviewTime | textEmptyFilter}}</td>
+		          <td>{{item.operationType == '01' ? '新增' : '删除'}}</td>
+		          <td><span class="m-l-10" ng-repeat="prdt in item.applyPrdt">{{prdt | prdtTypeFilter}}</span></td>
+		          <td>{{item.applicant | textEmptyFilter}}</td>
+		          <td>{{item.reviewer | textEmptyFilter}}</td>
+		          <td>{{item.status | quotaAdjStatusFilter}}</td>
+		          <td>{{!item.notes ? '--' : item.notes}} <button ng-show="item.notes" class="btn btn-link" ng-click="showMsg(item.notes)"></button></td>
+		        </tr>
+		        <tr ng-show="datas.list.length === 0">
+		        	<td colspan="{{titles.length+1}}">没有任何数据</td>
+		        </tr>
+
+		      </tbody>
+		    </table>
+		</div>
+		<pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination>
+	</section>
+
+	<div class="modal fade" id="accountCheckModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	    <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	            <div class="modal-body">
+	                <div class="dls-panel no-border">
+	                  <div class="dls-panel-heading">充值申请</div>
+	                  <div class="dls-panel-body">
+
+	                    <p class="item-content">
+	                    	<label class="infoLbl">交易流水号：</label>
+	                    	<span class="infoContent" ng-bind="quotaDatas.orgFullNameCN"></span>
+	                    </p>
+	                    <p class="item-content">
+	                    	<label class="infoLbl">机构名称：</label>
+	                    	<span class="infoContent" ng-bind="quotaDatas.orgFullNameCN"></span>
+	                    </p>
+
+	                    <p class="item-content">
+	                    	<label class="infoLbl">部门名称：</label>
+	                    	<span class="infoContent" ng-bind="quotaDatas.deptName"></span>
+	                    </p>
+	                    <p class="item-content">
+	                    	<label class="infoLbl">充值金额：</label>
+	                    	<span class="infoContent" ng-bind="quotaDatas.deptName"></span>
+	                    </p>
+	                    <p class="item-content">
+	                    	<label class="infoLbl">发票号：</label>
+	                    	<span class="infoContent" ng-bind="quotaDatas.deptName"></span>
+	                    </p>
+	                    <p class="item-content">
+	                    	<label class="infoLbl">备注：</label>
+	                    	<span class="infoContent" ng-bind="quotaDatas.deptName"></span>
+	                    </p>
+	                    <hr>
+	                    <p class="item-content">
+	                    	<label class="infoLbl">审核意见：</label>
+	                    	<textarea rows="2" cols="40" style="vertical-align: text-top;border-radius: 4px;" autofocus="true"  ng-bind="quotaDatas.deptName"></textarea>
+	                    </p>
+	                    
+	                  </div>
+	                </div>
+	                <div class="t-a-r">
+	                    <button type='button' style="padding:5px 30px;" class='btn btn-primary border' data-dismiss='modal' ng-click="data.goTo && jumpTo(data.goTo)">确定</button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<p><a class="btn btn-primary  m-b-50 m-l-20" href="javascript:history.go(-1);">返回</a></p>
+
+</article>

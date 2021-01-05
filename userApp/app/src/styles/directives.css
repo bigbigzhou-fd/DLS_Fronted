@@ -1,0 +1,329 @@
+.sec_drop{
+    cursor: pointer;
+}
+
+.sec_drop .active{
+    background-color: #5A5C61;
+    color:#FFF;
+}
+
+.sec_drop:hover div, .sec_drop>li>ul>li:hover{
+    background:#5A5C61;
+    color:#FFF;
+}
+
+.sec_drop>li{
+    font-size:13px;
+    color:#B9B0B0;
+}
+
+.sec_drop>li>ul>li{
+    height:30px;
+    line-height:30px;
+    padding-left:60px;
+    font-size:12px;
+}
+
+.sec_drop>li span:nth-of-type(1){
+    display: inline-block;
+    margin:8px 20px;
+}
+
+.arr {
+    position: absolute;
+    right: 11px;
+    top: 13px;
+    display: block;
+    width: 12px;
+    height: 14px;
+    margin: 0;
+    vertical-align: middle;
+    font-weight:100;
+    cursor: pointer;
+}
+
+
+.btn-middle .active{
+    background-color:#2E9BCF!important;
+}
+
+.icon-search {
+    position: absolute;
+    left: 7px;
+    /*top: 5px;*/
+    line-height: 34px;
+    color: #2e9bcf;
+    cursor: pointer;
+}
+
+.icon-enter {
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    line-height: 34px;
+    color: #2e9bcf;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.pagination{
+    height:80px;
+}
+
+.pagination .pageActive{
+    background-color:#DED7D7;
+}
+
+.pagination + label{
+    position:absolute;
+    font-weight:lighter;
+    font-size:12px;
+    margin:30px 0 0 10px;
+}
+
+.pagination span{
+    cursor: pointer;
+    text-align:center;
+    min-width:40px;
+}
+
+.pagination > li > span.active:hover{
+    background-color:#DED7D7;
+}
+
+.pagination > li > a:hover, .pagination > li > span:not(.active):hover{
+    background-color:#2E9BCF;
+}
+
+.tree-leaf-head {
+    padding: 1px 8px 0 10px !important;
+}
+
+.disabledBtn{
+    background-color:#DED7D7 !important;
+    border-color:#DED7D7 !important;
+    color:#B9B0B0 !important;
+    pointer-events: none;
+    cursor: not-allowed !important;
+    opacity: 0.6;
+}
+
+.dls-grid{
+    overflow-x:auto;
+    margin-left:15px;
+    cursor: pointer;
+}
+
+.dls-grid .panel-heading{
+    padding:0;
+}
+
+.dls-grid .grid-header-row{
+    background-color: #0068B7;
+}
+
+.dls-grid .grid-body-row .grid-body-row-content{
+    font-weight:lighter;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.dls-grid .grid-body-row.selectRow{
+    background-color:rgba(0,104,183,.3);
+}
+
+.dls-grid .btn:hover,.dls-grid .btn:link{
+    color:#FFF;
+}
+
+.show-data-item{
+    min-width:270px;
+}
+
+.pro_comfirm_btns button{
+    position:absolute;
+    padding:8px 15px;
+    border:none;
+    outline:none;
+    bottom:10px;
+    color:#FFF;
+    border-radius: 5px;
+}
+
+.pro_comfirm_btns button:nth-of-type(1){
+    background-color:#1ABC9C;
+    right:130px;
+}
+
+.pro_comfirm_btns button:nth-of-type(2){
+    background-color:#E74C3C;
+    right:20px;
+}
+
+.pro_comfirm_btns button:hover{
+    opacity:.9;
+}
+
+.state-label{
+    line-height:15px; ;
+    height:20px;
+    padding:3px 5px;
+    color:#FFF;
+    font-size:10px;
+    font-weight:lighter;
+    border-radius:5px;
+}
+
+.state-label-1{
+    background-color: #3e8acc;
+}
+
+.state-label-2{
+    background-color: #f0ad4d;
+}
+
+.state-label-3{
+    background-color: #1abc9c;
+}
+
+.state-label-4{
+    background-color: #e67e22;
+}
+
+.state-label-5{
+    background-color: #e74c3c;
+}
+
+.state-label-6{
+    background-color: #b9b0b0;
+}
+
+.state-label-7{
+    background-color: #2e9bcf;
+}
+
+.dotted li{
+    border-bottom:1px dotted #b9b0b0;
+    background-color:#F6F6F6;
+}
+
+.dotted .tree-expanded{
+    border-bottom:none;
+}
+
+.tree-li-add-btn{
+    position:absolute;
+    right:20px;
+    font-size:20px;
+    color:#2e9bcf;
+    cursor:pointer;
+}
+.tree-li-add {
+    font-size:20px;
+    color:#f39d12;
+    cursor:pointer;
+    visibility: hidden;
+}
+
+.tree-li-edit {
+    font-size:12px;
+    color:#2e9ccf;
+    cursor:pointer;
+    margin: 0 3px;
+    visibility: hidden;
+}
+
+.tree-li-remove {
+    font-size:12px;
+    color:#e96153;
+    cursor:pointer;
+    visibility: hidden;
+}
+
+treecontrol {
+    position: relative;
+}
+treecontrol li:hover >.tree-li-add, treecontrol li:hover >.tree-li-edit, treecontrol li:hover >.tree-li-remove {
+    visibility: visible;
+}
+
+.editable {
+    border: solid 2px #2EA7DC;
+    padding: 3px 6px;
+}
+.tree-label {
+    line-height: 30px;
+    height: 30px;
+    
+    vertical-align: middle;
+}
+.dls-tree {
+    position: relative;
+}
+.dls-tree .input-group {
+    width: 190px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    display: none;
+    z-index: 2;
+    background-color: #fff;
+}
+.dls-tree .input-group input{
+    border-radius: 0;
+    width: 110px;
+}
+.dls-tree .input-group-btn {
+    position: relative;
+    white-space: nowrap;
+    font-size: 14px;
+    line-height: 33px;
+}
+.dls-tree .input-group-btn span {
+    padding: 0 3px;
+    color: #2EA7DC;
+    cursor: pointer;
+}
+.dls-tree span .glyphicon-remove {
+    color: #939393;
+}
+.dls-tree .input-group {
+    /*visibility: hidden;*/
+    position: absolute;
+}
+.dls-select-header{
+    height:30px;
+    width:100px;
+    line-height:30px;
+    border:1px solid #B9B0B0;
+    padding-left:10px;
+}
+
+.dls-select-header .down{
+    position:absolute;
+    top:7px;
+    right:5px;
+}
+
+.dls-select>section{
+    margin-top:-4px;
+    padding-top:5px;
+}
+
+.dls-select>section>label{
+    height:20px;
+    line-height:20px;
+}
+
+.dls-select>section>label:hover{
+    background-color:#2e9bcf;
+}
+
+.select-disabled{
+    background-color:#EBEBE4;
+    color:#757575;
+}
+
+.tree-box-wrapper .tree-selected{
+    margin-top:0 !important;
+
+}

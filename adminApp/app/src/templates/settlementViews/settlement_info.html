@@ -1,0 +1,68 @@
+<article class="bg-2" ng-controller="settlementInfoCtrl">
+	<header class="h-50 dls-btn-default ver-mid lh-50">
+	    <span class="pull-left inline-block ver-mid lh-50 p-l-20 f-s-16 f-col-2 f-w-b">结算单管理>> </span>
+	    <span class="pull-left inline-block ver-mid lh-50 f-s-16 f-col-2 f-w-b">结算单信息</span>
+
+	    <a ng-if="!!permissions.hasPermission('93')" class="btn-dowmload" ng-href="{{'../../api/stt/sett/dataTable/admin/export?memId='+memId+ '&settNoList='+settNoList+'&startTime='+startTime_format+'&endTime='+endTime_format}}"><span class="iconfont icon-download"></span>导出结算流水</a>
+	    <a ng-if="!!permissions.hasPermission('93')" class="btn-dowmload" href="{{'../../api/stt/sett/admin/list/export?memId='+memId+ '&settNoList=' + settNoList + '&startTime='+startTime_format+'&endTime='+endTime_format}}"><span class="iconfont icon-download"></span>导出结算信息</a>
+	</header>
+
+	<section class="flex-container">
+		<!-- <div class="item-content flex flex-d-r"> -->
+		<p class="item-content m-r-10">查询日期:
+			<span class="infoContent"> {{startTime_format}} </span>
+			至
+			<span class="infoContent"> {{endTime_format}} </span>
+		</p>
+
+
+		<p class="item-content">本方机构名称：<span class="infoContent"> {{settlementInfoDatas.orgFullNameCN}} </span></p>
+		<p class="item-content">本方机构部门：<span class="infoContent"> {{settlementInfoDatas.deptName}} </span></p>
+
+		<p class="item-content">结算单数量：<span class="infoContent"> {{settlementInfoDatas.settNum}} </span>张</p>
+		<p class="item-content">应付金额合计：<span class="infoContent"> {{settlementInfoDatas.paidAmtTot}} </span>元</p>
+		<p class="item-content">应收金额合计：<span class="infoContent"> {{settlementInfoDatas.rcvAmtTot}} </span>元</p>
+
+		<div class="dls-tab">
+			<table class="table table-bordered table-striped" style="    min-width: 1300px;">
+		      <thead>
+		        <tr class="primary">
+		          <th><input type="checkbox" ng-model="checkedAll" ng-change="selectAll()"/></th>
+		          <th>序号</th>
+		          <th ng-repeat="title in titles">{{title}}</th>
+		          <th>操作</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in settlementInfoDatas.list">
+		          
+		          <!-- <td><a class="btn btn-link" ui-sref="dls.settlement.detail({memId:item.memId})" ng-bind="item.memId" href="javascript:void(0);"></a></td> -->
+		          <td><input type="checkbox" ng-model="item.checked" ng-change="isSelected($index)"/></td>
+		          <td>{{$index+1}}</td>
+		          <td>{{item.settStartTime | textEmptyFilter}}</td>
+		          <td>{{item.settEndTime | textEmptyFilter}}</td>
+		          <td>{{item.settNo | textEmptyFilter}}</td>
+		          <td>{{item.orderId | textEmptyFilter}}</td>
+		          <td>{{item.prdtType  | prdtTypeFilter}}</td>
+		          <!-- <td>{{item.memRole  | memRoleFilter}}</td> -->
+		          <td>{{item.memRole | textEmptyFilter}}</td>
+		          <!-- <td>{{item.partnerName}}</td> -->
+		          <!-- <td>{{item.prdtName}}</td> -->
+		          <td>{{item.billNum | textEmptyFilter}}</td>
+		          <td>{{!!item.settAmtPay ? item.settAmtPay : '--'}}</td>
+		          <td>{{!!item.settAmtAct ? item.settAmtAct : '--'}}</td>
+		          <!-- <td><a class="btn btn-link" ui-sref="dls.settlement.detail({memId:item.memId, memRole: item.memRole})" ng-click="goToDetail(item.settNo,item.memRole)" href="javascript:void(0);">查看</a></td> -->
+		          <td><a class="btn btn-link" ui-sref="dls.settlement.detail({settNo:item.settNo, memRole: item.memRole})" href="javascript:void(0);">查看</a></td>
+
+		        </tr>
+		        <tr ng-show="!settlementInfoDatas">
+		        	<td colspan="{{titles.length+3}}">没有任何数据</td>
+		        </tr>
+
+		      </tbody>
+		    </table>
+		</div>
+		<pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination>
+		<p class="item-content"><a href="javascript:void(0);" ui-sref="dls.settlement.manage({startTime:startTime, endTime: endTime})" class="btn btn-primary back">返回</a></p>
+	</section>
+</article>

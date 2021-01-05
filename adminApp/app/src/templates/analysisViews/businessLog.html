@@ -1,0 +1,47 @@
+<article class="bg-2" ng-controller="businessLogCtrl">
+    <header class="h-50 dls-btn-default  lh-50">
+        <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">业务日志</span>
+    </header>
+
+    <section class="flex-container f-s-14">
+        <p class="h-34 lh-34"><label class="w-80 f-w-l">机构名称：</label><label class="f-w-l">{{orgFullNameCN}}</label></p>
+        <p class="h-34 lh-34"><label class="w-80 f-w-l">部门名称：</label><label class="f-w-l">{{deptName}}</label></p>
+        <p class="h-34 lh-34"><label class="w-80 f-w-l">业务产品：</label><input type="radio" name="businessType" value="03" checked>营销类产品<input type="radio" name="businessType" class="m-l-10" value="02">征信类产品<input type="radio" name="businessType" class="m-l-10" value="01">其他</p>
+        <p class="h-34 lh-34"><label class="w-80 f-w-l">查询日期：</label>
+            <date-picker class="inline-block w-150 m-r-10 datePicker ver-mid" dt="startDt" mindt="1970, 5, 22"></date-picker>
+            <span> ~ </span>
+            <date-picker class="inline-block w-150 m-l-10 datePicker ver-mid" dt="endDt" mindt="1970, 5, 22"></date-picker>
+            <button class="btn-primary h-34 p-lr-10 m-l-20 lh-30 ver-mid pri-btn" ng-click="getData()">查询</button>
+            <a class="btn btn-success h-34 p-lr-10 m-l-20 lh-30 ver-mid pri-btn" target="_blank" href="../../api/stt/log/statistics/list/export?startTime={{start}}&endTime={{end}}&prdtType={{prdtType}}">导出</a>
+        </p>
+        <p class="h-34 lh-34 f-col-red m-t-10">截至{{end}}： 交易品累计买入量：{{prdtBuyNumTot}}条<span class="p-lr-20">交易品累计卖出量：{{prdtSoldNumTot}}条</span></p>
+        <hr class="m-tb-10">
+        <p class="h-34 lh-34">交易品总数：{{prdtNum}}个</p>
+        <p class="h-34 lh-34"><label class="w-170 f-w-l">互联需方：{{demNum}}家</label><label class="f-w-l">交易品买入量：{{prdtBuyNum}}条</label></p>
+        <p class="h-34 lh-34"><label class="w-170 f-w-l">互联供方：{{supNum}}家</label><label class="f-w-l">交易品卖出量：{{prdtSoldNum}}条</label></p>
+        <p class="h-34 lh-34 f-col-red">交易中心每日00:00进行业务日志统计，当前数据更新至*{{updateTime}}*</p>
+        <div class="dls-grid m-l-0 m-t-10 p-r-10">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr class='grid-header-row'>
+                    <th>序号</th>
+                    <th ng-repeat="col in businessLogGrid.columnDefs">
+                        {{col.displayName}}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="data in originDatas" class="grid-body-row">
+                    <td class="grid-body-row-content">{{$index+1}}</td>
+                    <td ng-repeat="col in businessLogGrid.columnDefs" class="grid-body-row-content">
+                        <span ng-if="'supNum' == col.field" class="f-col-3" ng-click="detail('sup',data.prdtIdCd)">{{data[col.field]}}</span>
+                        <span ng-if="'demNum' == col.field" class="f-col-3" ng-click="detail('dem',data.prdtIdCd)">{{data[col.field]}}</span>
+                        <span ng-if="'supNum' != col.field && 'demNum' != col.field">{{data[col.field]}}</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems" class="m-l-20"></pagination>
+        </div>
+    </section>
+</article>

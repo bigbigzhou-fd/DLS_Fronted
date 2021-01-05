@@ -1,0 +1,42 @@
+<div ng-controller="tradeMallSetCtrl">
+    <section class="p-t-10">
+        <label class="f-s-12 p-lr-10">搜索</label>
+        <div class="relative inline-block w-400">
+            <span class="iconfont icon-search"></span>
+            <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" placeholder="请输入想搜索的关键字,不同关键字之间用空格分隔" ng-model="searchText" ng-keyup="searchSet($event)">
+            <span class="iconfont icon-enter"></span>
+        </div>
+    </section>
+
+    <div ng-show = "showsetData">
+        <section class="container-fluid m-t-10 m-l--20">
+            <div class="dls-grid" ng-class="{true:'aside-short',false:'aside-long'}[aside.shortType]">
+                <table class="table table-bordered table-hover table-striped" id={{tradeMallSetsGrid.id}} dls-grid datas="tradeMallSetsGrid">
+                    <thead>
+                    <tr class='grid-header-row'>
+                        <th style="width:300px">互联对象编号</th>
+                        <th style="width:{{col.width}}" ng-repeat="col in tradeMallSetsGrid.columnDefs">{{col.displayName}}</th>
+                        <th style="width:{{tradeMallSetsGrid.widths[6].width}}">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="data in originDatas" ng-class={true:'selectRow'}[data.isSelected] class="grid-body-row" ng-click="selectRow($event,data)">
+                        <td class="f-col-3 grid-body-row-content" ng-click="showDetailData($index,$event)">{{data['connSetNo']}}</td>
+                        <td ng-repeat="col in tradeMallSetsGrid.columnDefs" class="grid-body-row-content">
+                            {{data[col.field]}}
+                        </td>
+                        <td style="text-align: center">
+                            <a ng-click="checkData(data)">加入购物车</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <pagination class="m-l-20" options="pageOptions" cur-page="curPage"></pagination>
+    </div>
+    <div ng-show = "!showsetData" class="text-center min-h-400 lh-300">
+        搜索结果为 0 ，请更换搜索关键词
+    </div>
+</div>

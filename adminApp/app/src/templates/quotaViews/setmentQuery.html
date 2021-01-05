@@ -1,0 +1,137 @@
+<article class="bg-2" ng-controller="quotaStatementsCtrl">
+	<header class="h-50 dls-btn-default  lh-50">
+	    <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">结算单查询</span>
+	    <a ng-if="!!permissions.hasPermission('73')" class="btn-dowmload" href={{"../../api/acc/settlement/list/export?year="+clearYear+"&month="+clearMonth+"&memId="+memId}}><span class="iconfont icon-download"></span>导出结算单</a>
+	</header>
+
+		<section class="flex-container f-s-12">
+			<p class="cart-item item-title">结算单查询</p>
+			<div class="item-content flex flex-d-r">
+				<label class="infoLbl infoDate">结算单日期：</label>
+				<select class="form-control form-short-select w-150 m-r-10 no-border-radius" name="clear-year" ng-model="clearYear">
+	                <option ng-repeat="year in years" value="{{years[$index]}}">{{years[$index]}}</option>
+	            </select>
+
+	            <select class="form-control form-short-select w-150 m-l-10 no-border-radius" name="clear-month" ng-model="clearMonth">
+	                <option ng-repeat="num in months.num" value="{{months.num[$index]}}">{{months.name[$index]}}</option>
+		        </select>
+				<button class="btn-success" ng-click="getDatas(clearYear,clearMonth)">查询</button>
+
+			</div>
+
+			<article ng-if="!!statementsOrderDatas.orderList.length">
+				<h1 class="account-title">上海数据交易中心结算单</h1>
+
+				<p class="cart-item item-title">概要信息</p>
+				<p class="item-content">
+					<label class="infoLbl">本方机构：</label>
+					<span class="infoContent" ng-bind="statementsOrderDatas.getCompAndDept"> </span>
+					<label class="infoLbl">结算周期：</label>
+					<span class="infoContent"　>{{statementsOrderDatas.cycle}}</span>
+					<label class="infoLbl">应收金额：</label>
+					<span class="infoContent" ng-bind="statementsOrderDatas.rcvAmt | currency : '￥'"></span>
+					<label class="infoLbl">应付金额：</label>
+					<span class="infoContent" ng-bind="statementsOrderDatas.payAmt | currency : '￥'"></span>
+				</p>
+
+				<div class="dls-tab">
+					<table id="summaryTab" class="table table-bordered table-striped">
+				      <thead>
+						<tr class="primary">
+							<th ng-repeat="title in outlineTitles">{{title}}</th>
+				        </tr>
+				      </thead>
+				      <tbody>
+				      	<tr ng-repeat="item in statementsOrderDatas.orderList">
+				          <td>{{$index+1}}</td>
+				          <td>{{item.oppositeInstitude}}</td>
+				          <td>{{item.receive  | dlsCurrencyFilter}}</td>
+				          <td>{{item.pay  | dlsCurrencyFilter}}</td>
+				        </tr>
+				        <tr>
+				        	<td><span ng-bind="statementsOrderDatas.orderList.length+1"></span></td>
+				        	<td>总计</td>
+				        	<td><span ng-bind="statementsOrderDatas.rcvAmt | dlsCurrencyFilter"></span></td>
+				        	<td><span ng-bind="statementsOrderDatas.payAmt | dlsCurrencyFilter"></span></td>
+				        </tr>
+
+				      </tbody>
+				    </table>
+				</div>
+
+				<p class="cart-item item-title">结算明细</p>
+				<div class="dls-tab">
+					<table id="detailTab" class="table table-bordered table-striped">
+					<thead>
+						<tr class="primary">
+				          <th ng-repeat="title in statementsTitles">{{title}}</th>
+				        </tr>
+				      </thead>
+				      <tbody>
+				      	<tr ng-repeat="item in statementsOrderDatas.orderList">
+				      	  <td>{{$index+1}}</td>
+				          <td>{{item.oppositeInstitude}}</td>
+				          <td><button class="btn btn-link">{{item.id}}</button></td>
+				          <td>{{item.name}}</td>
+				          <td>{{item.roleName}}</td>
+				          <td>{{'02' === item.clearingType ? "集中清算" : "双边清算"}}</td>
+				          <td>{{item.receive  | dlsCurrencyFilter}}</td>
+				          <td>{{item.pay  | dlsCurrencyFilter}}</td>
+				        </tr>
+
+				      </tbody>
+				    </table>
+				</div>
+
+				<p class="cart-item item-title">订单内容明细</p>
+				<article class="order-detail" ng-repeat="item in statementsOrderDatas.orderList">
+					<p class="item-content">
+						<label class="infoLbl">订单ID：</label>
+						<span class="infoContent" ng-bind="item.id"></span>
+						<label class="infoLbl">订单名称： </label>
+						<span class="infoContent" ng-bind="item.name"></span>
+						<label class="infoLbl">本方角色：</label>
+						<span class="infoContent" ng-bind="item.roleName"></span>
+						<label class="infoLbl">生效日期：</label>
+						<span class="infoContent" ng-bind="item.orderEffectDate"></span>
+						<label class="infoLbl">失效日期：</label>
+						<span class="infoContent" ng-bind="item.orderExpiryDate"></span>
+						<br>
+						<label class="infoLbl">供方确认时间：</label>
+						<span class="infoContent" ng-bind="item.confirmTime"></span>
+					</p>
+
+					<div class="dls-tab">
+						<table id="contentTab" class="table table-bordered table-striped">
+					      <thead>
+					      	<tr class="primary">
+					          <th ng-repeat="title in statementsOrderTitles">{{title}}</th>
+					        </tr>
+					      </thead>
+					      <tbody>
+					      	<tr>
+					          <td>{{"1010101" === item.connObjCatCd ? "单品" : "套餐"}}</td>
+					          <td>{{item.connObjId}}</td>
+					          <td>{{item.ConnObjVer}}</td>
+					          <td>{{item.connObjName}}</td>
+					          <td>{{item.chargetype}}</td>
+					          <td>{{item.taskNum}}</td>
+					          <td>{{item.expectPrice}}</td>
+					          <td>{{item.receive}}</td>
+					          <td>{{item.pay}}</td>
+					        </tr>
+
+					      </tbody>
+					    </table>
+					</div>
+				</article>
+
+			</article>
+
+			<article ng-if="!statementsOrderDatas.orderList.length">
+				<h1 class="account-title m-b-250">暂无数据</h1>
+			</article>
+
+
+		</section>
+</article>

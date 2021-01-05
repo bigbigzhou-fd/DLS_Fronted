@@ -1,0 +1,96 @@
+<article class="bg-2" ng-controller="settlementDetailCtrl">
+	<header class="h-50 dls-btn-default  lh-50">
+	    <span class="pull-left inline-block ver-mid lh-50 p-l-20 f-s-16 f-col-2 f-w-b">结算单管理>> </span>
+	    <span class="pull-left inline-block ver-mid lh-50  f-s-16 f-col-2 f-w-b">结算单信息>> </span>
+	    <span class="pull-left inline-block  lh-50  f-s-16 f-col-2 f-w-b">结算单详情</span>
+	    <!-- <a ng-if="!!permissions.hasPermission('93')" class="btn-dowmload" href={{"../../api/stt/sett/dataTable/admin/export?settNo="+settNo}}><span class="iconfont icon-download"></span>导出结算单</a> -->
+	</header>
+
+	<section class="flex-container f-s-12">
+		<!-- <p class="item-content">
+			<label class="infoLbl">订单名称：</label>
+			<span class="infoContent" ng-bind="datas.orderName"></span>
+		</p> -->
+		<p class="item-content">
+			<label class="infoLbl">结算单编号：</label>
+			<span class="infoContent" ng-bind="datas.settNo"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">结算起止日期：</label>
+			<span class="infoContent" ng-bind="datas.startTime"></span>
+			至
+			<span class="infoContent" style="margin-left: 20px;" ng-bind="datas.endTime"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">成员角色：</label>
+			<span class="infoContent" ng-bind="datas.memRole | memRoleFilter"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">业务产品：</label>
+			<span class="infoContent" ng-bind="datas.prdtType | prdtTypeFilter"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">结算周期：</label>
+			<span class="infoContent" ng-bind="datas.settPeriod | settPeriodFilter"></span>
+		</p>
+		<p class="item-content" ng-show="datas.paidAmt !== '0' ">
+			<label class="infoLbl">订单应{{'01' === datas.memRole ? '收' : '付'}}金额合计：</label>
+			<!-- <label class="infoLbl">订单应付金额合计：</label> -->
+			<span class="infoContent" ng-bind="datas.paidAct"></span>
+		</p>
+
+		<div class="dls-tab" ng-if=" '05' !== memRole ">
+			<table class="table table-bordered table-striped" style="min-width: 1260px;">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in titles">{{title}}</th>
+		          <th>操作</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in datas.list">
+		          <td ng-bind="$index + 1"></td>
+		          <td ng-bind="item.orderId | textEmptyFilter"></td>
+		          <td ng-bind="item.orderName | textEmptyFilter"></td>
+		          <td ng-bind="item.orgFullNameCN | textEmptyFilter"></td>
+		          <td ng-bind="item.deptName | textEmptyFilter"></td>
+		          <td ng-bind="item.prdtIdCd | textEmptyFilter"></td>
+		          <td ng-bind="item.name | textEmptyFilter"></td>
+		          <td ng-bind="item.connObjId | textEmptyFilter"></td>
+		          <td ng-bind="item.prdtName | textEmptyFilter"></td>
+		          <td ng-bind="item.amount | textEmptyFilter"></td>
+		          <td ng-bind="item.paidAct ? item.paidAct : '--' "></td>
+		          <td ><a class="btn btn-link" ui-sref="dls.settlement.currency({settNo:settNo, taskId: item.taskId})" href="javascript:void(0);">流水信息</a></td>
+		        </tr>
+		      </tbody>
+		    </table>
+		</div>
+
+		<div class="dls-tab" ng-if=" '05' === memRole ">
+			<table class="table table-bordered table-striped">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in titles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in datas.list">
+		          <td ng-bind="$index + 1"></td>
+		          <td ng-bind="item.prdtIdCd | textEmptyFilter"></td>
+		          <td ng-bind="item.prdtName | textEmptyFilter"></td>
+		          <td ng-bind="item.connObjId | textEmptyFilter"></td>
+		          <td ng-bind="item.name | textEmptyFilter"></td>
+		          <td ng-bind="item.amount | textEmptyFilter"></td>
+		          <td ng-bind="item.price | moneyEmptyFilter"></td>
+		          <td ng-bind="item.paidAct ? item.paidAct : '--' "></td>
+		        </tr>
+		      </tbody>
+		    </table>
+		</div>
+
+
+		<p class="item-content" style="margin-bottom: 42px;height: 42px;"><a href="javascript:history.go(-1);" class="btn btn-primary back">返回</a></p>
+
+		 <!-- <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination> -->
+	</section>
+</article>

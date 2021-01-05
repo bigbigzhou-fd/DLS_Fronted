@@ -1,0 +1,167 @@
+<article class="bg-2" ng-controller="myAccountCtrl">
+    <header class="h-50 dls-btn-default  lh-50" style="width: 1150px;">
+        <span class="pull-left inline-block  lh-50 p-lr-20 f-s-16 f-col-2 f-w-b">我的账户</span>
+    </header>
+    <section class="flex-container">
+        <div class="">
+            <p class="item-content">
+                <label class="infoLbl">机构名称：</label>
+                <span class="infoContent" ng-bind="accountDatas.orgFullNameCN"></span>
+            </p>
+        </div>
+        <div class="">
+            <p class="item-content">
+                <label class="infoLbl">部门名称：</label>
+                <span class="infoContent" ng-bind="accountDatas.deptName"></span>
+            </p>
+        </div>
+        <div class=" flex flex-d-r">
+            <p class="item-content">
+                <label class="infoLbl">充值金额：</label>
+                <span class="infoContent" ng-bind="accountDatas.avaLmt  | currency"></span>元
+
+                <span class="glyphicon glyphicon-info-sign" uib-popover="{{'充值金额为上次清算后的全部资金信息，包含账户可用余额和已分配到产品的分配额度。'}}"
+                      popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+            </p>
+            <p class="item-content">
+                <label class="infoLbl">可计提金额：</label>
+                <span class="infoContent" ng-bind="accountDatas.accruedLmt  | currency"></span>元
+
+                <span class="glyphicon glyphicon-info-sign" uib-popover="{{'可计提金额为上次清算后，累计收入的金额信息。'}}"
+                      popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+            </p>
+            <p class="item-content">
+                <label class="infoLbl">冻结金额：</label>
+                <span class="infoContent" ng-bind="accountDatas.freLmt  | currency"></span>元
+
+                <span class="glyphicon glyphicon-info-sign" uib-popover="{{'冻结金额为上次清算后的在账户上由于未核对发票等原因暂时不能使用的金额。'}}"
+                      popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+            </p>
+            <p class="item-content">
+                <button type='button' class='btn btn-primary' ui-sref="dls.account.freezeList">冻结记录</button>
+                <a target="_blank" class='btn btn-primary' href="../../api/acc/user/account/export/">导出账户明细</a>
+            </p>
+        </div>
+        <div class=" flex flex-d-r">
+            <p class="item-content">
+                <label class="infoLbl">授信额度：</label>
+                <span class="infoContent" ng-bind="accountDatas.crdLmt  | currency"></span>元
+
+                <span class="glyphicon glyphicon-info-sign" uib-popover="{{'授信额度为交易中心给予用户的信用额度'}}"
+                      popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+            </p>
+            <p class="item-content">
+                <label class="infoLbl">可用授信额度：</label>
+                <span class="infoContent" ng-bind="accountDatas.avaCrdLmt  | currency"></span>元
+
+                <span class="glyphicon glyphicon-info-sign" uib-popover="{{'可用授信额度为上次清算后剩余未被使用的信用额'}}"
+                      popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+            </p>
+        </div>
+        <div ng-if="accountDatas.hasExecLqd == '0'" class="f-s-12 f-col-red">* 说明：账户信息还未进行交易清算</div>
+        <div ng-if="accountDatas.hasExecLqd == '1'" class="f-s-12 f-col-red">* 说明：账户信息于 {{accountDatas.LQDTime}} 根据交易清算进行更新</div>
+        <div class="dls-panel">
+            <div class="dls-panel-heading" style="color: #0068B7">账户详情</div>
+            <div class="dls-panel-body">
+                <div class=" flex flex-d-r">
+                    <p class="item-content">
+                        <label class="infoLbl">累计交易消费：</label>
+                        <span class="infoContent" ng-bind="accountDatas.amt_spend  | currency"></span>元
+                        <span class="glyphicon glyphicon-info-sign" uib-popover="{{'累计交易收入为上次清算至当前时刻的应付金额，由于统计误差，可能会与实际消费金额有差异，请以清算单为准。'}}"
+                              popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+                    </p>
+                    <p class="item-content">
+                        <label class="infoLbl">累计交易收入：</label>
+                        <span class="infoContent" ng-bind="accountDatas.amt_earn  | currency"></span>元
+                        <span class="glyphicon glyphicon-info-sign" uib-popover="{{'累计交易收入为上次清算至当前时刻的应收金额，由于统计误差，可能会与实际消费金额有差异，请以清算单为准。'}}"
+                              popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+                    </p>
+                </div>
+                <div class="flex flex-d-r">
+                    <p class="item-content">
+                        <label class="infoLbl">充值金额：</label>
+                        <span class="infoContent" ng-bind="accountDatas.totLmtReal  | currency"></span>元
+                    </p>
+                    <p class="item-content">
+                        <label class="infoLbl">可计提金额：</label>
+                        <span class="infoContent" ng-bind="accountDatas.accruedLmtReal  | currency"></span>元
+                    </p>
+                    <p class="item-content">
+                        <label class="infoLbl">可用授信额度：</label>
+                        <span class="infoContent" ng-bind="accountDatas.avaCrdLmtReal  | currency"></span>元
+                    </p>
+                </div>
+                <div class="f-s-12 f-col-red">* 说明：金额更新至{{accountDatas.nowTime}}可能会与实际交易金额有差异</div>
+            </div>
+        </div>
+        </div>
+        <div ng-show="prdtArr.length != 0">
+            <div>
+                <ul class="flex">
+                    <li class='f-s-14 btn btn-default h-34 lh-34 p-lr-10'
+                        ng-class="{'btn-primary': prdtType === item.prdtType}" ng-click="selectPrdt(item.prdtType)"
+                        ng-repeat="item in prdtArr">{{item.name}}
+                    </li>
+                </ul>
+            </div>
+            <div class="dls-panel">
+                <div class="dls-panel-heading" style="color: #0068B7">{{accountData.name}}账户</div>
+                <div class="dls-panel-body">
+                    <div class=" flex flex-d-r">
+                        <p class="item-content">
+                            <label class="infoLbl">分配额度：</label>
+                            <span class="infoContent" ng-bind="accountData.disLmt | currency"></span>元
+                            <span class="glyphicon glyphicon-info-sign" uib-popover="{{'分配额度说明：充值额度为上次清算后，产品账户中可以用于数据交易消费的额度'}}"
+                                  popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+                        </p>
+                        <p class="item-content">
+                            <label class="infoLbl">赠送额度：</label>
+                            <span class="infoContent" ng-bind="accountData.handSelLmt | currency"></span>元
+                            <span class="glyphicon glyphicon-info-sign" uib-popover="{{'赠送额度为交易中心给予用户的优惠额度'}}"
+                                  popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+                        </p>
+                        <p class="item-content">
+                            <label class="infoLbl">可用赠送额度：</label>
+                            <span class="infoContent" ng-bind="accountData.avaHandSelLmt | currency"></span>元
+                            <span class="glyphicon glyphicon-info-sign" uib-popover="{{'可用赠送额度为上次清算后剩余未被使用的赠送额'}}"
+                                  popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+                        </p>
+                    </div>
+                    <div ng-if="accountDatas.hasExecLqd == '0'" class="f-s-12 f-col-red">* 说明：账户信息还未进行交易清算</div>
+                    <div ng-if="accountDatas.hasExecLqd == '1'" class="f-s-12 f-col-red">* 说明：账户信息于 {{accountDatas.LQDTime}} 根据交易清算进行更新</div>
+                </div>
+
+                <div class="dls-panel">
+                    <div class="dls-panel-heading" style="color: #0068B7">交易详情</div>
+                    <div class="dls-panel-body">
+                        <div class=" flex flex-d-r">
+                            <p class="item-content">
+                                <label class="infoLbl">累计交易消费：</label>
+                                <span class="infoContent" ng-bind="accountData.amt_prdt_spend | currency"></span>元
+                                <span class="glyphicon glyphicon-info-sign" uib-popover="{{'累计交易收入为指定产品账户上次清算至当前时刻的应付金额，由于统计误差，可能会与实际消费金额有差异，请以清算单为准。'}}"
+                                      popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+                            </p>
+                            <p class="item-content">
+                                <label class="infoLbl">累计交易收入：</label>
+                                <span class="infoContent" ng-bind="accountData.amt_prdt_earn | currency"></span>元
+                                <span class="glyphicon glyphicon-info-sign" uib-popover="{{'累计交易收入为指定产品账户上次清算至当前时刻的应收金额，由于统计误差，可能会与实际消费金额有差异，请以清算单为准。'}}"
+                                      popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+                            </p>
+                        </div>
+                        <div class=" flex flex-d-r">
+                            <p class="item-content">
+                                <label class="infoLbl">分配额度：</label>
+                                <span class="infoContent" ng-bind="accountData.disLmtReal | currency"></span>元
+                            </p>
+                            <p class="item-content">
+                                <label class="infoLbl">可用赠送额度：</label>
+                                <span class="infoContent" ng-bind="accountData.avaHandSelLmtReal | currency"></span>元
+                            </p>
+                        </div>
+                        <div class="f-s-12 f-col-red">* 说明：账户信息于 {{accountDatas.nowTime}} 根据交易结算进行更新</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</article>

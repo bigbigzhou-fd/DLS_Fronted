@@ -1,0 +1,25 @@
+<div class="dls-tab"  ng-class="{'dls-table-scroll-container' : widthFlag}">
+	<table id="{{tabId}}" class="table table-bordered table-striped" ng-class="{'dls-table-width' : widthFlag}" ng-style="{'min-width':width+'px'}">
+      <thead>
+        <tr class="primary">
+          <th ng-repeat="title in titles">{{title}}</th>
+          <th ng-if="!transHide">操作</th>
+        </tr>
+      </thead>
+      <tbody ng-click="tabOperate($event)">
+        <tr ng-repeat="item in datas">
+          <td>{{$index+1}}</td>
+          <td ng-repeat="(key,val) in item track by $index"  id={{key}} >
+            <span ng-if="key!='status' && key!='id'" ng-bind="item[key]"></span>
+            <state-btn ng-if="key=='status'" data="item.status"></state-btn>
+            <a ng-if="key=='id'" ng-class="{'dls-table-td-link':key=='id'}" ui-sref="dls.account.order({odId:item[key]})" ng-bind="item[key]" href="javascript:void(0);"></a>
+          </td>
+          <td ng-transclude="" ng-if="!transHide"></td>
+        </tr>
+
+        <tr ng-if="datas.length==0">
+            <td colspan="{{transHide?titles.length:(titles.length+1)}}">没有任何数据</td>
+        </tr>
+      </tbody>
+    </table>
+</div>

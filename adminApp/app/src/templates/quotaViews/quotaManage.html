@@ -1,0 +1,39 @@
+<article class="bg-2" ng-controller="quotaManageCtrl">
+	<header class="h-50 dls-btn-default ver-mid lh-50">
+	    <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">额度管理</span>
+	</header>
+
+	<section class="flex-container">
+		<!-- <label class="radio-inline">搜索</label> -->
+		<div class="search-group">
+			<span class="iconfont icon-search" ng-click="getQuotaLists(searchText)"></span>
+			<input type="text" ng-keyup="searchItem($event)" placeholder="请输入想搜索的关键字" class="table-search form-control p-lr-25 no-border-radius" name="table-search" ng-model="searchText">
+			<span class="iconfont icon-enter" ng-click="search(searchText)"></span>
+		</div>
+
+		<div class="dls-tab">
+			<table class="table table-bordered table-striped">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in titles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in quotaLists">
+		          <td ng-bind="$index+1"></td>
+		          <td>{{item.memId}}</td>
+		          <td>{{item.orgFullNameCN}}</td>
+		          <td>{{item.deptName}}</td>
+		          <!-- <td><sign-currency data="item.totLmt" type="'01'"}}></sign-currency></td> -->
+		          <td>{{item.totLmt}}</td>
+		          <td>{{item.timestamp}}</td>
+		          <td>{{item.status}}</td>
+		          <td><a ui-sref="dls.quota.record({memId:item.memId})">历史记录</a>&nbsp&nbsp&nbsp<a ui-sref="dls.quota.adjust({memId:item.memId})">调整额度</a></td>
+		        </tr>
+
+		      </tbody>
+		    </table>
+		</div>
+		<pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination>
+	</section>
+</article>

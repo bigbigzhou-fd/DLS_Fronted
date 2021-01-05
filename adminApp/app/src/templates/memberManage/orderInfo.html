@@ -1,0 +1,52 @@
+<article class="bg-2" ng-controller="orderInfoCtrl">
+    <header class="h-50 dls-btn-default ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">订单列表</span>
+    </header>
+
+    <section class="flex-container">
+        <div class="cart-item flex flex-d-r">
+            <label class="radio-inline">
+                <input class="cart-ratio" type="radio" name="searchTypeVal" ng-value="2" ng-model="searchType"> 订单编号
+            </label>
+            <label class="radio-inline">
+                <input class="cart-ratio" type="radio" name="searchTypeVal" ng-value="3" ng-model="searchType"> 需方名称
+            </label>
+            <label class="radio-inline">
+                <input class="cart-ratio" type="radio" name="searchTypeVal" ng-value="4" ng-model="searchType"> 供方名称
+            </label>
+        </div>
+
+        <div class="relative inline-block w-400">
+            <span class="iconfont icon-search" ng-click="getDatas()"></span>
+            <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" placeholder="请输入想搜索的关键字" ng-model="searchText">
+            <span class="p-r-10 iconfont icon-enter" ng-click="getDatas()"></span>
+        </div>
+
+        <div class="dls-grid m-t-10 m-l-0">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr class='grid-header-row'>
+                    <th style="min-width:{{col.width}}px" ng-repeat="col in order_info_titles.columnDefs">{{col.displayName}}</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="grid-body-row" ng-repeat="list in MemOrderInfo">
+                    <td class="grid-body-row-content">{{$index+1}} </td>
+                    <td class="grid-body-row-content f-col-3" ng-click="detail(list.orderId)">{{list.orderId}} </td>
+                    <td class="grid-body-row-content">{{list.name | textEmptyFilter}}</td>
+                    <td class="grid-body-row-content">{{list.demMemName | textEmptyFilter}} </td>
+                    <td class="grid-body-row-content">{{list.supMemName | textEmptyFilter}}</td>
+                    <td class="grid-body-row-content">{{list.orderEffectDate | textEmptyFilter}}</td>
+                    <td class="grid-body-row-content">{{list.orderExpiryDate | textEmptyFilter}}</td>
+                    <td class="grid-body-row-content"><state-btn data="list.status"></state-btn></td>
+                    <td class="grid-body-row-content"> <span class="f-col-3" ng-click="setStatus(list.orderId, '05')">生效</span> <span class="m-l-10 f-col-red" ng-click="setStatus(list.orderId, '06')">失效</span> </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <pagination cur-page="curPage" options="pageOptions"></pagination>
+
+    </section>
+</article>

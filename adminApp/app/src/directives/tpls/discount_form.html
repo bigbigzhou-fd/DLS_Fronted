@@ -1,0 +1,54 @@
+<form class="form-horizontal m-b-50">
+
+  <div class="form-group">
+    <label for="memId" class="col-sm-2 control-label">会员编号</label>
+    <div class="col-sm-4">
+      <input type="txt" class="form-control" ng-model="data.memId" name="memId" placeholder="会员编号">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="memRole" class="col-sm-2 control-label">会员角色</label>
+    <div class="col-sm-4">
+      <label class="radio-inline">
+        <input class="cart-ratio" type="radio" name="memRole" ng-model="data.memRole" id="01" value="01"> 供方会员
+      </label>
+      <label class="radio-inline">
+        <input class="cart-ratio" type="radio" name="memRole" ng-model="data.memRole" id="02" value="02"> 需方会员
+      </label>
+      <label class="radio-inline">
+        <input class="cart-ratio" type="radio" name="memRole" ng-model="data.memRole" id="03" value="03"> 服务会员
+      </label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="prdtType" class="col-sm-2 control-label">产品类型</label>
+    <div class="col-sm-4">
+      <label class="radio-inline">
+        <input class="cart-ratio" type="radio" name="prdtType" ng-model="data.prdtType" id="01" value="01"> 普通产品
+      </label>
+      <label class="radio-inline">
+        <input class="cart-ratio" type="radio" name="prdtType" ng-model="data.prdtType" id="02" value="02"> 征信类产品
+      </label>
+      <label class="radio-inline">
+        <input class="cart-ratio" type="radio" name="prdtType" ng-model="data.prdtType" id="03" value="03"> 营销类产品
+      </label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="memDiscount" class="col-sm-2 control-label">会员折扣</label>
+    <div class="col-sm-4">
+      <input type="txt" class="form-control" ng-model="data.memDiscount" name="memDiscount" placeholder="会员折扣">
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary" ng-if="flag" ng-click="edit()">编辑</button>
+
+      <button type="submit" class="btn btn-primary" ng-if="!flag" ng-click="save()">保存</button>
+      <button type="submit" class="btn btn-default" ng-if="!flag" ng-click="cancle()">取消</button>
+    </div>
+  </div>
+    <hr>
+</form>

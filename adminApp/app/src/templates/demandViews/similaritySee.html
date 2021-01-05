@@ -1,0 +1,35 @@
+<div class="bg-2" ng-controller="demandSimilarityCtrl">
+    <header class="h-50 dls-btn-default ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">相似度详情</span>
+    </header>
+
+    <section class="flex-container f-s-12">
+			<p class="item-title" style="line-height: 34px">
+				共匹配到<span ng-bind="pageOptions.total_items_num"></span>项相似交易品信息，您可展开交易品查看具体供方信息
+				<a href="javascript:history.go(-1);" class="btn btn-primary pull-right no-border-radius">返回</a>
+			</p>
+
+			<div class="dls-tab" style="width: 100%">
+				<table class="table table-bordered table-striped" style="min-width: 135%;">
+			      <thead>
+			        <tr class="primary">
+			          <th ng-repeat="title in titles">{{title}}</th>
+			        </tr>
+			      </thead>
+			      <tbody>
+			        <tr ng-repeat="item in datas.list">
+			          <td><span ng-bind="item.simiDegree | textEmptyFilter"></span><span ng-show="!!item.simiDegree">%</span></td>
+			          <td>
+			          	<a ng-bind="item.prdtIdName | textEmptyFilter" ui-sref="dls.demand.goodsItem({prdtIdcd:item.prdtIdcd,prdtType: item.prdtType,reqId:reqId})" ng-click="detail(item)"></a>
+			          </td>
+			          <td ng-bind="item.prdtType | prdtTypeFilter"></td>
+			          <td ng-bind="item.responseNum | textEmptyFilter"></td>
+			          <!-- <td ng-bind="item.prdtIdDesc"></td> -->
+			          <td ng-bind="item.value_ex"></td>
+			        </tr>
+			      </tbody>
+			    </table>
+			  </div>
+			  <pagination  options="pageOptions" cur-page="curPage" sum="totalItems"></pagination>
+    </section>
+</div>

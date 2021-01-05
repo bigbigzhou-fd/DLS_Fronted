@@ -1,0 +1,61 @@
+<article class="bg-2">
+    <header class="h-50 dls-btn-default ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">工单列表</span>
+    </header>
+    <div class="flex-container">
+        <div class="w-500">
+            <div class="relative cart-item">
+                <span class="iconfont icon-search"></span>
+                <input type="text" placeholder="请输入想搜索的关键字" class="h-30 lh-30 p-lr-25 no-border-radius w-300" name="table-search" ng-model="searchContent">
+                <select class="inline-block lh-30 h-30" ng-options="item.value as item.name for item in workOrderStatusData" ng-model="workOrderStatus"></select>
+                <!--<button class="btn btn-primary" ng-click="searchItem()">搜索</button>-->
+            </div>
+        </div>
+        <div class="m-t-20">
+            <p class="h-34 lh-34">共有{{pageOptions.total_items_num}}条工单信息</p>
+            <div class="dls-grid m-l-0 m-t-10 p-r-10">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr class='grid-header-row'>
+                            <th>工单编号</th>
+                            <th>订单编号</th>
+                            <th>生效日期</th>
+                            <th>失效日期</th>
+                            <th>状态</th>
+                            <th ng-show="role === 'dem'">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in listDatas" class="grid-body-row">
+                            <td class="grid-body-row-content f-col-3">
+                                <span ng-show="role === 'dem' && data.status != '04'" ng-click="routerConfig(data)">{{data.jobId}}</span>
+                                <span ng-show="role === 'dem' && data.status === '04'">{{data.jobId}}</span>
+                                <span ng-show="role === 'sup'" ng-click="detail(data)">{{data.jobId}}</span>
+                            </td>
+                            <td class="grid-body-row-content f-col-3">
+                                <span ng-click="order(data.orderId)">{{data.orderId}}</span>
+                            </td>
+                            <td class="grid-body-row-content">
+                                <span>{{data.orderEffectDate}}</span>
+                            </td>
+                            <td class="grid-body-row-content">
+                                <span>{{data.orderExpiryDate}}</span>
+                            </td>
+                            <td class="grid-body-row-content">
+                                <span>{{data.status | workOrderStatus}}</span>
+                            </td>
+                            <td class="grid-body-row-content f-col-3" ng-show="role === 'dem'">
+                                <span ng-show="data.status != '04'" ng-click="routerConfig(data)">路由配置</span>
+                            </td>
+                        </tr>
+                        <tr class="text-center" ng-show="listDatas.length === 0">
+                            <td colspan="6">暂无数据</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <pagination class="m-l-20 m-t-20" options="pageOptions" cur-page="curPage"></pagination>
+            </div>
+        </div>
+    </div>
+</article>

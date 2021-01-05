@@ -1,0 +1,85 @@
+<article class="bg-2" ng-controller="settlementDetailCtrl">
+	<header class="h-50 dls-btn-default  lh-50">
+	    <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">结算单详情</span>
+	    <a ng-if="!!permissions.hasPermission('99')" class="btn-dowmload" href={{"../../api/stt/sett/dataTable/user/export?settNo="+settNo}}><span class="iconfont icon-download"></span>导出结算单</a>
+	</header>
+
+	<section class="flex-container f-s-12">
+		<p class="item-content">
+			<label class="infoLbl">订单名称：</label>
+			<span class="infoContent" ng-bind="datas.orderName | textEmptyFilter"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">结算单编号：</label>
+			<span class="infoContent" ng-bind="datas.settNo | textEmptyFilter"></span>
+		</p>
+
+		<p class="item-content">
+			<label class="infoLbl">订单编号：</label>
+			<span class="infoContent" ng-bind="datas.orderId | textEmptyFilter"></span>
+		</p>
+
+		<p class="item-content">
+			<label class="infoLbl">业务产品：</label>
+			<span class="infoContent" ng-bind="datas.prdtType | prdtTypeFilter"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">结算周期：</label>
+			<span class="infoContent" ng-bind="datas.settPeriod | settPeriodFilter"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">结算起始时间：</label>
+			<span class="infoContent" ng-bind="datas.startTime | textEmptyFilter"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">结算截止时间：</label>
+			<span class="infoContent" ng-bind="datas.endTime | textEmptyFilter"></span>
+		</p>
+		<p class="item-content" ng-show="datas.paidAmt !== '0' ">
+			<label class="infoLbl">实付金额：</label>
+			<span class="infoContent" ng-bind="datas.paidAct ? datas.paidAct : '--' "></span>
+		</p>
+		<p class="item-content" ng-show="datas.rctAmt !== '0' ">
+			<label class="infoLbl">实收金额：</label>
+			<span class="infoContent" ng-bind="datas.rctAct ? datas.rctAct : '--' "></span>
+		</p>
+
+
+
+
+
+
+
+		<div class="dls-tab">
+			<table class="table table-bordered table-striped">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in titles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in datas.list">
+		          <td ng-bind="$index+1"></td>
+		          <td ng-bind="item.prdtIdCd | textEmptyFilter"></td>
+		          <td ng-bind="item.name | textEmptyFilter"></td>
+		          <td ng-bind="item.connObjId | textEmptyFilter"></td>
+		          <td ng-bind="item.prdtName | textEmptyFilter"></td>
+		          <td ng-bind="item.paidAct ? item.paidAct : '--' "></td>
+		          <td ng-bind="item.rctAct ? item.rctAct : '--' "></td>
+		        </tr>
+		        <!-- <tr>
+		        	<td colspan="{{titles.length-2}}">合计</td>
+		        	<td >{{datas.paidAmt}}</td>
+		        	<td >{{datas.rctAmt}}</td>
+		        </tr> -->
+
+		      </tbody>
+		    </table>
+		</div>
+
+
+		<p class="item-content"><a href="javascript:history.go(-1);" class="btn btn-primary back">返回</a></p>
+
+		 <!-- <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination> -->
+	</section>
+</article>

@@ -1,0 +1,89 @@
+.btn-link.active {
+	background-color: #337ab7;
+	color: #fff;
+}
+.ul-container {
+	margin: 10px 20px;
+	text-align: justify;
+	padding-bottom: 0;
+}
+.ul-container li{
+	width: 49%;
+	display: inline-block;
+	vertical-align: top;
+	margin: 5px;
+}
+.ul-container li .wrapper{
+	display: flex;
+	border: solid 1px #ddd;
+	padding: 20px;
+	min-height: 100px;
+	border-radius: 5px;
+}
+
+.ul-container li ~  li {
+	/*margin-top: 10px;*/
+}
+.ul-container li .left {
+	flex:1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+.ul-container .left h1 {
+	font-size: 16px;
+	font-weight: bold;
+	display: inline-block;
+	margin-right: 30px;
+}
+.ul-container .left .items {
+  line-height: 30px;
+}
+.ul-container .left .info .desc{
+  line-height: 24px;
+}
+.ul-container li .right {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	/*min-width: 130px;*/
+	margin-left: 40px;
+}
+.ul-container .right .operation {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	text-align: center;
+}
+.ul-container .right .operation span {
+	font-size: 16px;
+}
+.ul-container .right .operation a ~ a {
+	margin-left: 10px;
+}
+
+.flex-container .title {
+	font-size: 16px;
+	font-weight: bold;
+	color: #337ab7;
+	text-align: center;
+}
+.bill-tab {
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 80px;
+}
+.bill-tab tr td {
+	text-align: center;
+	width: 200px;
+}
+.bill-tab tr td:nth-child(2) {
+	text-align-last: left;
+}
+.bill-tab .primary {
+	color: #fff;
+}
+.bill-tab .primary td {
+	text-align: center;
+}

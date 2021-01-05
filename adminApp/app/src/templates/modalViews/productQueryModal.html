@@ -1,0 +1,62 @@
+<div class="modal-header">
+    <h3 class="modal-title">产品账户开户申请</h3>
+    <span class="glyphicon glyphicon-remove" style="position: absolute;right: 10px;top:10px;cursor: pointer;" ng-click="$ctrl.cancel()"></span>
+</div>
+<div class="modal-body">
+		<p class="item-content">
+			<label class="infoLbl">机构名称：</label>
+			<span class="infoContent" ng-bind="modalDatas.orgFullNameCN"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">部门名称：</label>
+			<span class="infoContent" ng-bind="modalDatas.deptName"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">开户时间：</label>
+			<span class="infoContent" ng-bind="modalDatas.createTime"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">账户号：</label>
+			<span class="infoContent" ng-bind="modalDatas.accountId"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">申请类型：</label>
+			<span class="infoContent">新增产品</span>
+		</p>
+
+		<hr>
+		<p class="item-title">
+			<label class="infoLbl">配置产品信息：</label>
+		</p>
+
+
+			<div class="form-group">
+			    <div class="flex flex-r" >
+			      <div class="checkbox">
+			        <label>业务产品：{{test}}</label>
+			      </div>
+
+			      <div class="checkbox">
+			        <label>
+			          <input type="checkbox" style="margin-top: -3px;" ng-model="modalDatas.prdtTypeList['03']" ng-disabled="modalDatas.prdtAccountStatus['03']" ng-change="selectPrdt('03')"> 营销产品
+			        </label>
+			      </div>
+
+			      <div class="checkbox">
+			        <label>
+			          <input type="checkbox" style="margin-top: -3px;" ng-model="modalDatas.prdtTypeList['02']" ng-disabled="modalDatas.prdtAccountStatus['02']" ng-change="selectPrdt('02')"> 征信产品
+			        </label>
+			      </div>
+
+
+
+			    </div>
+			    <p style="color:grey;font-size: 12px;" ng-if="modalDatas.prdtAccountStatus['03']">营销产品已提交审核申请</p>
+			    <p style="color:grey;font-size: 12px;" ng-if="modalDatas.prdtAccountStatus['02']">征信产品已提交审核申请</p>
+			  </div>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确定</button>
+    <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">取消</button>
+</div>

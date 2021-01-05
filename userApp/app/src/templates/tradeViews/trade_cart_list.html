@@ -1,0 +1,60 @@
+<article class="cart-panel" ng-controller="tradeCartListCtrl">
+    <header class="h-50 dls-btn-default lh-50">
+        <span class="w-250 p-lr-20 f-s-16 f-col-2 f-w-b">购物车</span>
+    </header>
+
+    <section class="flex-container">
+        <div class="btn-group ratio-btns">
+            <label class="btn btn-success" ng-model="prdtType" uib-btn-radio="'03'">营销类数据</label>
+            <label class="btn btn-success" ng-model="prdtType" uib-btn-radio="'02'">征信类数据</label>
+            <label class="btn btn-success" ng-model="prdtType" uib-btn-radio="''">算法模型</label>
+        </div>
+        <div class="cart-item">
+            <label>共有<span>{{datas.length}}</span>条数据信息</label>
+        </div>
+
+        <div class="dls-tab" style="margin-bottom: 10px;">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr class="primary" ng-init="checkedAll = false">
+                    <th><input type="checkbox" ng-model="checkedAll" ng-change="selectAll()"/></th>
+                    <th ng-if="'03' === prdtType" ng-repeat="title in marketingCartListTitles">{{title}}</th>
+                    <th ng-if="'02' === prdtType" ng-repeat="title in creditCartListTitles">{{title}}</th>
+                    <th ng-if="'' === prdtType" ng-repeat="title in creditCartListTitles">{{title}}</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in datas">
+                    <td><input type="checkbox" ng-model="item.checked"
+                               ng-change="selectData(item.checked,item.connObjNo)"/></td>
+                    <td ng-bind="item.prdtType | tagTypeFilter"></td>
+                    <td ng-bind="item.tagName | textEmptyFilter"></td>
+                    <td ng-bind="item.connObjId | textEmptyFilter"></td>
+                    <td><span ng-click="detail(item)"
+                              class="f-col-3 cursor-pointer">{{item.connVer | connVerFilter}}</span></td>
+                    <td ng-if="'03' === prdtType" ng-bind="item.supMemName | textEmptyFilter"></td>
+                    <td ng-if="'02' === prdtType" ng-bind="item.supMemName | textEmptyFilter"></td>
+                    <td ng-if="'' === prdtType" ng-bind="item.supMemName | textEmptyFilter"></td>
+                    <td ng-bind="item.supDeptName | textEmptyFilter"></td>
+                    <td ng-bind="item.price | moneyEmptyFilter"></td>
+                    <td>{{item.valuationModeCd | valuationCountCdFilter}} - {{ item.valuationCountCd |
+                        valuationModeCdFilter}}
+                    </td>
+                    <td>
+                        <button class="btn btn-link" ng-click="deleteItem($index,item.connObjNo)">删除</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="listBtnArea" style="position: relative;top: 20px;">
+            <button class="btn btn-success pull-left cart-confirm-btn" ng-disabled="selectedConnObjNo.length == 0"
+                    ng-click="createOrder()"> 生成订单
+            </button>
+            <a href="javascript:history.go(-1);" class="btn btn-default no-border-radius back" style="margin-left: 10px;">返回</a>
+        </div>
+        <pagination class="m-l-20" options="pageOptions" cur-page="curPage"></pagination>
+    </section>
+</article>

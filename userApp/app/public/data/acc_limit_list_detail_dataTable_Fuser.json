@@ -1,0 +1,110 @@
+{
+	"status": 1,
+	"msg": "成功",
+	"data": {
+		"list": [{
+			"lmtAdjType": "01",
+			"remark": "充值1000元",
+			"timeStamp": "2016-11-25 10:14:36",
+			"adjAmt": "1000.00",
+			"memId": "0000079",
+			"adjUser": "0000079_adm",
+			"id": 79,
+			"adjBal": "3004.32"
+		}, {
+			"lmtAdjType": "03",
+			"remark": "授信额度调增1元",
+			"timeStamp": "2016-11-25 10:14:30",
+			"adjAmt": "1.00",
+			"memId": "0000079",
+			"adjUser": "0000079_adm",
+			"id": 78,
+			"adjBal": "2004.32"
+		}, {
+			"lmtAdjType": "04",
+			"remark": "授信额度调减1元",
+			"timeStamp": "2016-11-25 10:14:27",
+			"adjAmt": "1.00",
+			"memId": "0000079",
+			"adjUser": "0000079_adm",
+			"id": 77,
+			"adjBal": "2003.32"
+		}, {
+			"lmtAdjType": "01",
+			"remark": "充值1000元",
+			"timeStamp": "2016-11-23 11:09:08",
+			"adjAmt": "1000.00",
+			"memId": "0000079",
+			"adjUser": "0000079_adm",
+			"id": 75,
+			"adjBal": "2004.32"
+		}, {
+			"lmtAdjType": "03",
+			"remark": "授信额度调增1000元",
+			"timeStamp": "2016-10-20 13:47:03",
+			"adjAmt": "1000.00",
+			"memId": "0000079",
+			"adjUser": "0000079_adm",
+			"id": 43,
+			"adjBal": "1004.32"
+		}, {
+			"lmtAdjType": "03",
+			"remark": "授信增加0.1元",
+			"timeStamp": "2016-10-06 15:39:56",
+			"adjAmt": "0.10",
+			"memId": "0000079",
+			"adjUser": "0000079_adm",
+			"id": 42,
+			"adjBal": "4.32"
+		}, {
+			"lmtAdjType": "01",
+			"remark": "充值4.22元",
+			"timeStamp": "2016-10-06 15:39:38",
+			"adjAmt": "4.22",
+			"memId": "0000079",
+			"adjUser": "0000079_adm",
+			"id": 41,
+			"adjBal": "4.22"
+		}, {
+			"lmtAdjType": "02",
+			"remark": "提现4.22元",
+			"timeStamp": "2016-10-06 15:39:33",
+			"adjAmt": "4.22",
+			"memId": "0000079",
+			"adjUser": "0000079_adm",
+			"id": 40,
+			"adjBal": "0.00"
+		}, {
+			"lmtAdjType": "01",
+			"remark": "充值2.115元",
+			"timeStamp": "2016-10-06 15:39:22",
+			"adjAmt": "2.12",
+			"memId": "0000079",
+			"adjUser": "0000079_adm",
+			"id": 39,
+			"adjBal": "4.22"
+		}, {
+			"lmtAdjType": "01",
+			"remark": "充值2.111111元",
+			"timeStamp": "2016-10-06 15:39:16",
+			"adjAmt": "2.11",
+			"memId": "0000079",
+			"adjUser": "0000079_adm",
+			"id": 38,
+			"adjBal": "2.11"
+		}],
+		"totalRows": 18,
+		"page": {
+			"pre_more": false,
+			"begin": 0,
+			"rows": 10,
+			"total_rows": 18,
+			"page_list": [1, 2],
+			"end": 0,
+			"suf_more": false,
+			"total_pages": 2,
+			"page": 1
+		}
+	},
+	"msg_level": 1
+}

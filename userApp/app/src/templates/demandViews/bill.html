@@ -1,0 +1,181 @@
+<article class="bg-2" ng-controller="demandBillCtrl">
+	<header class="h-50 dls-btn-default ver-mid lh-50">
+	    <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">需求查询</span>
+			
+	</header>
+	<section class="flex-container">
+		<h1 class="title">数据需求单</h1>
+		<p style="height: 34px;">
+			<a class="btn btn-primary f-r m-l-10" href={{"../../rps/req/req/dtl/export?reqId="+reqId}}>下载</a>
+			<a class="btn btn-primary f-r m-l-10" ng-show="type === '02' && status == 0" ng-click="responseBill('md', 'demandResponse')">响应</a>
+			<a class="btn btn-primary f-r m-l-10" ng-show="type === '02' && status == 1" disabled>已响应</a>
+			<a class="btn btn-primary f-r m-l-10" ng-show="type === '02' && status == 2" disabled>响应</a>
+			<a class="btn btn-primary f-r m-l-10" ng-if="type === '01' && status != 1" ng-click="editBill()">编辑</a>
+			<a class="btn btn-primary f-r" href="javascript:history.go(-1);">返回</a>
+		</p>
+
+		<div class="bill-tab">
+			<table class="table table-bordered">
+		      <tbody>
+		        <tr>
+		          <td>需求单号</td>
+		          <td><span ng-bind="reqId | textEmptyFilter"></span></td>
+		        </tr>
+		        <tr>
+		          <td>机构名称</td>
+		          <td><span ng-bind="datas.orgFullNameCN | textEmptyFilter"></span></td>
+		        </tr>
+						<tr>
+		          <td>机构部门</td>
+		          <td><span ng-bind="datas.deptName | textEmptyFilter"></span></td>
+		        </tr>
+						<tr>
+		          <td>需求发布时间</td>
+		          <td><span ng-bind="datas.publishTime | textEmptyFilter"></span></td>
+		        </tr>
+		        <tr class="primary">
+		          <td colspan='2'>基本信息</th>
+		        </tr>
+						<tr>
+		          <td>应用场景</td>
+		          <td><span class="p-lr-10" ng-repeat="item in scenes" ng-bind="item | reqSceneFilter | textEmptyFilter"></span></td>
+		        </tr>
+						<tr>
+		          <td>需求标题</td>
+		          <td><span ng-bind="datas.keyword | textEmptyFilter"></span></td>
+		        </tr>
+						<tr>
+		          <td>需求描述</td>
+		          <td><span ng-bind="datas.prdtIdDesc | textEmptyFilter"></span></td>
+		        </tr>
+				<tr>
+					<td>数据规模</td>
+					<td><span ng-bind="datas.dataScale | textEmptyFilter"></span></td>
+				</tr>
+				<tr>
+					<td>交付金额</td>
+					<td><span ng-bind="datas.preCharge | textEmptyFilter"></span></td>
+				</tr>
+				<tr>
+					<td>交付截止日期</td>
+					<td><span ng-bind="datas.delDeadline | textEmptyFilter"></span></td>
+				</tr>
+				<tr>
+					<td>交付验收要求</td>
+					<td><span ng-bind="datas.accReq | textEmptyFilter"></span></td>
+				</tr>
+		        <tr>
+		          <td>联系人姓名</td>
+		          <td><span ng-bind="datas.contactName | textEmptyFilter"></span></td>
+		        </tr>
+		        <tr>
+		          <td>联系人电话或邮箱</td>
+		          <td><span ng-bind="datas.contact | textEmptyFilter"></span></td>
+		        </tr>
+
+
+		      </tbody>
+			  <tfoot ng-if="reqType == ''">
+				  <tr class="primary">
+					  <td colspan='2'>查询标识（ID）</th>
+				  </tr>
+				  <tr>
+					  <td>ID类型</td>
+					  <td><span ng-bind="datas.idCdList | textEmptyFilter"></span></td>
+				  </tr>
+				  <tr class="primary">
+					  <td colspan='2'>时间轴元素（TIME）</th>
+				  </tr>
+				  <tr>
+					  <td>更新频率</td>
+					  <td>
+						  <span ng-bind="datas.freqLoop | textEmptyFilter"> </span>
+						  <span ng-bind="datas.freUnit | timeUnitFilter | textEmptyFilter"></span>
+					  </td>
+				  </tr>
+				  <tr>
+					  <td>统计周期</td>
+					  <td>
+						  <span ng-bind="datas.dataLoop | textEmptyFilter"> </span>
+						  <span ng-bind="datas.perUnit | timeUnitFilter | textEmptyFilter"></span>
+					  </td>
+				  </tr>
+				  <tr>
+					  <td>统计时间范围</td>
+					  <td><span ng-bind="datas.timeRange| textEmptyFilter"></span></td>
+				  </tr>
+				  <tr class="primary">
+					  <td colspan='2'>价格元素（PRICE）</th>
+				  </tr>
+				  <tr>
+					  <td>单位</td>
+					  <td>
+						  <span ng-bind="datas.valuationModeCd | valuationCountCdFilter | textEmptyFilter"></span>
+						  <span>;</span>
+						  <span ng-bind="datas.valuationCountCd | valuationModeCdFilter | textEmptyFilter"></span>
+					  </td>
+				  </tr>
+				  <tr>
+					  <td>期望价格(元)</td>
+					  <td><span ng-bind="datas.valuationPrice.replace(',', ' - ') | textEmptyFilter"></span></td>
+				  </tr>
+				  <tr>
+					  <td>备注</td>
+					  <td><span ng-bind="datas.remarks | textEmptyFilter"></span></td>
+				  </tr>
+				  <tr class="primary">
+					  <td colspan='2'>赋值要求（VALUE）</th>
+				  </tr>
+				  <tr>
+					  <td>赋值类型</td>
+					  <td><span ng-bind="datas.valueType | valueType | textEmptyFilter"></span></td>
+				  </tr>
+				  <tr>
+					  <td>赋值说明</td>
+					  <td><span ng-bind="datas.valueEx | textEmptyFilter"></span></td>
+				  </tr>
+				  <tr class="primary">
+					  <td colspan='2'>限定性条件（LIMIT）</th>
+				  </tr>
+				  <tr>
+					  <td>来源行业</td>
+					  <td><span ng-bind="datas.multiSelcategory | textEmptyFilter"></span></td>
+				  </tr>
+				  <tr>
+					  <td>最长延时值(ms)</td>
+					  <td><span ng-bind="datas.maxDelay | textEmptyFilter"></span></td>
+				  </tr>
+				  <tr>
+					  <td>支持并发量(条/ms)</td>
+					  <td><span ng-bind="datas.expConcurrency | textEmptyFilter"></span></td>
+				  </tr>
+				  <tr>
+					  <td>加工方式</td>
+					  <td><span ng-bind="datas.processType | processTypeFilter | textEmptyFilter"></span></td>
+				  </tr>
+				  <tr>
+					  <td>覆盖地域</td>
+					  <td><span ng-bind="datas.multiSelgeo | textEmptyFilter"></span></td>
+				  </tr>
+				  <tr>
+					  <td>覆盖地域备注</td>
+					  <td><span ng-bind="datas.multiSelgeoRemarks | textEmptyFilter"></span></td>
+				  </tr>
+				  <tr>
+					  <td>期望覆盖总量(条)</td>
+					  <td><span ng-bind="datas.expCvgAmount | textEmptyFilter"></span></td>
+				  </tr>
+				  <tr>
+					  <td>预计数据规模(条)</td>
+					  <td><span ng-bind="datas.expDateScale | textEmptyFilter"></span></td>
+				  </tr>
+			  </tfoot>
+		      <!-- <tbody>
+		        <tr ng-repeat="item in datas">
+		          <td ng-bind="item.similarity | texttextEmptyFilter"></td>
+		        </tr>
+		      </tbody> -->
+		    </table>
+		  </div>
+	</section>
+</article>

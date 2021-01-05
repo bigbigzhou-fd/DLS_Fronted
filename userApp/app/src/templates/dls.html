@@ -1,0 +1,75 @@
+<div ng-if="!!isUserAuth" class="container-fluid clear-m-p">
+<div class="container-fluid clear-m-p">
+    <header class="h-80">
+        <section class="pull-left">
+            <a class="logo-md"></a>
+            <i class="iconfont icon-pickup2 lh-80 ver-mid f-col-1 cursor-pointer" ng-click="setAsideStyle()"></i>
+        </section>
+        <section class="pull-right h-80" style="padding-right: 5rem">
+            <a class="relative f-col-3 f-w-l m-lr-8" ui-sref="dls.trade.cartList" title="购物车">
+                <label class="label-link iconfont icon-purchase f-s-26"></label>
+                <b class="badge">{{cartNum}}</b>
+            </a>
+            <a class="relative f-col-3 f-w-l m-lr-8" href="../../user/public/helpDocument.html" target="_blank" title="帮助文档">
+                <label class="label-link iconfont icon-ordermanage f-s-26"></label>
+            </a>
+            <label class="label-link iconfont icon-user f-col-2 f-s-26 ver-mid"></label>
+            <label class="label-link lh-80 f-w-l f-s-12 ver-super">
+                <span ng-bind="currentUser.company"></span>
+                <span ng-bind="currentUser.apartment"></span>
+                <span ng-bind="currentUser.username"></span>
+            </label>
+            <!-- <label class="label-link iconfont icon-arrdown f-s-12 f-col-1 ver-super"></label> -->
+            <div class="logoOut">
+                <uib-accordion>
+                  <div uib-accordion-group class="panel-none" is-open="status.open">
+                    <uib-accordion-heading>
+                      <i class="glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </uib-accordion-heading>
+                    <a class="btn btn-link" ng-click="logoOut()">退出登录</a>
+                    <a class="btn btn-link" ng-click="resetPwd()">修改密码</a>
+                  </div>
+                </uib-accordion>
+            </div>
+        </section>
+
+    </header>
+
+    <div class="flex dls-min-height">
+        <aside ng-if="aside.shortType == false" class="w-225 bg-1" ng-controller="dlsAsideCtrl">
+            <secondary-dropdown data = "dls_operation_btn_datas" cur-state="curState"></secondary-dropdown>
+        </aside>
+
+        <aside ng-if="aside.shortType == true" class="w-50 bg-1" ng-controller="dlsAsideCtrl" ng-include="'src/directives/tpls/aside_short.html'">
+        </aside>
+
+        <div class="flex-1 bg-2 relative ovf-h" ng-controller="dlsMainCtrl" ng-init="curView = 'mall'">
+            <div ui-view="">
+            </div>
+            <div class="loading-bg" ng-show="isLoading">
+                <div class="loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <p class="m-t-30 text-center">数据加载中</p>
+            </div>
+            <footer class="dls-alert">
+                <p class="pull-right lh-50 p-r-40 f-s-12 clear-m-p">
+                    <span class="f-s-12 f-col-1">© 2016 上海数据交易中心有限公司</span>
+                    <a class="f-s-12" href="http://www.miibeian.gov.cn/" target="_blank">沪ICP备沪ICP备17003045号-1</a>
+                    <a href="http://www.sgs.gov.cn/shaic/" target="_blank">
+                        <img class='ver-mid' src="public/images/gongshang.png" alt="工商">
+                    </a>
+                </p>
+            </footer>
+        </div>
+    </div>
+</div>
+
+
+<!-- **********************Login***************************************** -->
+<!-- <dls-login ng-if="!isUserAuth"></dls-login>

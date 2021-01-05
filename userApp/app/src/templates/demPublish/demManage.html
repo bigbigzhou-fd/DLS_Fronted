@@ -1,0 +1,156 @@
+<div class="bg-2 p-b-80 p-lr-20" ng-controller="demManageCtrl">
+    <header class="h-50 dls-btn-default ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">需求管理</span>
+
+        <section class="pull-right lh-50">
+            <button class="btn btn-success inline-block ver-mid" style="margin-right: 20px;" ui-sref="dls.demPublish.demPublish">需求发布</button>
+        </section>
+    </header>
+
+    <div>
+        <button class="btn btn-default" ng-click="choose('01')" ng-class="{'btn-primary':chooseType === '01'}">我的发布</button>
+        <button class="btn btn-default" ng-click="choose('02')" ng-class="{'btn-primary':chooseType === '02'}">我的响应</button>
+    </div>
+
+    <div class="flex m-t-20 f-s-12">
+        <div>
+            <label class='w-80 text-right'>查询日期：</label>
+            <date-picker class="inline-block w-150 m-r-10 datePicker ver-mid" dt="startDt"
+                         mindt="1970, 5, 22"></date-picker>
+            <span> ~ </span>
+            <date-picker class="inline-block w-150 m-l-10 datePicker ver-mid" dt="endDt"
+                         mindt="1970, 5, 22"
+            ></date-picker>
+        </div>
+
+        <div>
+            <label class='w-80 text-right'>搜索：</label>
+            <div class="relative inline-block w-350">
+                <span class="iconfont icon-search"></span>
+                <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" ng-model="searchText" ng-keyup="searchItem($event)"  placeholder="请输入搜索关键字">
+                <span class="iconfont icon-enter"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-t-20 flex-between">
+        <p>共有 {{totNum ? totNum : 0}} 条需求信息</p>
+        <section>
+            状态：
+            <select ng-options="item.value as item.name for item in demPubStates" ng-model="searchStatus"></select>
+        </section>
+    </div>
+
+    <div class="dls-tab" style="width: 100%" ng-show="chooseType === '01'">
+        <table class="table table-bordered table-striped" style="min-width: 100%;">
+            <thead>
+            <tr class="primary">
+                <th>序号</th>
+                <th>需求编号</th>
+                <th>需求相似度</th>
+                <th>应用场景</th>
+                <th>关键字</th>
+                <th>更新时间</th>
+                <th>状态</th>
+                <th>响应数（家）</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in datas">
+                <td>{{$index+1}}</td>
+                <td>{{item.reqId}}</td>
+                <td ng-click="go('dls.demand.similarity', item.reqId)">
+                    <span class="f-col-2 cursor-pointer" ng-click="setAppStatus">{{item.simiDegree | similarityFilter | emptyFilter}}</span>
+                </td>
+                <td>{{item.scene | reqSceneFilter | emptyFilter }}</td>
+                <td>
+                    <span ng-bind="item.keyword | emptyFilter"
+                          uib-popover="{{item.keyword}}" popover-placement="auto"
+                          popover-trigger="'mouseenter'" popover-popup-close-delay="200"
+                          style="vertical-align:middle;width: 96px;display:inline-block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></span>
+                </td>
+                <td>{{item.disTime | emptyFilter}}</td>
+                <td>{{item.status | reqDemStatusFilter}}</td>
+                <td ng-click="go('dls.demPublish.supResponse', item.reqId)">
+                    <span class="f-col-2 cursor-pointer">{{item.respNum}}</span>
+                </td>
+                <td ng-show="item.status === '01'">
+                    <span class="f-col-2 m-lr-8 cursor-pointer" ng-click="viewReq(item.reqId, item.status)">查看</span>
+                    <span class="f-col-2 m-lr-8 cursor-pointer" ng-click="editReq(item.reqId)">编辑</span>
+                    <span class="f-col-2 m-lr-8 cursor-pointer" ng-click="deleteReq(item.reqId, '01')">删除</span>
+                </td>
+                <td ng-show="item.status === '02'">
+                    <span class="f-col-2 m-lr-8 cursor-pointer" ng-click="viewReq(item.reqId, item.status)">查看</span>
+                    <span class="f-col-2 m-lr-8 cursor-pointer" ng-click="editReq(item.reqId)">编辑</span>
+                    <span class="f-col-2 m-lr-8 cursor-pointer" ng-click="closeReq(item.reqId, '01')">关闭</span>
+                </td>
+                <td ng-show="item.status === '03'">
+                    <span class="f-col-2 m-lr-8 cursor-pointer" ng-click="viewReq(item.reqId, item.status)">查看</span>
+                    <span class="f-col-2 m-lr-8 cursor-pointer" ng-click="deleteReq(item.reqId, '01')">删除</span>
+                </td>
+            </tr>
+            <tr ng-show="datas.length === 0">
+                <td colspan="9">没有任何数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="dls-tab" style="width: 100%" ng-show="chooseType === '02'">
+        <table class="table table-bordered table-striped" style="min-width: 100%;">
+            <thead>
+            <tr class="primary">
+                <th>序号</th>
+                <th>需求编号</th>
+                <th>需求相似度</th>
+                <th>更新时间</th>
+                <th>应用场景</th>
+                <th>关键字</th>
+                <th>机构名称</th>
+                <th>联系人</th>
+                <th>联系人电话</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in datas">
+                <td>{{$index+1}}</td>
+                <td>{{item.reqId}}</td>
+                <td  ng-click="go('dls.demPublish.similarity', item.reqId)">
+                    <span class="f-col-2 cursor-pointer" ng-click="setAppStatus">{{item.simiDegree | similarityFilter | emptyFilter}}</span>
+                </td>
+                <td>{{item.respTime | emptyFilter}}</td>
+                <td>{{item.scene | reqSceneFilter | emptyFilter }}</td>
+                <td><span ng-bind="item.keyword | emptyFilter"
+                      uib-popover="{{item.keyword}}" popover-placement="auto"
+                      popover-trigger="'mouseenter'" popover-popup-close-delay="200"
+                      style="vertical-align:middle;width: 96px;display:inline-block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></span>
+                </td>
+                <td>{{item.orgFullNameCN | emptyFilter}}</td>
+                <td>{{item.contactName | emptyFilter}}</td>
+                <td>{{item.contact | emptyFilter}}</td>
+                <td>{{item.status | reqSupStatusFilter}}</td>
+                <td ng-show="item.status === '01'">
+                    <span class="f-col-2 m-lr-8 cursor-pointer" ng-click="viewReq(item.reqId, item.status)">查看</span>
+                    <span class="f-col-2 m-lr-8 cursor-pointer" ng-click="dismiss(item.reqId, '02')">取消关注</span>
+                </td>
+                <td ng-show="item.status === '02'">
+                    <span class="f-col-2 m-lr-8 cursor-pointer" ng-click="viewReq(item.reqId, item.status)">查看</span>
+                    <span class="f-col-2 m-lr-8 cursor-pointer" ng-click="deleteReq(item.reqId, '02')">取消响应</span>
+                </td>
+                <td ng-show="item.status === '03'">
+                    <span class="f-col-2 m-lr-8 cursor-pointer" ng-click="viewReq(item.reqId, item.status)">查看</span>
+                    <span class="f-col-2 m-lr-8 cursor-pointer" ng-click="deleteReq(item.reqId, '02')">取消响应</span>
+                </td>
+            </tr>
+            <tr ng-show="datas.length === 0">
+                <td colspan="11">没有任何数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <pagination class="m-l-20 m-t-50" options="pageOptions" cur-page="curPage"></pagination>
+</div>

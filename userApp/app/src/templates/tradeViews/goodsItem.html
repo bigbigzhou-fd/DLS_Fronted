@@ -1,0 +1,125 @@
+<article class="bg-2" ng-controller="goodsItemCtrl">
+	<header class="h-50 dls-btn-default ver-mid lh-50">
+	    <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">交易品</span>
+
+	    <div class="pull-right lh-50">
+	        <button class="btn btn-success inline-block ver-mid m-r-0" ui-sref="dls.trade.cartList">前往购物车</button>
+	    </div>
+	</header>
+	
+	<section class="flex-container">
+		<div  ng-if = "transactionSwitchValue=='01'">
+				<p class="cart-item">
+						<span>交易品名称:</span>
+						<span class="cart-item-content" ng-bind="goodsCategoryDatas.name"></span>
+					</p>
+					<p class="cart-item" ng-if=" '02' === prdtType">
+						<span>ID类型:</span>
+						<span class="cart-item-content" ng-bind="goodsCategoryDatas.idType | textEmptyFilter"></span>
+					</p>
+		</div>
+		<div ng-if = "transactionSwitchValue=='02'">
+				<p class="cart-item">
+						<span>算法交易品名称:</span>
+						<span class="cart-item-content" ng-bind="goodsCategoryDatas.name"></span>
+					</p>
+					<p class="cart-item" ng-if=" '02' === prdtType">
+						<span>算法交易品类别:</span>
+						<span class="cart-item-content" ng-bind="goodsCategoryDatas.idType | textEmptyFilter"></span>
+					</p>
+		</div>
+		<div class="flex-row-wrap">
+			<p class="cart-item">
+				<span>均价:</span>
+				<span class="cart-item-content" ng-bind="goodsCategoryDatas.avgPrice | moneyEmptyFilter"></span> 元
+			</p>
+
+			<p class="cart-item">
+				<span>最高价:</span>
+				<span class="cart-item-content" ng-bind="goodsCategoryDatas.maxPrice | moneyEmptyFilter"></span> 元
+			</p>
+
+			<p class="cart-item">
+				<span>最低价:</span>
+				<span class="cart-item-content" ng-bind="goodsCategoryDatas.minPrice | moneyEmptyFilter"></span> 元
+			</p>
+		</div>
+
+		<!-- <label class="f-s-12 p-lr-10 h-34 lh-34 pull-left">搜索</label> -->
+		<div class="relative inline-block w-350">
+		    <span class="iconfont icon-search"></span>
+		    <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" ng-model="searchText" ng-keyup="searchItem($event)" placeholder="请输入想搜索的供方机构名称" ng-show=" '03' === prdtType">
+		    <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" ng-model="searchText" ng-keyup="searchItem($event)" placeholder="请输入想搜索的供方机构编号" ng-show=" '02' === prdtType">
+		    <span class="iconfont icon-enter" ng-click="getDatas()"></span>
+		</div>
+		<!-- <button class="btn btn-info" ng-click="getDatas()">搜索</button> -->
+
+
+		<div class="dls-tab" style="width: 100%" ng-if=" '03' === prdtType">
+		    <table class="table table-bordered table-striped" style="min-width: 135%;">
+		      <thead>
+		        <tr class="primary">
+		        	<th></th>
+		          <th>序号</th>
+		          <th ng-repeat="title in titles.marketingItemTitles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in datas.list">
+		        	<td style="width: 140px;"><a class="add-cart" ng-class="{true : 'disabledBtn'}[item.isInCart]" disabled={{item.isInCart}} ng-click="addToCart($index,item)"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><label class="add-cart-text">加入购物车</label></a></td>
+		          <td>{{$index+1}}</td>
+		          <td>{{item.connObjId | textEmptyFilter}}</td>
+		          <td><span ng-click="detail(item)" class="f-col-3 cursor-pointer">{{item.version | textEmptyFilter}}</span></td>
+		          <td>{{item.supMemName | textEmptyFilter}}</td>
+		          <td>{{item.supMemDept | textEmptyFilter}}</td>
+		          <!-- <td>{{item.area}}</td> -->
+		          <td><span ng-bind="item.area" uib-popover="{{item.area}}" popover-placement="auto bottom-left" popover-trigger="'mouseenter'" style="max-width: 160px;display:inline-block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></span></td>
+		          <td>{{item.coverage | textEmptyFilter}}</td>
+		          <td>{{item.updateFrequency | textEmptyFilter}}</td>
+		          <td>{{item.price | moneyEmptyFilter}}</td>
+		          <td>{{item.countMethod}}</td>
+		        </tr>
+		        <tr ng-show="!datas.list.length">
+		            <td colspan="{{titles.marketingItemTitles.length+2}}">没有任何数据</td>
+		        </tr>
+		      </tbody>
+		    </table>
+		</div>
+
+		<div class="dls-tab" style="width: 100%" ng-if=" '02' === prdtType">
+		    <table class="table table-bordered table-striped" style="min-width: 135%;">
+		      <thead>
+		        <tr class="primary">
+		        	<th></th>
+		          <th>序号</th>
+		          <th ng-repeat="title in titles.creditItemTitles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in datas.list">
+		        	<td style="width: 140px;"><a class="add-cart" ng-class="{true : 'disabledBtn'}[item.isInCart]" disabled={{item.isInCart}} ng-click="addToCart($index,item)"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><label class="add-cart-text">加入购物车</label></a></td>
+		          <td>{{$index+1}}</td>
+		          <td>{{item.connObjId | textEmptyFilter}}</td>
+		          <td><span class="f-col-3 cursor-pointer" ng-bind="item.version" ng-click="detail(item)"></span></td>
+		          <td>{{item.supMemId | textEmptyFilter}}</td>
+		          <td>{{item.supMemDept | textEmptyFilter}}</td>
+		          <td>{{item.optionalId | emptyFilter}}</td>
+		          <td>{{item.idType | textEmptyFilter}}</td>
+		          <td>{{item.price | moneyEmptyFilter}}</td>
+		          <td>{{item.countMethod}}</td>
+		        </tr>
+		        <tr ng-show="!datas.list.length">
+		            <td colspan="{{titles.marketingItemTitles.length+2}}">没有任何数据</td>
+		        </tr>
+		      </tbody>
+		    </table>
+		</div>
+
+		<div class="listBtnArea" style="position: relative;top: 20px;">
+		    <a href="javascript:history.go(-1);" class="btn btn-default no-border-radius back" style="margin-left: 10px;">返回</a>
+		</div>
+
+		<pagination class="m-l-20 m-t-50" options="pageOptions" cur-page="curPage"></pagination>
+	</section>
+
+</article>

@@ -1,0 +1,25 @@
+{
+    "status": 1,
+    "data": [
+        {
+            "username": "0000079_adm",
+            "status": 1,
+            "update_time": "2017-04-20 13:14:50",
+            "name": "会员管理账户",
+            "roles": [
+                7
+            ],
+            "mobile": "2332-22221768",
+            "fix": "746-45846865",
+            "is_activated": 0,
+            "company_id": 79,
+            "id": 78,
+            "phone": "2332-22221768",
+            "flag": 1,
+            "create_time": "2016-09-22 15:56:30",
+            "email": "chad@zamplus.com",
+            "rsa_account": null
+        }
+    ],
+    "error": ""
+}

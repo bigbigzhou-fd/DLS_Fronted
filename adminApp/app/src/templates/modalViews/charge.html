@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h3 class="modal-title">充值</h3>
+</div>
+<div class="modal-body">
+  <form  name='form' novalidate>
+    <p class="item-content">
+      <label class="infoLbl">机构名称：</label>
+      <span class="infoContent" ng-bind="modalDatas.orgFullNameCN"></span>
+    </p>
+    <p class="item-content">
+      <label class="infoLbl">部门名称：</label>
+      <span class="infoContent" ng-bind="modalDatas.deptName"></span>
+    </p>
+    <p class="item-content">
+      <label class="infoLbl">发票号：</label>
+      <input type="text" class="" ng-model="modalDatas.invoiceNum" name="invoiceNum" ng-maxlength="20" ng-pattern="DlsUtil.namePattern">
+      <span class="help-inline" ng-if="form.invoiceNum.$error.pattern && form.invoiceNum.$dirty">请输入除'<'和'>'以外的符号</span>
+      <span class="help-inline" ng-show="form.invoiceNum.$error.maxlength">最多为20个字符</span>
+    </p>
+    <p class="item-content">
+      <label class="infoLbl">充值金额：</label>
+      <input type="text" class="" ng-model="modalDatas.amt" name="amt"  ng-pattern="DlsUtil.positiveNumPattern" required>元
+      <span class="help-inline" ng-if="(form.amt.$error.pattern && form.amt.$dirty) || (form.amt.$error.required && form.amt.$dirty)">请输入正数,最多两位小数</span>
+    </p>
+    <p class="item-content" style="margin-bottom: 30px;">
+      <label class="infoLbl">备注：</label>
+      <textarea name="remarks"  cols="30" ng-model="modalDatas.remarks" ng-maxlength="255"></textarea>
+      <span class="help-inline" ng-show="form.remarks.$error.maxlength">最多为255个字符</span>
+    </p>
+  </form>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-disabled="form.$invalid" type="button" ng-click="$ctrl.ok()">确定</button>
+    <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">取消</button>
+</div>

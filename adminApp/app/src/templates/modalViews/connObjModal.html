@@ -1,0 +1,93 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title p-lr-10 h-30 lh-30 f-w-b" id="myModalLabel">查看互联对象</h2>
+        </div>
+        <div class="p-tb-10" id="myModalBody" style="max-height: 700px;overflow-y: auto">
+            <p class="h-30 lh-30">
+                <label class="w-225 text-right m-r-30">必选ID：</label>
+                <ul ng-if="data.data.idCdList.length !== 0" style="margin:-25px 0 0 235px">
+                    <li ng-repeat="item in data.data.idCdList">
+                        {{item.name}} : {{item.id}}
+                    </li>
+                </ul>
+            </p>
+            <p class="h-30 lh-30" ng-if="data.data.isIDSel === 1">
+                <label class="w-225 text-right m-r-30">可选ID属性：</label>
+                <ul ng-if="data.data.prdtIdRelList.length !== 0" style="margin:-25px 0 0 235px">
+                    <li ng-repeat="item in data.data.prdtIdRelList">
+                        {{item.name}} : {{item.id}}
+                    </li>
+                </ul>
+            </p>
+            <p class="h-30 lh-30">
+                <label class="w-225 text-right m-r-30">交易品分类：</label>
+                <span>{{data.data.tagDict.tagTypeName}}</span>
+            </p>
+            <p class="h-30 lh-30">
+                <label class="w-225 text-right m-r-30">交易品名称：</label>
+                <span>{{data.data.tagDict.tagName}}</span>
+            </p>
+            <p>
+                <label class="w-225 text-right m-r-30 ver-top">互联对象描述：</label>
+                <textarea cols="40" rows="3" disabled>{{data.data.prdtDesc}}</textarea>
+            </p>
+            <p>
+                <label class="w-225 text-right m-r-30 ver-top">Value 类型：</label>
+                <span>{{data.data.tagDict.valueType | valueType}}</span>
+            </p>
+            <p>
+                <label class="w-225 text-right m-r-30 ver-top">Value赋值：</label>
+                <textarea cols="40" rows="3" disabled>{{data.data.tagDict.valueStr}}</textarea>
+            </p>
+            <p>
+                <label class="w-225 text-right m-r-30 ver-top">报文样例：</label>
+                <textarea cols="40" rows="3" disabled>{{data.data.msgSample}}</textarea>
+            </p>
+            <p>
+                <label class="w-225 text-right m-r-30 ver-top">返回错误代码列表：</label>
+                <textarea cols="40" rows="3" disabled>{{data.data.errCodeList}}</textarea>
+            </p>
+            <p>
+                <label class="w-225 text-right m-r-30 ver-top">最长延时值：</label>
+                <span>{{data.data.maxDelayTime[0]}} {{data.data.maxDelayTime[1] | maxDelayTimeFilter}}</span>
+            </p>
+            <p>
+                <label class="w-225 text-right m-r-30 ver-top">并发量：</label>
+                <span>{{data.data.concurrency[0]}} {{data.data.concurrency[1] | concurrencyFilter}}</span>
+            </p>
+            <p>
+                <label class="w-225 text-right m-r-30 ver-top">应用行业：</label>
+                <span ng-repeat="item in data.data.applicationIndustrySel">{{item.id}}{{item.name}}</span>
+            </p>
+            <p>
+                <label class="w-225 text-right m-r-30 ver-top">是否加入质量评估：</label>
+                <span>{{data.data.qltEvlStatus | qltEvlStatusFilter}}</span>
+            </p>
+            <p>
+                <label class="w-225 text-right m-r-30 ver-top">应用场景限定：</label>
+                <span ng-repeat="item in data.data.multi_selscene_limit">{{item.id}}{{item.name}}</span>
+            </p>
+            <p>
+                <label class="w-225 text-right m-r-30">收费报文代码：</label>
+                <ul ng-if="data.data.chargeRspList.length !== 0" style="margin:-25px 0 0 235px">
+                    <li ng-repeat="item in data.data.chargeRspList">
+                        {{item.value}}
+                    </li>
+                </ul>
+            </p>
+            <p>
+                <label class="w-225 text-right m-r-30">不收费报文代码：</label>
+                <ul  style="margin:-25px 0 0 235px">
+                    <li ng-repeat="item in data.data.freeRspList">
+                        {{item.value}}
+                    </li>
+                </ul>
+            </p>
+
+            <div class="flex flex-center">
+                <button type='button' style="padding:5px 30px;" class='btn btn-primary border f-s-16 m-t-50' data-dismiss='modal' ng-click="data.goTo && jumpTo(data.goTo)">确定</button>
+            </div>
+        </div>
+    </div>
+</div>

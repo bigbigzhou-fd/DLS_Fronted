@@ -1,0 +1,99 @@
+<article class="bg-2" ng-controller="demandManageCtrl">
+    <header class="h-50 dls-btn-default  lh-50">
+        <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">需求管理</span>
+    </header>
+
+    <div style="height:46px">
+        <label class="f-s-12 f-w-l ver-mid p-r-10 h-34 lh-34 m-l-20 pull-left" >查询日期:</label>
+        <div class="cart-item flex flex-d-r w-400 pull-left">
+            <date-picker class="inline-block w-150 m-r-10 datePicker" dt="startTime" mindt="1970, 5, 22"></date-picker>
+            <span> ~ </span>
+            <date-picker class="inline-block w-150 m-l-10 datePicker" dt="endTime" mindt="1970, 5, 22"></date-picker>
+            <button class=" btn btn-primary m-l-10" ng-click="search()">查询</button>
+        </div>
+        <label class="f-s-12 f-w-l ver-mid p-r-10 h-34 lh-34 m-l-20 pull-left" >搜索:</label>
+        <div class="relative inline-block w-225 pull-left" >
+            <span class="iconfont icon-search" ng-click="search()"></span>
+            <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" placeholder="请输入想搜索的关键字" ng-model="searchText" ng-keyup='search($event)'>
+            <span class="p-r-10 iconfont icon-enter" ng-click="search()"></span>
+        </div>
+        <!-- <a class="btn btn-success m-l-40" target="_blank" href="../../api/opt_logs_export/?text={{searchText}}&startDate={{st}}&endDate={{et}}">导出</a> -->
+    </div>
+    <div class="p-lr-20">
+            <p class="item-title" style="float:left">共有<span>{{pageOptions.total_items_num}}</span>条需求信息</p>
+            <div style="float:right">
+                    <label class="header-tag">场景</label>
+                    <select  class="form-control inline-block no-border-radius" style="width: 120px;" ng-model="status1" ng-options="item.value as item.name  for item in sceneState" >
+                        <option value="" ng-if="false"></option>
+                    </select>
+                    <label class="header-tag">状态</label>
+                    <select  class="form-control inline-block no-border-radius" style="width: 120px;" ng-model="status2" ng-options="item.value as item.name  for item in releaseState" >
+                        <option value="" ng-if="false"></option>
+                    </select>
+            </div>
+    </div>
+
+
+
+    <div class="dls-tab p-lr-20 c-f" style="overflow: auto">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr class="primary">
+                <th>序号</th>
+                <th>需求编号</th>
+                <th>需求相似度</th>
+                <th>发布方名称</th>
+                <th>应用场景</th>
+                <th>关键字</th>
+                <th>更新时间</th>
+                <th>状态</th>
+                <th>响应数(家)</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in operateDatas">
+                    <td>{{$index+1}}</td>
+                    <td ng-bind="item.reqId | textEmptyFilter"></td>
+                    <td>
+                        <a class="btn btn-link"
+                        ui-sref="dls.demand.similaritySee({reqId: item.reqId})"
+                        ng-bind="item.simiDegree | textEmptyFilter"
+                        ng-click="setStatus()"
+                        href="javascript:void(0);">
+                        </a>
+                        <a ng-show="!!item.simiDegree">%</a>
+                    </td>
+                    <td ng-bind="item.orgFullNameCN | textEmptyFilter"></td>
+                    <td class="grid-body-row-content"><scene-state-btn data="item.scene"></scene-state-btn></td>
+                    <td><span ng-bind="item.keyword | emptyFilter"
+                        uib-popover="{{item.keyword}}" popover-placement="auto"
+                        popover-trigger="'mouseenter'" popover-popup-close-delay="200"
+                        style="vertical-align:middle;width: 96px;display:inline-block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></span>
+                   </td>
+                    <td ng-bind="item.disTime | textEmptyFilter"></td>
+                    <td class="grid-body-row-content"><release-state-btn data="item.status"></release-state-btn></td>
+                    <td>
+                        <a class="btn btn-link"
+                           ui-sref="dls.demand.supResponse({reqId: item.reqId})"
+                           ng-click="setStatus()"
+                           href="javascript:void(0);">{{item.respNum | textEmptyFilter}}
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-link"
+                        ui-sref="dls.demand.bill({reqId: item.reqId})"
+                        ng-click="setStatus()"
+                        href="javascript:void(0);">查看
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-show="operateDatas.length == 0">
+                    <td colspan="10">暂无数据</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+     <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems" class="m-l-20"></pagination>
+
+</article>

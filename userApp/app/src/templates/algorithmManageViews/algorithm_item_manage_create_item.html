@@ -1,0 +1,266 @@
+<div class="bg-2 p-lr-20 create-item p-b-50" ng-controller="algorithmCreateItemCtrl">
+    <header class="h-50 ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 f-s-16 f-col-2 f-w-b" ng-show="!isView">创建互联对象</span>
+        <span class="pull-left inline-block ver-mid lh-50 w-250 f-s-16 f-col-2 f-w-b" ng-show="isView">查看互联对象</span>
+    </header>
+
+    <div class="flex bg-3 flex-d-c p-lr-20" style="min-height: 768px;">
+        <nav class="c-f m-b-10" ng-show="!isView">
+            <ol class="breadcrumb h-34 lh-34">
+                <li ng-class="{'active':step === 1}"><span>1</span>选择交易品标签</li>
+                <li ng-class="{'active':step === 2}"><span>2</span>添加交易品执行环境</li>
+                <li ng-class="{'active':step === 3}"><span>3</span>添加交易品操作说明</li>
+                <li ng-class="{'active':step === 4}"><span>4</span>添加交易品信息</li>
+                <li ng-class="{'active':step === 5}"><span>5</span>添加算法数据输入输出说明</li>
+                <li ng-class="{'active':step === 6}"><span>6</span>确认生效交易品</li>
+            </ol>
+        </nav>
+        
+        <div class="flex m-l--20" ng-show="step == 1 && !showAll">
+            <aside class="w-250 p-l-20">
+                <p class="p-10">全部交易品分类</p>
+                <div class="border p-10 bg-2" style="height: 100%;">
+                    <section class="bg-3 border" style="height: 100%;">
+                        <treecontrol class="tree-light"
+                                     tree-model="trade_label_reckon_type_btn_datas"
+                                     options="treeOptions"
+                                     on-selection="showSelected(node)"
+                                     selected-node="selectedNode">{{node.label}}
+                        </treecontrol>
+                    </section>
+                </div>
+            </aside>
+            <div class="flex-1">
+                <div class="p-t-10 p-r-40 bg-3">
+                    <div>
+                        <section class="search-label btn-group">
+                            <input type="text" placeholder="请输入想搜索的关键字" ng-keyup="searchItem($event)"
+                                   ng-model="searchText" style="height:34px;">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </section>
+                    </div>
+
+                    <div class="dls-grid m-t-10">
+                        <table class="table table-bordered table-hover table-striped" title="false">
+                            <thead>
+                            <tr class='grid-header-row'>
+                                <th>交易品编号</th>
+                                <th>交易品名称</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="data in labelDatas" class="grid-body-row">
+                                <td class="grid-body-row-content">{{data.code}}</td>
+                                <td class="grid-body-row-content">{{data.name}}</td>
+                                <td style="text-align: center">
+                                    <a ng-click="goToStep2($index,data)"><span
+                                            class="create-item-btn">+</span>生成互联对象</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <pagination class="m-l-20 m-t-50" options="pageOptions" cur-page="curPage"></pagination>
+
+                </div>
+            </div>
+        </div>
+        <div>
+               
+            <div class="bg-3 p-b-30" ng-show="step == 2 || showAll">
+                <div class="m-t-20">
+                    <label class="f-w-l f-s-12 w-150 text-right must m-r-20">操作系统:</label>
+                    <select class="inline-block lh-30 h-30" ng-options="item.value as item.name for item in operatingSystemList" ng-model="operatingSystem"></select>
+                    <p class="m-l-170 m-t-10 f-col-red" ng-if="!operatingSystem">请选择该项！</p>
+                </div>
+                <div class="m-t-20">
+                    <label class="f-w-l f-s-12 w-150 text-right must m-r-20">版本:</label>
+                    <select class="inline-block lh-30 h-30" ng-options="item.value as item.name for item in editionList" ng-model="edition"></select>                    
+                    <p class="m-l-170 m-t-10 f-col-red" ng-if="!edition">请选择该项！</p>
+                </div>
+                <div class="m-t-20">
+                    <label class="f-w-l f-s-12 w-150 text-right must m-r-20">系统位数:</label>
+                    <select class="inline-block lh-30 h-30" ng-options="item.value as item.name for item in systemDigitList" ng-model="systemDigit"></select>                                        
+                    <p class="m-l-170 m-t-10 f-col-red" ng-if="!systemDigit">请选择该项！</p>
+                </div>
+                <div class="m-t-20">
+                    <label class="f-w-l f-s-12 w-150 text-right must m-r-20">编程语言:</label>
+                    <select class="inline-block lh-30 h-30" ng-options="item.value as item.name for item in languageList" ng-model="language"></select>                                                            
+                    <p class="m-l-170 m-t-10 f-col-red" ng-if="!language">请选择该项！</p>
+                </div>
+                <section ng-show="!showAll" class="relative m-t-150">
+                    <hr class="footer-hr">
+                    <a class="inline-block m-l-40 btn btn-primary" ng-click="goToStep3()">下一步</a>
+                    <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+                </section>
+            </div>
+           <form>
+                <div ng-class="{true:'p-b-30'}[!showAll]" class="bg-3"  ng-show="step == 3 || showAll">
+                    <p class = "m-t-20" style="position:relative">
+                        <button class="btn" style="position:absolute;left:93px;top:17px;" ng-click="addCreateAlgorithm(createAlgorithm[0].operationNotice)">+添加</button>
+                        <label class="f-w-l f-s-12 w-150 text-right ver-top must">操作说明:</label>
+                        <div ng-repeat="item in createAlgorithm[0].operationNotice">
+                                <textarea class="p-l-10" style="margin-left:174px;" cols="60" rows="3" ng-disabled="showAll" ng-model="item.text" name="operationNoticeTxt" required></textarea>
+                                <input type="file" name="operationNotice" ng-if="algorithmType != 'view'" style="margin-left:174px;" onchange='angular.element(this).scope().fileChanged(this,"asdfas")'>
+                                <label class="ver-top p-l-10 f-w-l f-s-12 f-col-red" ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                                <a href="{{'../../api'+item.img}}" ng-if="item.img" ng-style="lookStyle" target="_blank">查看</a>
+                        </div>
+
+                    </p>
+                    <p class = "m-t-20" style="position:relative">
+                            <!-- <button class="btn" style="position:absolute;left:93px;top:17px;" ng-click="addCreateAlgorithm(createAlgorithm[1].dataRequirements)">+添加</button> -->
+                            <label class="f-w-l f-s-12 w-150 text-right ver-top must">数据要求:</label>
+                            <div ng-repeat="item in createAlgorithm[1].dataRequirements">
+                                <textarea class="p-l-10" style="margin-left:174px;" cols="60" rows="3" ng-disabled="showAll" ng-model="item.text" name="dataRequirementsTxt" required></textarea>
+                                <!-- <input type="file" name="dataRequirements" id="" style="margin-left:174px;" onchange='angular.element(this).scope().fileChanged(this,"asdfasdf")'> -->
+                                <label class="ver-top p-l-10 f-w-l f-s-12 f-col-red" ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                            </div>
+                    </p>
+                    <p class = "m-t-20" style="position:relative">
+                            <!-- <button class="btn" style="position:absolute;left:93px;top:17px;" ng-click="addCreateAlgorithm(createAlgorithm[2].algorithmUse)">+添加</button> -->
+                            <label class="f-w-l f-s-12 w-150 text-right ver-top must">算法用途:</label>
+                            <div ng-repeat="item in createAlgorithm[2].algorithmUse">
+                                <textarea class="p-l-10" style="margin-left:174px;" cols="60" rows="3" ng-disabled="showAll" ng-model="item.text" name="algorithmUseTxt" required></textarea>
+                                <!-- <input type="file" name="algorithmUse" id="" style="margin-left:174px;" onchange='angular.element(this).scope().fileChanged(this,item.text)'> -->
+                                <label class="ver-top p-l-10 f-w-l f-s-12 f-col-red" ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                            </div>
+                    </p>
+                    <p class = "m-t-20" style="position:relative">
+                            <button class="btn" style="position:absolute;left:93px;top:17px;" ng-click="addCreateAlgorithm(createAlgorithm[3].algorithmPrinciple)">+添加</button>
+                            <label class="f-w-l f-s-12 w-150 text-right ver-top must">算法原理:</label>
+                            <div ng-repeat="item in createAlgorithm[3].algorithmPrinciple">
+                                <textarea class="p-l-10" style="margin-left:174px;" cols="60" rows="3" ng-disabled="showAll" ng-model="item.text" name="algorithmPrincipleTxt" required></textarea>
+                                <input type="file" name="algorithmPrinciple" id="" style="margin-left:174px;" ng-if="algorithmType != 'view'" onchange='angular.element(this).scope().fileChanged(this,item.text)'>
+                                <label class="ver-top p-l-10 f-w-l f-s-12 f-col-red" ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                                <a href="{{'../../api'+item.img}}" ng-if="item.img" ng-style="lookStyle" target="_blank">查看</a>
+                            </div>
+                    </p>
+                    <p class = "m-t-20" style="position:relative">
+                            <!-- <button class="btn" style="position:absolute;left:93px;top:17px;" ng-click="addCreateAlgorithm(createAlgorithm[4].result)">+添加</button> -->
+                            <label class="f-w-l f-s-12 w-150 text-right ver-top must">结果与解释:</label>
+                            <div ng-repeat="item in createAlgorithm[4].result">
+                                <textarea class="p-l-10" style="margin-left:174px;" cols="60" rows="3" ng-disabled="showAll" ng-model="item.text" name="resultTxt" required></textarea>
+                                <!-- <input type="file" name="" id="" style="margin-left:174px;" onchange='angular.element(this).scope().fileChanged(this,"asdfasdf")'> -->
+                                <label class="ver-top p-l-10 f-w-l f-s-12 f-col-red" ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                            </div>
+                    </p>
+                    <section ng-show="!showAll" class="relative m-t-150 p-b-30">
+                        <hr class="footer-hr">
+                        <a class="btn border" ng-click="goBack(2)">上一步</a>
+                        <a class="inline-block m-l-40 btn btn-primary" ng-click="goToStep4()">下一步</a>
+                        <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+                    </section>
+
+                </div>
+
+                <div ng-class="{true:'p-b-30'}[!showAll]" class="bg-3" ng-show="step == 4 || showAll">
+                    <div>
+                    <p class = "m-t-20" style="position:relative">
+                            <button class="btn" style="position:absolute;left:93px;top:17px;" ng-click="addCreateAlgorithm(createAlgorithm[5].commodityAdvantage)">+添加</button>
+                            <label class="f-w-l f-s-12 w-150 text-right ver-top must">商品优势:</label>
+                            <div ng-repeat="item in createAlgorithm[5].commodityAdvantage">
+                                    <textarea class="p-l-10" style="margin-left:174px;" cols="60" rows="3" ng-disabled="showAll" ng-model="item.text" name="commodityAdvantageTxt" required></textarea>
+                                    <input type="file" name="commodityAdvantage" style="margin-left:174px;" ng-if="algorithmType != 'view'" onchange='angular.element(this).scope().fileChanged(this,"asdfas")'>
+                                    <label class="ver-top p-l-10 f-w-l f-s-12 f-col-red" ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                                    <a href="{{'../../api'+item.img}}" ng-if="item.img" ng-style="lookStyle" target="_blank">查看</a>
+                            </div>
+                        </p>
+                        <p class = "m-t-20" style="position:relative">
+                                <button class="btn" style="position:absolute;left:93px;top:17px;" ng-click="addCreateAlgorithm(createAlgorithm[6].algorithmicDescription)">+添加</button>
+                                <label class="f-w-l f-s-12 w-150 text-right ver-top must">算法描述:</label>
+                                <div ng-repeat="item in createAlgorithm[6].algorithmicDescription">
+                                    <textarea class="p-l-10" style="margin-left:174px;" cols="60" rows="3" ng-disabled="showAll" ng-model="item.text" name="algorithmicDescriptionTxt" required></textarea>
+                                    <input type="file" name="algorithmicDescription" id="" style="margin-left:174px;" ng-if="algorithmType != 'view'" onchange='angular.element(this).scope().fileChanged(this,"asdfasdf")'>
+                                    <label class="ver-top p-l-10 f-w-l f-s-12 f-col-red" ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                                    <a href="{{'../../api'+item.img}}" ng-if="item.img" ng-style="lookStyle" target="_blank">查看</a>
+                                </div>
+                        </p>
+                        <p class = "m-t-20" style="position:relative">
+                                <button class="btn" style="position:absolute;left:93px;top:17px;" ng-click="addCreateAlgorithm(createAlgorithm[7].relatedApplications)">+添加</button>
+                                <label class="f-w-l f-s-12 w-150 text-right ver-top must">相关应用:</label>
+                                <div ng-repeat="item in createAlgorithm[7].relatedApplications">
+                                    <textarea class="p-l-10" style="margin-left:174px;" cols="60" rows="3" ng-disabled="showAll" ng-model="item.text" name="relatedApplicationsTxt" required></textarea>
+                                    <input type="file" name="relatedApplications" id="" style="margin-left:174px;" ng-if="algorithmType != 'view'" onchange='angular.element(this).scope().fileChanged(this,item.text)'>
+                                    <label class="ver-top p-l-10 f-w-l f-s-12 f-col-red" ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                                    <a href="{{'../../api'+item.img}}" ng-if="item.img" ng-style="lookStyle" target="_blank">查看</a>
+                                </div>
+                        </p>
+                        <p class = "m-t-20" style="position:relative">
+                                <button class="btn" style="position:absolute;left:93px;top:17px;" ng-click="addCreateAlgorithm(createAlgorithm[8].example)">+添加</button>
+                                <label class="f-w-l f-s-12 w-150 text-right ver-top must">实例:</label>
+                                <div ng-repeat="item in createAlgorithm[8].example">
+                                    <textarea class="p-l-10" style="margin-left:174px;" cols="60" rows="3" ng-disabled="showAll" ng-model="item.text" name="exampleTxt" required></textarea>
+                                    <input type="file" name="example" id="" style="margin-left:174px;" ng-if="algorithmType != 'view'" onchange='angular.element(this).scope().fileChanged(this,item.text)'>
+                                    <label class="ver-top p-l-10 f-w-l f-s-12 f-col-red" ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                                    <a href="{{'../../api'+item.img}}" ng-if="item.img" ng-style="lookStyle" target="_blank">查看</a>
+                                </div>
+                        </p>
+                        <p class = "m-t-20" style="position:relative">
+                                <label class="f-w-l f-s-12 w-150 text-right ver-top must">优缺点:</label>
+                                <div ng-repeat="item in createAlgorithm[9].meritsAndFaults">
+                                    <textarea class="p-l-10" style="margin-left:174px;" cols="60" rows="3" ng-disabled="showAll" ng-model="item.text" name="meritsAndFaultsTxt" required></textarea>
+                                    <label class="ver-top p-l-10 f-w-l f-s-12 f-col-red" ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                                </div>
+                        </p>
+                        <p class = "m-t-20" style="position:relative">
+                            <!-- <button class="btn" style="position:absolute;left:93px;top:17px;" ng-click="addCreateAlgorithm(createAlgorithm[10].price)">+添加</button> -->
+                            <label class="f-w-l f-s-12 w-150 text-right ver-top must">售后服务:</label>
+                            <div ng-repeat="item in createAlgorithm[10].customSvc">
+                                <textarea class="p-l-10" style="margin-left:174px;" cols="60" rows="3" ng-disabled="showAll" ng-model="item.text" name="customSvcTxt" required></textarea>
+                                <!-- <input type="file" name="customSvc" id="" style="margin-left:174px;" onchange='angular.element(this).scope().fileChanged(this,item.text)'> -->
+                                <label class="ver-top p-l-10 f-w-l f-s-12 f-col-red" ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                            </div>
+                     </p>
+                        <section ng-show="!showAll" class="relative m-t-150 p-b-30">
+                            <hr class="footer-hr">
+                            <a class="btn border" ng-click="goBack(3)">上一步</a>
+                            <a class="inline-block m-l-40 btn btn-primary" ng-click="goToStep5()" type="submit">下一步</a>
+                            <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+                        </section>
+                    </div>
+                </div>            
+                <div ng-class="{true:'p-b-30'}[!showAll]" class='bg-3' ng-show="step == 5 || showAll">
+                    <div>
+                        <p class = "m-t-20" style="position:relative">
+                                <!-- <button class="btn" style="position:absolute;left:93px;top:17px;" ng-click="addCreateAlgorithm(createAlgorithm[10].price)">+添加</button> -->
+                                <label class="f-w-l f-s-12 w-150 text-right ver-top must">输入:</label>
+                                <div ng-repeat="item in createAlgorithm[11].input">
+                                    <textarea class="p-l-10" style="margin-left:174px;" cols="60" rows="3" ng-disabled="showAll" ng-model="item.text" name="input" required></textarea>
+                                    <!-- <input type="file" name="price" id="" style="margin-left:174px;" onchange='angular.element(this).scope().fileChanged(this,item.text)'> -->
+                                    <label class="ver-top p-l-10 f-w-l f-s-12 f-col-red" ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                                </div>
+                        </p>
+                        <p class = "m-t-20" style="position:relative">
+                                <!-- <button class="btn" style="position:absolute;left:93px;top:17px;" ng-click="addCreateAlgorithm(createAlgorithm[10].price)">+添加</button> -->
+                                <label class="f-w-l f-s-12 w-150 text-right ver-top must">输出:</label>
+                                <div ng-repeat="item in createAlgorithm[12].output">
+                                    <textarea class="p-l-10" style="margin-left:174px;" cols="60" rows="3" ng-disabled="showAll" ng-model="item.text" name="outputTxt" required></textarea>
+                                    <!-- <input type="file" name="customSvc" id="" style="margin-left:174px;" onchange='angular.element(this).scope().fileChanged(this,item.text)'> -->
+                                    <label class="ver-top p-l-10 f-w-l f-s-12 f-col-red" ng-show="createItemForm.valuestr.$invalid">该项为必填项</label>
+                                </div>
+                        </p>
+                        <section ng-show="!showAll" class="relative m-t-150 p-b-30">
+                            <hr class="footer-hr">
+                            <a class="btn border" ng-click="goBack(4)">上一步</a>
+                            <a class="inline-block m-l-40 btn btn-primary" ng-click="goToStep6()" type="submit">下一步</a>
+                            <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+                        </section>
+                    </div>
+                </div>
+            <form/>
+            <div class="m-t-50 m-b-50" ng-show="algorithmType !='view'&& (step == 6|| showAll)">
+                <hr class="footer-hr">
+                <a class="btn border" ng-click="goBack(5)">上一步</a>
+                <a class="inline-block m-l-40 btn btn-primary" ng-click="uploadFile($event)" type="submit">提交</a>
+                <a class="p-l-40" ng-click="cancelCreate()">取消</a>
+            </div>
+        </div>
+
+        <div ng-show="isView" class="m-t-20 m-b-10 m-l-170">
+            <a class="btn btn-primary" ng-click="back()">返回</a>
+        </div>
+    </div>
+</div>
+

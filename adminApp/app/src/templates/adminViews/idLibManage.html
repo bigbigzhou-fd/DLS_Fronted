@@ -1,0 +1,111 @@
+<article class="dls-admin bg-2" ng-controller="adminIdCtrl">
+	<header class="h-50 dls-btn-default  lh-50">
+	    <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">ID库管理</span>
+		<a ng-if="!!permissions.hasPermission('65')" class="btn-dowmload" href="../../api/sys/idM/idObj/export"><span class="iconfont icon-download"></span>导出ID库</a>
+	</header>
+
+	<div class="flex">
+	    <aside class="w-250 p-l-20" ng-controller="labelEditCtrl">
+	        <div class="border p-10">
+	            <section class="dls-tree bg-3 border">
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="newTag" aria-label="...">
+                        <div class="input-group-btn">
+                            <span class="glyphicon glyphicon-ok" ng-click="addNewTag($event)"><span/>
+                            <span class="glyphicon glyphicon-remove" ng-click="cancleAddNewTag($event)"></span>
+                        </div>
+                    </div>
+
+	                <treecontrol class="tree-light"
+	                    tree-model="admin_label_type_btn_datas"
+	                    options="treeOptions"
+	                    on-selection="showSelected(node)"
+	                    selected-node = "selectedNode">{{node.label}}
+	                </treecontrol>
+
+                  <button class="btn btn-warning btn-add-tag" ng-click="addCategory($event)"><span class="glyphicon glyphicon-plus-sign"></span> 新增ID类</button>
+	            </section>
+	        </div>
+	    </aside>
+	    <div class="flex-1 content bg-3">
+            <div class="label-search">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle  f-s-12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{labelType}} <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-click="setLabelType(0)">ID名称</li>
+                    </ul>
+                </div>
+                <section class="search-label">
+                    <input type="text" placeholder="请输入想搜索的关键字" ng-keyup="searchItem($event)" ng-model="searchText">
+                    <span  class="glyphicon glyphicon-search" ng-click="getTagListDatas('',searchText)"></span>
+                </section>
+
+                <button  class="btn btn-default f-r" ng-click="deleteIdGroup($index,$event)">删除</button>
+
+            </div>
+
+            <section>
+                <div class="dls-tab" >
+                    <table id="{{tabId}}" class="table table-bordered table-striped" style="min-width: 850px;">
+                      <thead>
+                        <tr class="primary">
+                          <th></th>
+                          <th ng-repeat="title in libTabTitles">{{title}}</th>
+                          <th ng-if="!transHide">操作</th>
+                        </tr>
+                      </thead>
+                      <tbody style="position: relative;" ng-repeat="item in libIdDatas">
+
+
+                        <tr ng-hide="renderId === $index " id="{{'render-tr' + $index}}">
+                          <td><input type="checkbox" ng-model="item.checked"/></td>
+                          <td><span  ng-bind="item.code"></span></td>
+                          <td><span class="edit" ng-bind="item.name"></span></td>
+                          <td><span class="edit" ng-bind="item.value_ex"></span></td>
+                          <td class="editBtn">
+                              <a ng-click="editTag($index,$event)">编辑</a>
+                              <a class="p-l-10" ng-click="deleteTag($index,$event)">删除</a>
+                          </td>
+                        </tr>
+
+                        <tr ng-show="renderId === $index " class="edit-tr" id="{{'edit-tr' + $index}}">
+                            <td></td>
+                            <td></td>
+                            <td><input type="text" class="edit"  ng-model="edit_name"></td>
+                            <td><input type="text" class="edit" ng-model="edit_value"></td>
+                            <td>
+                                <a ng-click="saveTag($index,$event,item.code)">保存</a>
+                                <a class="p-l-10" ng-click="cancelEditTag($index,$event)">取消</a>
+                            </td>
+                        </tr>
+                      </tbody>
+                      <tbody ng-if="addNewIdContentFlag === 1 ">
+                        <tr class="edit-tr">
+                            <td></td>
+                            <td></td>
+                            <td><input type="text" class="edit"  ng-model="edit_name"></td>
+                            <td><input type="text" class="edit" ng-model="edit_value"></td>
+                            <td>
+                                <a ng-click="saveNewIdContent(edit_name,edit_value)">保存</a>
+                                <a class="p-l-10" ng-click="cancelAddNewIdContent() ">取消</a>
+                            </td>
+                        </tr>
+                      </tbody>
+                      <tbody ng-if="libIdDatas.length === 0 && addNewIdContentFlag === 0 ">
+                        <tr>
+                            <td colspan="{{libTabTitles.length+2}}">没有任何数据</td>
+                        </tr>
+                      </tbody>
+
+                    </table>
+                </div>
+                <div class="btn-group-inline">
+                    <button class="btn btn-link padding-4-0" ng-click="addNewIdContent()">+新增ID</button>
+                </div>
+                <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination>
+            </section>
+	    </div>
+	</div>
+</article>

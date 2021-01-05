@@ -1,0 +1,110 @@
+<div class="container-fluid" ng-controller="providerItemMItemCtrl">
+    <section class="p-t-10">
+        <label class="f-s-12 p-lr-10 h-34 lh-34 pull-left">搜索</label>
+        <div class="relative inline-block w-400">
+            <span class="iconfont icon-search"></span>
+            <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" placeholder="请输入想搜索的交易品编号或交易品名称" ng-keyup="searchItem($event)" ng-model="searchText">
+            <span class="iconfont icon-enter"></span>
+        </div>
+    </section>
+
+    <my-table class="dls-grid m-t-20" ng-show = "showitemData">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr class='grid-header-row'>
+                    <th></th>
+                    <th>序号</th>
+                    <th>互联对象编号</th>
+                    <th>交易品名称</th>
+                    <th>版本号</th>
+                    <th>价格（元）</th>
+                    <th>计价单位</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                    <th ng-if="selectData=='CAP'">配置</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="data in itemDatas" class="grid-body-row">
+                    <td ng-if="selectData == 'CAP'" class="grid-body-row-content"><input type="checkbox" name="selectCAPs" value={{data.id}} style="min-width:20px;"></td>
+                    <td ng-if="selectData == 'CRP'" class="grid-body-row-content"><input type="checkbox" name="selectCAPs" value={{data.connObjNo}} style="min-width:20px;"></td>
+                    <td class="grid-body-row-content" style="min-width:60px;">{{$index+1}}</td>
+                    <td class="grid-body-row-content" style="min-width:150px;">{{data.connObjId | textEmptyFilter}}</td>
+                    <td class="grid-body-row-content" style="min-width:150px;">{{data.prdtName | textEmptyFilter}}</td>
+                    <td class="grid-body-row-content" style="min-width:60px;">
+                        <span ng-click="detail(data)" class="f-col-3">{{data.connVer}}</span>
+                    </td>
+                    <td class="grid-body-row-content" style="min-width:80px;">
+                        <span ng-if="!data.isSelected">{{data.price | moneyEmptyFilter}}</span>
+                        <input class="price" ng-if="data.isSelected" type="number" value={{data.price}} min="0" oninput="if(value.length>5)value=value.slice(0,5)">
+                    </td>
+                    <td class="grid-body-row-content" style="min-width:160px;">
+                        <span ng-if="!data.isSelected">{{data.valuationModeCd}} -  {{data.valuationCountCd}}</span>
+                        <select ng-if="data.isSelected" class="selection1">
+                            <option value="01">按次</option>
+                            <option value="02">按千次</option>
+                            <option value="04">按条</option>
+                            <option value="05">按千条</option>
+                        </select>
+                        <select ng-if="data.isSelected" class="selection2">
+                            <option value="01">查询计数</option>
+                            <option value="02">查得计数</option>
+                        </select>
+                    </td>
+                    <td style="min-width:150px;">
+                        <button class="btn tab-btn min-w-110 full-width" ng-class="{'btn-state02':(data.status == '已上架'),'btn-state03':(data.status == '已下架'),'btn-state01':(data.status == '待上架')}">
+                        {{data.status}}
+                        </button>
+                    </td>
+                    <td ng-show="!(data.checkStatus === '01' && (data.status == '待上架') || data.checkStatus === '01' && (data.status == '已下架'))" style="min-width:210px;">
+                        <section ng-show="(data.status == '已下架') && (selectData == 'CAP')" style="text-align: center;position:relative;margin-top:5px;">
+                            <a ng-click="editData(data)">编辑</a>
+                            <a ng-click="pushData(data)" class="m-l-10">上架</a>
+                            <a ng-click="invalidData(data)" class="m-l-10">失效</a>
+                        </section>
+                        <section ng-show="(data.status == '已下架') && (selectData == 'CRP')" style="text-align: center;position:relative;margin-top:5px;">
+                            <a ng-if="!data.isSelected" ng-click="auditData(data)">提交审核</a>
+                            <a ng-click="editData(data)" class="m-l-10">编辑</a>
+                            <a ng-click="invalidData(data)" class="m-l-10">失效</a>
+                        </section>
+                        <section ng-show="(data.status == '待上架') && (selectData == 'CAP')" style="text-align: center;position:relative;margin-top:5px;">
+                            <a ng-if="!data.isSelected" ng-click="editData(data)">编辑</a>
+                            <a ng-if="!data.isSelected" ng-click="pushData(data)" class="m-l-10">上架</a>
+                            <a ng-if="!data.isSelected" ng-click="editPrice(data)" class="m-l-10">价格编辑</a>
+                            <a ng-if="data.isSelected" ng-click="surePrice($event,data)">确定</a>
+                            <a ng-if="data.isSelected" ng-click="editPrice(data)" class="m-l-10">取消</a>
+                            <!--<a ng-click="invalidData(data)">失效</a>-->
+                            <a ng-if="!data.isSelected" ng-click="deleteData(data)" class="m-l-10">删除</a>
+                        </section>
+                        <section ng-show="(data.status == '待上架') && (selectData == 'CRP')" style="text-align: center;position:relative;margin-top:5px;">
+                            <a ng-if="!data.isSelected" ng-click="editData(data)">编辑</a>
+                            <a ng-if="!data.isSelected" ng-click="auditData(data)" class="m-l-10">提交审核</a>
+                            <a ng-if="!data.isSelected" ng-click="editPrice(data)" class="m-l-10">价格编辑</a>
+                            <a ng-if="data.isSelected" ng-click="surePrice($event,data)">确定</a>
+                            <a ng-if="data.isSelected" ng-click="editPrice(data)" class="m-l-10">取消</a>
+                            <!--<a ng-click="invalidData(data)">失效</a>-->
+                            <a ng-if="!data.isSelected" ng-click="deleteData(data)" class="m-l-10">删除</a>
+                        </section>
+                        <section ng-show="data.status == '已上架'" style="text-align: center;position:relative;margin-top:5px;">
+                            <a ng-if="!data.isSelected" ng-click="pullData(data)">下架</a>
+                            <a ng-if="!data.isSelected" ng-click="editPrice(data)" class="m-l-10">价格编辑</a>
+                            <a ng-if="data.isSelected" ng-click="surePrice($event,data)">确定</a>
+                            <a ng-if="data.isSelected" ng-click="editPrice(data)">取消</a>
+                        </section>
+                    </td>
+                    <td ng-show="data.checkStatus === '01' && (data.status == '待上架')  || data.checkStatus === '01' && (data.status == '已下架')" class="grid-body-row-content" style="min-width:150px;">
+                        已提交
+                    </td>
+                    <td class="grid-body-row-content" style="min-width:100px;" ng-if="!(data.status == '已失效') && selectData=='CAP'"><span ui-sref="dls.provider.deploy({data:'true',cIdData:data.connObjId,idData:data.connObjNo})">配置</span><span class="m-l-15" span ui-sref="dls.provider.deploy({data:'',cIdData:data.connObjId,idData:data.connObjNo})">查看</span></td>
+                    <td class="grid-body-row-content" style="min-width:100px;" ng-if="data.status == '已失效' && selectData=='CAP'"><span ui-sref="dls.provider.deploy({data:'',cIdData:data.connObjId,idData:data.connObjNo})">查看</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </my-table>
+
+    <div ng-show = "!showitemData" class="text-center min-h-400 lh-300">
+        搜索结果为 0 ，请更换搜索关键词
+    </div>
+
+    <pagination class="m-l-20" options="pageOptions" cur-page="curPage" style="margin-top:50px;"></pagination>
+</div>

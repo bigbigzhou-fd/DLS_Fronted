@@ -1,0 +1,29 @@
+<div class="bg-2 p-lr-20" ng-controller="openAccountCtrl">
+    <header id="memberAudit" class="h-50 ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 p-lr-20 f-s-16 f-col-2 f-w-b">成员开户审核</span>
+        <<span class="f-col-1 f-s-12 f-w-l p-l-3">成员申请列表</span>
+    </header>
+
+    <div class="flex bg-3 p-lr-20 p-b-30 flex-d-c">
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">申请编号</label><label class="f-s-12 f-w-l f-col-3 p-l-10">{{applyNo}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">注册成员</label><label class="f-s-12 f-w-l p-l-10">{{orgFullNameCN}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">部门</label><label class="f-s-12 f-w-l p-l-10">{{deptName}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">申请人账号</label><label class="f-s-12 f-w-l p-l-10">{{applyName}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">注册资本总额</label><label class="f-s-12 f-w-l p-l-10">{{regCapital}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">开户状态</label><label class="f-s-12 f-w-l f-col-4 inline-block m-l-10 p-lr-5 text-center auditState{{openAcctStatCd}}">{{openAcctStatCd | openState}}</label></p>
+        <hr class="dotted p-b-10 m-t-10">
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30 ver-mid">发送通知</label>
+            <input type="checkbox" name="message" id="innerStation" disabled class="m-l-10" value="1"><label class="f-s-12 f-w-l f-col-1 m-l-5 ver-mid cursor-pointer" for="innerStation">站内信通知</label>
+            <input type="checkbox" name="message" id="message" class="m-l-10 cursor-pointer" value="2"><label class="f-s-12 f-w-l m-l-5 ver-mid cursor-pointer" for="message">短信通知</label>
+            <input type="checkbox" name="message" id="email" class="m-l-10 cursor-pointer" value="3"><label class="f-s-12 f-w-l m-l-5 ver-mid cursor-pointer" for="email">邮件通知</label>
+            <label class="f-s-12 f-w-l f-col-red ver-mid" id="messageAlert" style="visibility:hidden">该项为必填项</label>
+        </p>
+        <hr class="dotted p-b-30 m-t-10">
+        <div>
+            <a ng-click="openAcc()" class="btn btn-primary pull-left m-l-40">确认开户</a>
+            <a ng-click="goBack()" class="btn btn-default pull-left m-l-40"><<返回列表</a>
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,70 @@
+<div class="bg-2" ng-controller="algorithmItemManagerCtrl">
+    <header class="h-50 ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">算法互联对象</span>
+        <section class="pull-left btn-middle lh-50">
+            <btn-tab data = trade_scenario_btn_datas></btn-tab>
+        </section>
+        <section class="pull-left"><label class="h-34 p-lr-10 f-s-12 f-w-l">状态</label></section>
+        <section class="pull-left">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    {{selectState}}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li ng-click="setState('all')"><a>全部</a></li>
+                    <li ng-click="setState('to-be-added')"><a>待上架</a></li>
+                    <li ng-click="setState('have-been-added')"><a>已上架</a></li>
+                    <li ng-click="setState('have-been-undercarriaged')"><a>已下架</a></li>
+                    <li ng-click="setState('expired')"><a>已失效</a></li>
+                    <!--<li ng-click="setState('deleted')"><a>已删除</a></li>-->
+                </ul>
+            </div>
+        </section>
+        <div ng-show="selectData == 'CAP'">
+            <section class="pull-left"><label class="h-34 p-lr-10 f-s-12 f-w-l m-l-20">操作</label></section>
+            <section class="pull-left" >
+                <a class="btn btn-default dls-btn-primary" ng-click="pushItems()">批量上架</a>
+                <a class="btn btn-default dls-btn-primary" ng-click="pullItems()">批量下架</a>
+            </section>
+        </div>
+
+        <section class="pull-left" ng-show="selectData == 'CRP'">
+            <section class="pull-left"><label class="h-34 p-lr-10 f-s-12 f-w-l m-l-20">操作</label></section>
+            <a class="btn btn-default dls-btn-primary" ng-click="pushAudit()">批量提交审核</a>
+            <a class="btn btn-default dls-btn-primary" ng-click="pullCrps()">批量下架</a>
+        </section>
+        <section class="pull-left m-l-40">
+            <a class="btn dls-btn-warning dls-btn-primary no-border-radius m-l-20" ui-sref="dls.algorithm.createItem"><span class="f-col-4">创建互联对象</span></a>
+
+            <a ng-show="selectData == 'CAP'" class="btn dls-btn-warning dls-btn-primary no-border-radius m-l-20" href="../../api/sup/trade/prdtExport/?status={{selectStateNum}}&prdtType=03&pcode={{selectedNode.id}}&text={{searchFullText}}"><span class="f-col-4">导出互联对象</span></a>
+            <a ng-show="selectData == 'CRP'" class="btn dls-btn-warning dls-btn-primary no-border-radius m-l-20" href="../../api/sup/trade/prdtExport/?status={{selectStateNum}}&prdtType=02&pcode={{selectedNode.id}}&text={{searchFullText}}"><span class="f-col-4">导出互联对象</span></a>
+        </section>
+    </header>
+
+    <div class="flex">
+        <aside class="w-250 p-l-20">
+            <div class="border p-10" style="height: 100%">
+                <label class="f-s-12 f-w-b p-l-10">全部标签类别</label>
+                <section class="bg-3 border" style="height: 96%">
+                    <treecontrol class="tree-light"
+                                 tree-model="trade_label_reckon_type_btn_datas"
+                                 options="treeOptions"
+                                 on-selection="showSelected(node)"
+                                 selected-node="selectedNode">{{node.label}}
+                    </treecontrol>
+                </section>
+            </div>
+        </aside>
+        <div class="flex-1">
+            <div class="p-t-10 p-r-40 bg-3">
+                <!-- <ul class="nav nav-tabs p-l-20">
+                    <li role="presentation" ng-class="{true:'active'}[selectData == 'CAP']" class="f-s-12" ng-click="dataSelect('CAP')" ui-sref="dls.provider.itemManage.item"><a>营销类产品</a></li>
+                    <li role="presentation" ng-class="{true:'active'}[selectData == 'CRP']" class="f-s-12" ng-click="dataSelect('CRP')" ui-sref="dls.provider.itemManage.item"><a>征信类产品</a></li>
+                </ul> -->
+                <div ui-view=""></div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,67 @@
+<div class="bg-2 p-lr-20" ng-controller="auditDetailPageCtrl">
+    <header id="memberAudit" class="h-50 ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 p-lr-20 f-s-16 f-col-2 f-w-b f-s-12 p-tb-10">成员资格申请详情页</span>
+    </header>
+
+    <div class="flex bg-3 p-lr-20 flex-d-c p-b-80">
+        <p><label class="text-left f-s-12 f-w-l h-30 lh-30 p-r-5">申请编号</label><label class="f-s-12 f-w-l border square cursor-pointer" title="申请编号是为每一位申请单位自动生成的唯一标识码">？</label><label class="f-s-12 f-w-l f-col-3 p-l-10">{{account}}</label></p>
+        <p class="f-w-b f-s-12 p-tb-10 p-tb-10">申请机构基本信息</p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">机构全称（中文）</label><label class="f-s-12 f-w-l p-l-10">{{orgFullNameCN}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">机构简称（英文）</label><label class="f-s-12 f-w-l p-l-10">{{orgFullNameEN}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">部门</label><label class="f-s-12 f-w-l p-l-10">{{deptName}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">组织机构代码</label><label class="f-s-12 f-w-l p-l-10">{{orgNo}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">机构注册地址</label><label class="f-s-12 f-w-l p-l-10">{{orgRegAddr}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">注册资本总额</label><label class="f-s-12 f-w-l p-l-10">{{regCapital}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">机构类别</label><label class="f-s-12 f-w-l p-l-10">{{orgTypeCd}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">所属行业</label><label class="f-s-12 f-w-l p-l-10">{{industryCd}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">所在国家/地区</label><label class="f-s-12 f-w-l p-l-10">{{nationCd}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">省/自治区/直辖市</label><label class="f-s-12 f-w-l p-l-10">{{provCd}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">通讯地址</label><label class="f-s-12 f-w-l p-l-10">{{postAddr}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">邮政编码</label><label class="f-s-12 f-w-l p-l-10">{{zipNo}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">机构官网</label><label class="f-s-12 f-w-l p-l-10">{{companyWebSite}}</label></p>
+        <hr class="dotted p-b-10 m-t-10">
+        <p class="f-w-b f-s-12 p-tb-10">机构联系人信息</p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">业务联系人姓名</label><label class="f-s-12 f-w-l p-l-10">{{contactName1}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">业务联系人电子邮件</label><label class="f-s-12 f-w-l p-l-10">{{emailAddr1}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">业务联系人电话</label><label class="f-s-12 f-w-l p-l-10">{{phoneNo1}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">业务联系人传真</label><label class="f-s-12 f-w-l p-l-10">{{faxNo1}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">其他业务联系人姓名</label><label class="f-s-12 f-w-l p-l-10">{{contactName2}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">其他业务联系人电子邮件</label><label class="f-s-12 f-w-l p-l-10">{{emailAddr2}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">其他业务联系人电话</label><label class="f-s-12 f-w-l p-l-10">{{phoneNo2}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">其他业务联系人传真</label><label class="f-s-12 f-w-l p-l-10">{{faxNo2}}</label></p>
+        <hr class="dotted p-b-10 m-t-10">
+        <p class="f-w-b f-s-12 p-tb-10">机构清算账户</p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">银行账号户名</label><label class="f-s-12 f-w-l p-l-10">{{acctName}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">银行账号</label><label class="f-s-12 f-w-l p-l-10">{{acctNo}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">开户银行</label><label class="f-s-12 f-w-l p-l-10">{{issueBankName}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">开户行行号</label><label class="f-s-12 f-w-l p-l-10">{{issueBankID}}</label></p>
+        <hr class="dotted p-b-10 m-t-10">
+        <p class="f-w-b f-s-12 p-tb-10">发票信息</p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">发票抬头</label><label class="f-s-12 f-w-l p-l-10">{{billHead}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">发票银行账号</label><label class="f-s-12 f-w-l p-l-10">{{billAcctNo}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">发票开户银行</label><label class="f-s-12 f-w-l p-l-10">{{billIssueBankName}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">发票寄送地址</label><label class="f-s-12 f-w-l p-l-10">{{billSendAddr}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">联系电话</label><label class="f-s-12 f-w-l p-l-10">{{billContactPhone}}</label></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">纳税人识别号</label><label class="f-s-12 f-w-l p-l-10">{{taxID}}</label></p>
+        <hr class="dotted p-b-10 m-t-10">
+        <p class="f-w-b f-s-12 p-tb-10">相关附件</p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">营业执照</label><a href="../../api{{licence}}" target="_blank" class="f-s-12 f-w-l f-col-3 p-l-10 cursor-pointer">[ 查看 ]</a></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">机构组织代码证</label><a ng-if="ozgCode" href="../../api{{ozgCode}}" target="_blank" class="f-s-12 f-w-l p-l-10 cursor-pointer">[ 查看 ]</a></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">税务登记证</label><a ng-if="taxCode" href="../../api{{taxCode}}" target="_blank" class="f-s-12 f-w-l p-l-10 cursor-pointer">[ 查看 ]</a></p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">法人身份证扫描件</label><a href="../../api{{IDpic}}" target="_blank" class="f-s-12 f-w-l f-col-3 p-l-10 cursor-pointer">[ 查看 ]</a></p>
+        <hr class="dotted p-b-10 m-t-10">
+        <p class="f-w-b f-s-12 p-tb-10">审核状态</p>
+        <p><label class="w-150 text-right f-s-12 f-w-l h-30 lh-30">审核状态</label><label class="f-s-12 f-w-l f-col-4 inline-block m-l-15 p-lr-5 cursor-pointer text-center auditState{{applyProgCd}}">{{applyProgCd | auditState}}</label></p>
+        <p>
+            <label class="w-150 text-right f-s-12 f-w-l ver-top">审核记录</label>
+            <textarea class="m-l-10 p-l-3" cols="60" rows="10" disabled ng-model="historyAuditMsg"></textarea>
+        </p>
+        <hr class="dotted p-b-10 m-t-10">
+
+        <div class="m-t-10">
+            <a class="btn btn-default pull-left w-100 m-l-40" ng-click="goBack()" >关闭</a>
+        </div>
+
+    </div>
+</div>
+

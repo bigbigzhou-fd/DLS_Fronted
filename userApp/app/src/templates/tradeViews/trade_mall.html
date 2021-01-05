@@ -1,0 +1,48 @@
+<div class="bg-2" ng-controller="tradeMallCtrl">
+    <header class="h-50 dls-btn-default ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">交易大厅</span>
+        <!-- <section class="pull-left btn-middle lh-50">
+            <div class="btn-group ratio-btns">
+                <label class="btn btn-success" ng-model="tradeScenarioValue" uib-btn-radio="'03'">营销类数据</label>
+                <label class="btn btn-success" ng-model="tradeScenarioValue" uib-btn-radio="'02'">征信类数据</label>
+            </div>
+        </section> -->
+
+        <section class="pull-right lh-50">
+            <button class="btn btn-success inline-block ver-mid m-r-0" ui-sref="dls.trade.cartList">前往购物车</button>
+        </section>
+    </header>
+
+    <div class="flex">
+        <aside class="w-250 p-lr-10">
+            <div class="border p-10" style="height: 100%;">
+                <div class="f-s-12 f-w-b p-l-10"><button style="margin-left:0px;" class="btn-success" ng-model="transactionSwitchValue" uib-btn-radio="'01'">数据交易</button><button ng-model="transactionSwitchValue" class="btn-success" uib-btn-radio="'02'">算法模型交易</button></div>
+                <section class="bg-3 border" style="height: 96%;">
+                    <treecontrol class="tree-light"
+                        ng-show="transactionSwitchValue=='01'"
+                        tree-model="trade_label_type_btn_datas"
+                        options="treeOptions"
+                        on-selection="showSelected(node)"
+                        selected-node = "selectedNode">{{node.label}}
+                    </treecontrol>
+                    <treecontrol class="tree-light"
+                        ng-show="transactionSwitchValue=='02'"
+                        tree-model="trade_label_reckon_type_btn_datas"
+                        options="treeOptions"
+                        selected-node = "selectedNode">{{node.label}}
+                    </treecontrol>
+                </section>
+            </div>
+        </aside>
+        <div class="flex-1">
+            <div class="p-t-10 bg-3">
+                <!-- <ul class="nav nav-tabs p-l-20">
+                    <li role="presentation" ng-class="{true:'active'}[selectData == 'item']" class="f-s-12" ui-sref="dls.trade.mall.item" ng-click="dataSelect('item')"><a>数据单品</a></li>
+                    <li role="presentation" ng-class="{true:'active'}[selectData == 'set']" class="f-s-12" ui-sref="dls.trade.mall.set" ng-click="dataSelect('set')"><a>数据套餐</a></li>
+                </ul> -->
+                <div ui-view=""></div>
+            </div>
+        </div>
+    </div>
+</div>
+

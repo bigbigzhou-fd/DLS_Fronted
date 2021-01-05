@@ -1,0 +1,83 @@
+<article class="dls-admin bg-2" ng-controller="algorithmGoodsManageListCtrl">
+	<header class="h-50  lh-50" style="min-width: 1150px;position: relative;">
+	    <span class="pull-left inline-block  lh-50 p-lr-20 f-s-16 f-col-2 f-w-b">算法交易品管理</span>
+		  <label class="header-tag" style="margin-left: 117px;">搜索:</label>
+		  <div class="relative inline-block" style="width: 240px;">
+		      <span class="iconfont icon-search" ng-click="getData()"></span>
+		      <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" placeholder="请输入交易品编号或名称" ng-keyup="search($event)" ng-model="searchText">
+		      <span class="p-r-10 iconfont icon-enter" ng-click="getDatas()"></span>
+		  </div>
+
+		  <label class="header-tag">选择产品状态:</label>
+		  <select  class="form-control inline-block no-border-radius" style="width: 120px;" ng-model="_goodsStatus" ng-options="item.value as item.name  for item in goodsStatus" >
+		    <option value="" ng-if="false"></option>
+		  </select>
+
+			<div class="header-tag  pull-right" style="margin-right: 20px;">
+	      <a class="btn btn-primary" href={{"/api/sys/tagM/algTag/export?&content="+searchText+"&catCode="+pcode+"&status="+_goodsStatus}} target="_blank">导出交易品</a>
+			</div>
+	</header>
+	<div class="flex">
+  	<aside class="w-250 p-l-20" ng-controller="algorithmLabelEditCtrl">
+      <div class="border">
+          <section class="dls-tree bg-3 border">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="newTag" aria-label="...">
+                    <div class="input-group-btn">
+                        <span class="glyphicon glyphicon-ok" ng-click="addNewTag($event)"><span/>
+                        <span class="glyphicon glyphicon-remove" ng-click="cancleAddNewTag($event)"></span>
+                    </div>
+                </div>
+			  <treecontrol class="tree-light"
+                  tree-model="admin_algorithm_label_type_btn_datas"
+                  options="treeOptions"
+                  on-selection="showSelected(node)"
+                  selected-node = "selectedNode">{{node.label}}
+              </treecontrol>
+
+              <button class="btn btn-warning btn-add-tag" ng-click="addCategory($event)"><span class="glyphicon glyphicon-plus-sign"></span> 新增标签类</button>
+          </section>
+      </div>
+  	</aside>
+		<section class="flex-1 content content-wrap" style="margin-top: 0;"><!-- crp -->
+			<div style="position: relative;" >
+				<div class="dls-grid" style="overflow-x: auto;width:100%;">
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr class="grid-header-row">
+								<th>序号</th>
+								<th ng-repeat="title in algorithmTitles">{{title}}</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="item in datas" class="grid-body-row">
+							<td style="min-width:60px;" class="grid-body-row-content">{{$index+1}}</td>
+							<td style="min-width:120px;" class="grid-body-row-content">{{item.code}}</td>
+							<td style="min-width:120px;" class="grid-body-row-content">{{item.name}}</td>
+							<td class="grid-body-row-content"> <a class="f-col-3" ng-click="setData()" ui-sref="dls.algorithmGoodsManage.algorithmEdit({code:item.code, mode:'view'})">{{item.verNo}}</a></td>
+							<td class="grid-body-row-content"><goods-status-btn data="item.status"></goods-status-btn></td>
+							<td style="min-width:150px; vertical-align: middle" class="grid-body-row-content">
+								<a class ="btn btn-link f-col-3" ng-show="item.status === 3 || item.status === 1 " ng-click="setData()" ui-sref="dls.algorithmGoodsManage.algorithmEdit({code:item.code, mode:'update'})" href="javascript:void(0);">编辑</a>
+								<a class="btn btn-link f-col-3" ng-show="item.status === 3 || item.status === 1 " ng-click="updateState($index,item.code,2)" href="javascript:void(0);">上架</a>
+								<a class="btn btn-link f-col-3" ng-show="item.status === 2 " ng-click="updateState($index,item.code,3)" href="javascript:void(0);">下架</a>
+								<a class="btn btn-link f-col-3" ng-show="item.status === 3 " ng-click="updateState($index,item.code,4)" href="javascript:void(0);">失效</a>
+								<a class="btn btn-link f-col-3" ng-show="item.status === 4 " ng-click="updateState($index,item.code,3)" href="javascript:void(0);">恢复</a>
+								<a class="btn btn-link f-col-3" ng-show="item.status === 6 " ng-click="updateState($index,item.code,-1)" href="javascript:void(0);">删除</a>
+							</td>
+						</tr>
+						<tr ng-show="!datas">
+							<td colspan="6">没有任何数据</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="btn-group-inline">
+			    <button class="btn btn-link padding-4-0" ng-click="addNewgoods()">+新增交易品</button>    
+			</div>
+			<pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination>
+		</section>
+	</div>
+
+</article>

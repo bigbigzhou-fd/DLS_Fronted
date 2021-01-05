@@ -1,0 +1,61 @@
+<article class="bg-2" ng-controller="quotaCheckCtrl">
+	<header class="h-50 dls-btn-default  lh-50">
+	    <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">额度审核</span>
+	</header>
+
+	<section class="flex-container f-s-12">
+		<p class="item-title">账户信息</p>
+		<div class="item-content flex-r">
+			<label class="infoLbl">审核状态：</label>
+			<div class="btn-group">
+			    <button type="button" class="btn btn-default dropdown-toggle  f-s-12 w-100" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			        {{checkStatus}} <span class="caret"></span>
+			    </button>
+			    <ul class="dropdown-menu">
+			        <li ng-click="setCheckStatus(0)">未审核</li>
+			        <li ng-click="setCheckStatus(1)">已审核</li>
+			        <li ng-click="setCheckStatus(2)">已拒绝</li>
+			    </ul>
+			</div>
+			<a class="btn btn-primary" ng-click="getCheckDatas()">查询</a>
+		</div>
+
+
+		<p class="item-title">额度审核记录</p>
+
+		<div class="dls-tab">
+			<table class="table table-bordered table-striped">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in quotaCheckTitles">{{title}}</th>
+		          <th>额度调整原因</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in quotaCheckDatas">
+		          <td ng-bind="1+$index"></td>
+		          <td ng-bind="item.memId"></td>
+		          <td ng-bind="item.orgFullNameCN"></td>
+		          <td ng-bind="item.deptName"></td>
+		          <td ng-bind="item.timeStamp"></td>
+		          <td ng-bind="item.lmtAdjType | quotaAdjTypeFilter"></td>
+		          <td ><sign-currency data="item.adjAmt" type="item.lmtAdjType "}}></sign-currency></td>
+		          <td ng-bind="item.adjBal"></td>
+		          <td ng-bind="item.adjUser"></td>
+		          <td ng-bind="item.reviewUser ? item.reviewUser : '--' "></td>
+		          <td ng-bind="item.remark ? item.remark : '--' ""></td>
+		          <td>
+		          	<span ng-if=" '01' !==item.reviewStatus " ng-bind="item.reviewStatus | quotaAdjStatusFilter"></span>
+		          	<span ng-if=" '01' ===item.reviewStatus ">
+		          		<a ng-click="checkQuota(item.id, '02',$index)">审核</a><a class="p-l-10" ng-click="checkQuota(item.id, '03',$index)">拒绝</a>
+		          	</span>
+		          </td>
+		        </tr>
+
+		      </tbody>
+		    </table>
+		</div>
+
+		<pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination>
+	</section>
+</article>

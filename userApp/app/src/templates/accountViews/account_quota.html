@@ -1,0 +1,93 @@
+<article class="bg-2" ng-controller="accountQuotaCtrl">
+	<header class="h-50 dls-btn-default  lh-50">
+	    <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">额度查询</span>
+	</header>
+
+	<section class="flex-container f-s-12">
+		<p class="item-title">账户信息</p>
+		<p class="item-content">
+			<label class="infoLbl">机构名称：</label>
+			<span class="infoContent" ng-bind="quotaUserDatas.orgFullNameCN"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">部门名称：</label>
+			<span class="infoContent" ng-bind="quotaUserDatas.deptName"></span>
+		</p>
+
+		<p class="item-title">剩余互联额度</p>
+		<!-- <p class="item-content">
+			<label class="infoLbl">总额度：</label>
+			<span class="infoContent" ng-bind="quotaUserDatas.totLmt | currency"></span>元
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">授信额度：</label>
+			<span class="infoContent" ng-bind="quotaUserDatas.crdLmt  | currency"></span>元
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">当前已使用额度：</label>
+			<span class="infoContent" ng-bind="quotaUserDatas.usedBal  | currency"></span>元
+		</p> -->
+		<p class="item-content">
+			<label class="infoLbl">总额度：</label>
+			<span class="infoContent" ng-bind="quotaUserDatas.totLmt | currency"></span>元
+			<span class="glyphicon glyphicon-info-sign" uib-popover="{{'总额度：截至上次清算后的账户剩余可用额度。总额度 = 可用充值金额+ 可用授信额度'}}" popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">授信额度：</label>
+			<span class="infoContent" ng-bind="quotaUserDatas.crdLmt  | currency"></span>元
+			<span class="glyphicon glyphicon-info-sign" uib-popover="{{'授信额度：交易中心给予用户的信用额度'}}" popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">可用授信额度：</label>
+			<span class="infoContent" ng-bind="quotaUserDatas.crdAmt  | currency"></span>元
+			<span class="glyphicon glyphicon-info-sign" uib-popover="{{'可用授信额度：截至上次清算后的未被消费的授信额度'}}" popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">可用充值金额：</label>
+			<span class="infoContent" ng-bind="quotaUserDatas.depBal  | currency"></span>元
+			<span class="glyphicon glyphicon-info-sign" uib-popover="{{'可用充值金额：截至上次清算后的用户账户剩余的充值金额'}}" popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+		</p>
+
+
+		<p class="item-content">
+			<label class="infoLbl">当前已使用额度：</label>
+			<span class="infoContent" ng-bind="quotaUserDatas.usedBal  | currency"></span>元
+			<span class="glyphicon glyphicon-info-sign" uib-popover="{{'当前已使用额度：从上次清算到当前查询时刻，数据交易消费的额度'}}" popover-placement="auto bottom-left" popover-trigger="'mouseenter'"></span>
+		</p>
+		
+		<p class="item-content">
+			<label class="infoLbl">账户状态：</label>
+			<span class="infoContent" ng-bind="quotaUserDatas.status_dispaly"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">更新时间：</label>
+			<span class="infoContent" ng-bind="quotaUserDatas.timeStamp"></span>
+		</p>
+
+		<p class="item-title">额度更新记录</p>
+
+		<div class="dls-tab">
+			<table class="table table-bordered table-striped">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in quotaTitles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in quotaDatas">
+		          <td ng-bind="1+$index"></td>
+		          <td ng-bind="item.timeStamp"></td>
+		          <td ng-bind="item.lmtAdjType | quotaAdjTypeFilter"></td>
+		          <td ><sign-currency data="item.adjAmt" type="item.lmtAdjType "}}></sign-currency></td>
+		          <td ng-bind="item.adjBal"></td>
+		          <td ng-bind="item.adjUser"></td>
+		        </tr>
+
+		      </tbody>
+		    </table>
+		</div>
+
+		<pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination>
+
+	</section>
+</article>

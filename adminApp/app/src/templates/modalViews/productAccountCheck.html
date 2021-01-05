@@ -1,0 +1,55 @@
+<div class="modal-content">
+    <span class="glyphicon glyphicon-remove" style="position: absolute;right: 10px;top:10px;cursor: pointer;" ng-click="$ctrl.cancel()"></span>
+    <div class="modal-header">
+        <h3 class="modal-title">产品账户开户申请</h3>
+    </div>
+    <div class="modal-body">
+        <form  name='form' novalidate>
+
+            <p class="item-content">
+            	<label class="infoLbl">申请编号：</label>
+            	<span class="infoContent" ng-bind="modalDatas.applyNo"></span>
+            </p>
+            <p class="item-content">
+            	<label class="infoLbl">机构名称：</label>
+            	<span class="infoContent" ng-bind="modalDatas.orgFullNameCN"></span>
+            </p>
+
+            <p class="item-content">
+            	<label class="infoLbl">部门名称：</label>
+            	<span class="infoContent" ng-bind="modalDatas.deptName"></span>
+            </p>
+            <p class="item-content">
+            	<label class="infoLbl">开户时间：</label>
+            	<span class="infoContent" ng-bind="modalDatas.createTime"></span>
+            </p>
+            <p class="item-content">
+                <label class="infoLbl">账户号：</label>
+                <span class="infoContent" ng-bind="modalDatas.accountId"></span>
+            </p>
+            <p class="item-content">
+            	<label class="infoLbl">产品账户：</label>
+            	<!-- <span class="infoContent" ng-bind="modalDatas.applyPrdt"></span> -->
+                <span class="infoContent" ng-repeat="prdt in modalDatas.applyPrdt" class="m-l-10">{{prdt | prdtTypeFilter}}</span>
+            </p>
+
+            <p class="item-content">
+            	<label class="infoLbl">申请类型：</label>
+            	<span class="infoContent" ng-bind="modalDatas.operationType == '01' ? '新增' : '删除' "></span>
+            </p>
+            <!-- <hr> -->
+            <p class="item-content" style="margin-bottom: 30px;">
+            	<label class="infoLbl">审核意见：</label>
+                <textarea name="notes"  rows="2" cols="40" style="vertical-align: text-top;border-radius: 4px;" ng-model="modalDatas.notes" ng-maxlength="255"></textarea>
+            <span class="help-inline" ng-show="form.notes.$error.maxlength">最多为255个字符</span>
+            </p>
+        </form>
+          <!-- </div> -->
+        <!-- </div> -->
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-disabled="form.$invalid" ng-click="$ctrl.ok()">通过</button>
+        <button class="btn btn-warning" type="button" ng-disabled="form.$invalid" ng-click="$ctrl.deny()">拒绝</button>
+        <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">取消</button>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+<article class="dls-admin bg-2" ng-controller="configMemRoleCtrl">
+	<header class="h-50 dls-btn-default  lh-50">
+	    <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">成员角色列表</span>
+	</header>
+
+	<div class="flex">
+	    <div class="flex-1 content bg-3 p-b-20">
+            <section>
+
+                  <p class="cart-item item-title">会员编号:</p>
+                <div class="cart-item flex flex-d-r">
+                  <input class="cart-ratio form-control no-border-radius" type="txt" name="memId" ng-model="memId" style="width: 250px;" placeholder="请输入需要查询的会员编号">
+                  <button class=" btn btn-primary m-l-10" ng-click="getDatas(memId)">查询</button>
+                </div>
+
+                <div class="dls-tab" >
+                    <table  class="table table-bordered table-striped">
+                      <thead>
+                        <tr class="primary">
+                          <!-- <th></th> -->
+                          <th ng-repeat="title in titles">{{title}}</th>
+                          <th >操作</th>
+                        </tr>
+                      </thead>
+                      <tbody style="position: relative;" ng-repeat="item in dataLists">
+
+
+                        <tr ng-hide="renderId === $index " id="{{'render-tr' + $index}}">
+                          <!-- <td><input type="checkbox" ng-model="item.checked"/></td> -->
+                          <td><span  ng-bind="item.memId"></span></td>
+                          <td><span class="edit" ng-bind="item.memRole  | memRoleFilter"></span></td>
+                          <td><span class="edit" ng-bind="item.prdtType | prdtTypeFilter"></span></td>
+                          <td class="editBtn">
+                              <a ng-click="editItem($index,$event)">修改</a>
+                              <!-- <a class="p-l-10" ng-click="deleteItem($index,$event)">删除</a> -->
+                          </td>
+                        </tr>
+
+                        <tr ng-show="renderId === $index " class="edit-tr" id="{{'edit-tr' + $index}}">
+                            <td><span  ng-bind="item.memId"></span></td>
+                            <td>
+                                <select class="form-control" class="edit"  name="memRole" ng-model="memRole">
+                                    <option value="01">普通供方会员</option>
+                                    <option value="02">需方会员</option>
+                                    <option value="03">服务会员</option>
+                                    <option value="04">分成供方会员</option>
+                                    <option value="05">买断供方会员</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" class="edit"  name="prdtType" ng-model="prdtType">
+                                    <option value="01" >标准数据配送</option>
+                                    <option value="02">征信类产品</option>
+                                    <option value="03">营销类产品</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <a ng-click="saveItem($index,$event,item.memId,item.id)">保存</a>
+                                <a class="p-l-10" ng-click="cancelEditItem($index,$event)">取消</a>
+                            </td>
+                        </tr>
+                      </tbody>
+                      <tbody ng-if="addNewItemFlag === 1 ">
+                        <tr class="edit-tr">
+                            <td><input type="text" class="edit"  ng-model="memId" placeholder="请输入会员编号"></td>
+                            <td>
+                                <select class="form-control" class="edit"  name="add-type" ng-model="memRole">
+                                    <option value="01">普通供方会员</option>
+                                    <option value="02">需方会员</option>
+                                    <option value="03">服务会员</option>
+                                    <option value="04">分成供方会员</option>
+                                    <option value="05">买断供方会员</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" class="edit"  name="add-type" ng-model="prdtType">
+                                    <option value="01" >标准数据配送</option>
+                                    <option value="02">征信类产品</option>
+                                    <option value="03">营销类产品</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <a ng-click="saveItem($index,$event,memId)">保存</a>
+                                <a class="p-l-10" ng-click="cancelEditItem($index,$event)">取消</a>
+                            </td>
+
+                        </tr>
+                      </tbody>
+                      <tbody ng-if="libTabDatas.length === 0 && addNewItemFlag === 0 ">
+                        <tr>
+                            <td colspan="{{libTabTitles.length+2}}">没有任何数据</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+                <div class="btn-group-inline">
+                    <button class="btn btn-link padding-4-0" ng-click="addNewItem()">+新增成员/角色</button>
+                </div>
+                <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination>
+            </section>
+	    </div>
+	</div>
+</article>

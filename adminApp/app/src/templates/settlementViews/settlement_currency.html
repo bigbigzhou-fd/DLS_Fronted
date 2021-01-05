@@ -1,0 +1,80 @@
+<!-- settlementCurrencyDatas -->
+<article class="bg-2" ng-controller="settlementCurrencyCtrl">
+	<header class="h-50 dls-btn-default  lh-50">
+	    <span class="pull-left inline-block ver-mid lh-50 p-l-20 f-s-16 f-col-2 f-w-b">结算单管理>> </span>
+	    <span class="pull-left inline-block ver-mid lh-50  f-s-16 f-col-2 f-w-b">结算单信息>> </span>
+	    <span class="pull-left inline-block  lh-50  f-s-16 f-col-2 f-w-b">结算单详情>></span>
+	    <span class="pull-left inline-block  lh-50  f-s-16 f-col-2 f-w-b">结算流水信息</span>
+	    <!-- <a ng-if="!!permissions.hasPermission('93')" class="btn-dowmload" href={{"../../api/stt/sett/dataTable/admin/export?settNo="+settNo}}><span class="iconfont icon-download"></span>导出结算单</a> -->
+	</header>
+
+	<section class="flex-container f-s-12">
+		<!-- <p class="item-content">
+			<label class="infoLbl">本方机构名称：</label>
+			<span class="infoContent" ng-bind="datas.orderName"></span>
+		</p> -->
+		<p class="item-content">
+			<label class="infoLbl">结算单编号：</label>
+			<span class="infoContent" ng-bind="datas.settNo"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">结算起止日期：</label>
+			<span class="infoContent" ng-bind="datas.startTime"></span>
+			至
+			<span class="infoContent" style="margin-left: 20px;" ng-bind="datas.endTime"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">订单编号：</label>
+			<span class="infoContent" ng-bind="datas.orderId"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">互联对象编号：</label>
+			<span class="infoContent" ng-bind="datas.connObjId"></span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">互联对象名称：</label>
+			<span class="infoContent" ng-bind="datas.prdtName"></span>
+		</p>
+		<p class="item-content" ng-show="datas.paidAmt !== '0' ">
+			<label class="infoLbl">订单应{{'供方会员' === datas.list[0].roleName ? '收' : '付'}}金额合计：</label>
+			<span class="infoContent" ng-bind="datas.paidAct"></span>
+		</p>
+
+		<div class="dls-tab">
+			<table class="table table-bordered table-striped" style="min-width: 1560px;">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in titles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in datas.list">
+		          <td ng-bind="item.statDate | textEmptyFilter"></td>
+		          <td ng-bind="item.settNo | textEmptyFilter"></td>
+		          <td ng-bind="item.orderId | textEmptyFilter"></td>
+		          <td ng-bind="item.orderName | textEmptyFilter"></td>
+		          <td ng-bind="item.prdtTypeName | textEmptyFilter"></td>
+		          <td ng-bind="item.roleName | textEmptyFilter"></td>
+		          <td ng-bind="item.prdtIdCd | textEmptyFilter"></td>
+		          <td ng-bind="item.tagName | textEmptyFilter"></td>
+		          <td ng-bind="item.connObjId | textEmptyFilter"></td>
+		          <td ng-bind="item.prdtName | textEmptyFilter"></td>
+		          <td ng-bind="item.number | textEmptyFilter"></td>
+		          <td ng-bind="item.price | moneyEmptyFilter"></td>
+				  <td ng-bind="item.valuationModeCd | valuationCountCdFilter"></td>
+		          <td ng-bind="item.discount | numToPercentFilter"></td>
+		          <td ng-bind="item.paidAmount | moneyEmptyFilter"></td>
+		          <td ng-bind="item.discountAmount | moneyEmptyFilter"></td>
+		          <td ng-bind="item.paidAmountAct | moneyEmptyFilter"></td>
+		        </tr>
+		      </tbody>
+		    </table>
+		</div>
+
+		 <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination>
+
+
+		<p class="item-content" style="margin-bottom: 42px;height: 42px;"><a href="javascript:history.go(-1);" class="btn btn-primary back">返回</a></p>
+
+	</section>
+</article>

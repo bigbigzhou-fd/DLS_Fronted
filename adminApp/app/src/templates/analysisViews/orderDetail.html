@@ -1,0 +1,41 @@
+<article class="bg-2" ng-controller="orderDetailCtrl">
+    <header class="h-50 dls-btn-default  lh-50">
+        <span class="pull-left inline-block  lh-50 p-lr-20 f-s-16 f-col-2 f-w-b">业务日志 >> {{title}} >> 订单详情</span>
+    </header>
+
+    <section class="flex-container f-s-14">
+        <p class="h-34 lh-34" ng-show="isDem"><label class="w-100 f-w-l">需方机构名称：</label><label class="f-w-l">{{demMemName}}</label></p>
+        <p class="h-34 lh-34" ng-show="isDem"><label class="w-100 f-w-l">需方部门名称：</label><label class="f-w-l">{{demDeptName}}</label></p>
+        <p class="h-34 lh-34" ng-show="isSup"><label class="w-100 f-w-l">供方机构名称：</label><label class="f-w-l">{{supMemName}}</label></p>
+        <p class="h-34 lh-34" ng-show="isSup"><label class="w-100 f-w-l">供方部门名称：</label><label class="f-w-l">{{supDeptName}}</label></p>
+        <p class="h-34 lh-34" ng-show="isBuyoutSup"><label class="w-100 f-w-l">交易品名称：</label><label class="f-w-l">{{prdtName}}</label></p>
+        <!--<p class="h-34 lh-34" ng-show="isSharedSup || isBuyoutSup"><label class="w-80 f-w-l">成员角色：</label><label class="f-w-l">{{memRole}}</label></p>-->
+        <p class="h-34 lh-34" ng-hide="isBuyoutSup"><label class="w-80 f-w-l">订单编号：</label><label class="f-w-l">{{orderId}}</label></p>
+
+        <p class="h-34 lh-34" ng-hide="isBuyoutSup"><label class="w-80 f-w-l">结算类型：</label><label class="f-w-l">{{prdtType | prdtTypeFilter}}</label></p>
+
+        <p class="h-34 lh-34"><label class="w-80 f-w-l">互联对象：</label><label class="f-w-l">{{connNum}}个</label></p>
+
+        <div class="dls-grid m-l-0 m-t-10 p-r-10">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr class='grid-header-row'>
+                    <th>序号</th>
+                    <th ng-repeat="col in orderDetailGrid.columnDefs">
+                        {{col.displayName}}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="data in originDatas" class="grid-body-row">
+                    <td class="grid-body-row-content">{{$index+1}}</td>
+                    <td ng-repeat="col in orderDetailGrid.columnDefs" class="grid-body-row-content">
+                        {{data[col.field]}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems" class="m-l-20"></pagination>
+        </div>
+    </section>
+</article>

@@ -1,0 +1,17 @@
+<div class="flex" style="flex-wrap: wrap;">
+	<ul class="flex-1 show-data-item" ng-repeat="data in datas">
+	    <section class="border">
+	        <a class="label-name" ng-click="detail(data)">{{data.name}}</a>
+	        <li ng-repeat="content in data.contents">
+							<label class="label-key">{{content.key}}</label>
+							<label class="label-value">
+									<span ng-show="content.key !== '版本号' && content.key !== '产品类别'">{{content.value}}</span>
+									<span ng-show="content.key === '产品类别'">{{content.value | prdtTypeFilter}}</span>
+									<span ng-show="content.key === '版本号'" class="f-col-3 cursor-pointer" ng-click="detail(data)">{{content.value}}</span>
+							</label>
+			</li>
+	        <a class="add-cart" ng-class="{true : 'disabledBtn'}[data.isInCart]" disabled={{data.isInCart}} ng-click="addItem($event,data)"><label class="iconfont icon-purchase">加入购物车</label></a>
+	    </section>
+	</ul>
+</div>
+

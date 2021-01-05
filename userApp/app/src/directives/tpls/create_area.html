@@ -1,0 +1,21 @@
+<div class="provider-c-c-item">
+    <p>
+        <label class="f-w-l f-s-12 w-150 text-right ver-top pull-left">{{labelTitle}}</label>
+        <div class="m-l-20 bg-3"  style="position:relative;display:inline-block;vertical-align:top;min-width:700px;border:1px solid #B9B0B0;">
+            <div style="display:inline-block;min-width:500px;border-right:1px solid #B9B0B0;height:160px;overflow-y:auto">
+                <treecontrol class="tree-light dotted"
+                             tree-model = datas
+                             options = options
+                             selected-node = value>{{node.name}}
+                </treecontrol>
+            </div>
+            <div style="display:inline-block;vertical-align:top;margin-top:5px;position:relative;height:160px;overflow-y:auto">
+                <label class="f-w-l f-s-12 m-l-10">已选择</label>
+                <label ng-show="!options.disabled" class="glyphicon glyphicon-trash" style="position:relative;margin:0 0 0 120px;color:red"></label>
+                <ul>
+                    <li class="f-w-l f-s-12 p-l-10" style="position:relative;width:190px;height:30px;line-height:30px;border-bottom:1px dotted #B9B0B0" ng-repeat="data in selectedLabels">{{data.name}}<span ng-show="!options.disabled" ng-click="removeLabel($index)" class="glyphicon glyphicon-trash" style="display:inline-block;position:absolute;line-height:30px;right:10px;color:red;cursor:pointer"></span></li>
+                </ul>
+            </div>
+        </div>
+    </p>
+</div>

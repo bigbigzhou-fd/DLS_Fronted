@@ -1,0 +1,57 @@
+<article class="dls-admin bg-2" ng-controller="algorithmEditCtrl">
+	<header class="h-50 dls-btn-default  lh-50" style="width: 1150px;">
+	    <span class="pull-left inline-block  lh-50 p-lr-20 f-s-16 f-col-2 f-w-b">算法交易品信息录入</span>
+	</header>
+	<form class="content-wrap" name="algorithmEditForm" novalidate>
+		<p class="item-content">
+			<label class="p-label must">交易品编号：</label>
+			<input class="p-input" type="text" placeholder="交易品名称" ng-model="code" ng-disabled="mode!=='edit'" name="code" required>
+			<span class="help-inline" ng-show="!code"> 请输入交易品编号</span>
+			<span class="help-inline" ng-show="!code">请输入除'<'和'>'以外的符号</span>
+
+			<!-- <span class="infoContent highLight" ng-bind="code"></span> -->
+		</p>
+		<p class="item-content">
+			<label class="p-label must">交易品名称：</label>
+			<input class="p-input" type="text" placeholder="交易品名称" ng-model="name" ng-disabled="mode=='view'" name="name" required>
+			<span class="help-inline" ng-show="!name"> 请输入交易品名称</span>
+			<span class="help-inline" ng-show="!name">请输入除'<'和'>'以外的符号</span>
+
+			<!-- <span class="infoContent highLight" ng-bind="code"></span> -->
+		</p>
+		<p class="item-content" style="height: 100px;">
+		    <label class="p-label must">交易品描述：</label>
+		    <textarea class="p-textarea" type="text" placeholder="请输入交易品描述" ng-disabled="mode=='view'" ng-model="description" name="description" required></textarea>
+		    <span class="help-inline" ng-show="!description"> 请输入交易品描述</span>
+		    <span class="help-inline" ng-show="!description">请输入除'<'和'>'以外的符号</span>
+		</p>
+		<div class="m-t-20">
+			<label class="f-w-l f-s-12 w-150 text-right must m-r-20" style="width:168px;">交易品类型:</label>
+			<!-- <input type="checkbox" name="idMode" ng-model="selectedEXID" ng-disabled="showAll"><label for="">机器学习</label> -->
+			<select  class="form-control inline-block no-border-radius" style="width: 120px;" ng-model="productType" ng-options="item.value as item.name  for item in sceneState" >
+				<option value="" ng-if="false"></option>
+		 </select>
+			<p class="m-l-170 m-t-10 f-col-red" ng-if="!productType" style="margin-left:189px;">请选择该项！</p>
+		</div>
+		<br>
+		<!-- <p class="item-content">
+		    <label class="p-label must">是否交易中心审核</label>
+		    <label class="radio-inline m-l-20">
+		      <input type="radio" name="_chinadepCheck" ng-disabled="mode=='view'" ng-model="checkStatus" ng-value= 1 required> 是
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" name="_chinadepCheck" ng-disabled="mode=='view'" ng-model="checkStatus" ng-value= 0 required> 否
+		    </label>
+		    <span class="help-inline" ng-show="algorithmEditForm.chinadepCheck.$error.required "> 请设置</span>
+		</p> -->
+
+		<div class="form-group m-t-20">
+	    <div class="col-sm-offset-2 col-sm-10">
+	      <button type="submit" class="btn btn-primary" ng-show="mode=='edit'" ng-disabled="algorithmEditForm.$invalid || selectedNodes.length == 0 " ng-click="add()">提交</button>
+	      <button type="submit" class="btn btn-primary" ng-show="mode=='update'" ng-disabled="algorithmEditForm.$invalid || selectedNodes.length == 0 " ng-click="update()">提交</button>
+	      <!-- <button type="submit" class="btn btn-default m-l-20" ng-click="javascript:history.go(-1);">取消</button> -->
+	      <a href="javascript:history.go(-1);" class="btn btn-default back  m-l-20">返回</a>
+	    </div>
+	  </div>
+	</form>
+</article>

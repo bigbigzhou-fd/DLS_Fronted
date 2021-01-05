@@ -1,0 +1,115 @@
+<article class="dls-admin bg-2" ng-controller="crpEditCtrl">
+	<header class="h-50 dls-btn-default  lh-50" style="width: 1150px;">
+	    <span class="pull-left inline-block  lh-50 p-lr-20 f-s-16 f-col-2 f-w-b">征信类交易品信息录入</span>
+	</header>
+	<form class="content-wrap" name="capEditForm" novalidate>
+		<p class="item-content">
+			<label class="p-label must">交易品编号：</label>
+			<input class="p-input" type="text" placeholder="交易品名称" ng-model="goodsDatas.code" ng-disabled="!!code || mode=='view'" name="code" required ng-pattern="DlsUtil.namePattern">
+			<span class="help-inline" ng-show="capEditForm.code.$error.required  && capEditForm.code.$dirty"> 请输入交易品编号</span>
+			<span class="help-inline" ng-show="capEditForm.code.$error.pattern && capEditForm.code.$dirty">请输入除'<'和'>'以外的符号</span>
+
+			<!-- <span class="infoContent highLight" ng-bind="code"></span> -->
+		</p>
+		<p class="item-content">
+			<label class="p-label">交易品类型：</label>
+			<span class="infoContent"> 征信类产品 </span>
+		</p>
+
+		<!-- <p class="f-w-b f-s-12 p-tb-10 p-tb-10">填写申请机构基本信息</p> -->
+		<p class="item-content">
+		    <label class="p-label must">交易品名称：</label>
+		    <input class="p-input" type="text" placeholder="交易品名称" ng-disabled="mode=='view'" ng-model="goodsDatas.name" name="name" required ng-pattern="DlsUtil.namePattern">
+		    <span class="help-inline" ng-show="capEditForm.name.$error.required  && capEditForm.name.$dirty"> 请输入交易品名称</span>
+		    <span class="help-inline" ng-show="capEditForm.name.$error.pattern && capEditForm.name.$dirty">请输入除'<'和'>'以外的符号</span>
+		</p>
+
+		<p class="item-content" style="height: 100px;">
+		    <label class="p-label must">交易品描述：</label>
+		    <textarea class="p-textarea" type="text" placeholder="请输入交易品描述" ng-disabled="mode=='view'" ng-model="goodsDatas.description" name="description" ng-pattern="DlsUtil.namePattern" required></textarea>
+		    <span class="help-inline" ng-show="capEditForm.description.$error.required && capEditForm.description.$dirty"> 请输入交易品描述</span>
+		    <span class="help-inline" ng-show="capEditForm.description.$error.pattern && capEditForm.description.$dirty">请输入除'<'和'>'以外的符号</span>
+		</p>
+
+		<br>
+
+		<p class="item-content" style="position: relative;">
+		    <label class="p-label">ID列表</label>
+		    <hr class="p-hr">
+		</p>
+
+		<div>
+			<label class="f-w-l f-s-12 w-150 text-right must">ID列表</label>
+	    <div class="m-l-20 bg-3 tree-box-wrapper">
+	        <div class="tree-box" style="position: relative;">
+	            <treecontrol class="tree-light dotted"
+	                         tree-model="admin_label_type_btn_datas"
+	                         options="idTreeOptions"
+	                         selected-node = "selectedNode">{{node.name}}
+	            </treecontrol>
+	        </div>
+	        <div class="tree-selected p-t-10">
+	            <label class="f-w-l f-s-12 m-l-10 ver-mid">已选择</label>
+	            <ul>
+	                <li class="f-w-l f-s-12 p-l-10 selected-list" ng-repeat="data in selectedNodes">{{data.name}}<span ng-show="!showAll" ng-click="removeIdNodes($index)" class="glyphicon glyphicon-trash trash-1"></span></li>
+	            </ul>
+	        </div>
+	    </div>
+	    <span class="help-inline" ng-show="selectedNodes.length == 0 "> 请选择ID</span>
+		</div>
+
+		<p class="item-content">
+		    <label class="p-label must">是否支持ID可选：</label>
+		    <label class="radio-inline m-l-20">
+		      <input type="radio" name="idChoiceable" ng-model="goodsDatas.idOption" ng-disabled="mode=='view'" ng-value="1" required> 是
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" name="idChoiceable" ng-model="goodsDatas.idOption" ng-disabled="mode=='view'" ng-value="0" required> 否
+		    </label>
+		    <span class="help-inline" ng-show="capEditForm.idChoiceable.$error.required "> 请设置</span>
+		</p>
+
+		<p class="item-content" style="position: relative;">
+		    <label class="p-label">赋值列表</label>
+		    <hr class="p-hr">
+		</p>
+
+		<p class="item-content">
+		    <label class="p-label must">Value值类型</label>
+		    <select  class="form-control p-input inline-block no-border-radius" ng-disabled="mode=='view'" style="width: 120px;" name="valueType" ng-model="goodsDatas.valueType" ng-options="item.value as item.name  for item in valueType" required>
+		      <option value="" ng-if="false"></option>
+		    </select>
+		    <span class="help-inline" ng-show="capEditForm.valueType.$error.required"> 请选择赋值类型</span>
+		</p>
+
+		<p class="item-content" style="height: 100px;">
+		    <label class="p-label must">赋值说明：</label>
+		    <textarea class="p-textarea" type="text" placeholder="请输入赋值说明" ng-disabled="mode=='view'" ng-model="goodsDatas.valueEx" name="valueEx" required ng-pattern="DlsUtil.namePattern"></textarea>
+		    <span class="help-inline" ng-show="capEditForm.valueEx.$error.required && capEditForm.valueEx.$dirty"> 请输入赋值说明</span>
+		    <span class="help-inline" ng-show="capEditForm.valueEx.$error.pattern && capEditForm.valueEx.$dirty">请输入除'<'和'>'以外的符号</span>
+		</p>
+
+		<p class="item-content" style="position: relative;">
+		    <label class="p-label">交易品审核</label>
+		    <hr class="p-hr">
+		</p>
+		<p class="item-content">
+		    <label class="p-label must">是否交易中心审核</label>
+		    <label class="radio-inline m-l-20">
+		      <input type="radio" name="_chinadepCheck" ng-disabled="mode=='view'" ng-model="goodsDatas.checkStatus" ng-value= 1 required> 是
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" name="_chinadepCheck" ng-disabled="mode=='view'" ng-model="goodsDatas.checkStatus" ng-value= 0 required> 否
+		    </label>
+		    <span class="help-inline" ng-show="capEditForm.chinadepCheck.$error.required "> 请设置</span>
+		</p>
+
+		<div class="form-group m-t-20">
+	    <div class="col-sm-offset-2 col-sm-10">
+	      <button type="submit" class="btn btn-primary" ng-hide="mode=='view'" ng-disabled="capEditForm.$invalid || selectedNodes.length == 0 " ng-click="saveDatas()">提交</button>
+	      <!-- <button type="submit" class="btn btn-default m-l-20" ng-click="javascript:history.go(-1);">取消</button> -->
+	      <a href="javascript:history.go(-1);" class="btn btn-default back  m-l-20">返回</a>
+	    </div>
+	  </div>
+	</form>
+</article>

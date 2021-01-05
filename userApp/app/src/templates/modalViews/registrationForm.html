@@ -1,0 +1,52 @@
+<div class="modal-header">
+    <h3 class="modal-title">报名表</h3>
+</div>
+
+<div class="modal-body">
+
+  <form  name='form' novalidate>
+
+    <p class="item-content">
+      <label class="infoLbl">需求单号：</label>
+      <span class="infoContent" ng-bind="modalDatas.reqId"></span>
+    </p>
+    <p class="item-content">
+      <label class="infoLbl">需求类型：</label>
+      <span class="infoContent" ng-bind="modalDatas.reqType | reqTypeFilter | emptyFilter "></span>
+    </p>
+
+    <p class="item-content">
+      <label class="infoLbl">需求名称：</label>
+      <span class="infoContent" ng-bind="modalDatas.keywords"></span>
+    </p>
+    <p class="item-content">
+      <label class="infoLbl">交付截止日期：</label>
+      <span class="infoContent" ng-bind="modalDatas.deadline"></span>
+    </p>
+    <p class="item-content">
+        <label class="infoLbl">预计可交付时间：</label>
+        <date-picker class="inline-block w-150 m-r-10 datePicker ver-mid" dt="modalDatas.predate" mindt="1970, 5, 22"></date-picker>
+    </p>
+
+    <p class="item-content">
+      <label class="infoLbl">产品特色：</label>
+      <textarea name="features" cols="50"  rows="5" ng-model="modalDatas.features" ng-maxlength="500" style="overflow: auto"></textarea>
+      <span class="help-inline" ng-show="form.features.$error.maxlength">最多为500个字符</span>
+    </p>
+    <p class="item-content">
+      <label class="infoLbl">成功案例：</label>
+      <textarea name="succCases" cols="50"  rows="5" ng-model="modalDatas.succCases" ng-maxlength="500" style="overflow: auto"></textarea>
+      <span class="help-inline" ng-show="form.succCases.$error.maxlength">最多为500个字符</span>
+    </p>
+    <p class="item-content">
+      <label class="infoLbl">团队优势：</label>
+      <textarea name="advantage" cols="50"  rows="5" ng-model="modalDatas.advantage" ng-maxlength="500" style="overflow: auto"></textarea>
+      <span class="help-inline" ng-show="form.advantage.$error.maxlength">最多为500个字符</span>
+    </p>
+  </form>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-disabled="form.$invalid" type="button" ng-click="$ctrl.ok()">确定</button>
+    <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">取消</button>
+</div>

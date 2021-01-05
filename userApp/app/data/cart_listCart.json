@@ -1,0 +1,104 @@
+{
+    "status": 1,
+    "msg": "成功",
+    "data": {
+        "is_cart": true,
+        "is_mall": true,
+        "cartDict": {
+            "0000100": [{
+                "connObjCatCd":"1010101",
+                "connObjId":"DON00001000000000111",
+                "connObjNo":"DOS20161005000000111",
+                "connObjVer":"103",
+                "demMemId":"0000079",
+                "deptName":"大数据部门",
+                "id":114,
+                "orgFullNameCN":"电信浙江",
+                "prdtName":"命中指定金融产品",
+                "supMemId":"0000100",
+                "valuationModeCd":"按次计费"
+            }, {
+                "supMemId": "0000100",
+                "connObjCatCd": "1010101",
+                "demMemId": "0000079",
+                "prdtName": "命中指定母婴产品",
+                "orgFullNameCN": "电信浙江",
+                "connObjNo": "DOS20161005000000158",
+                "connObjId": "DON00001000000000211",
+                "deptName": "大数据部门",
+                "id": 115,
+                "connObjVer": "103"
+            }, {
+                "supMemId": "0000100",
+                "connObjCatCd": "1010101",
+                "demMemId": "0000079",
+                "prdtName": "命中指定汽车车系",
+                "orgFullNameCN": "电信浙江",
+                "connObjNo": "DOS20161005000000190",
+                "connObjId": "DON00001000000000192",
+                "deptName": "大数据部门",
+                "id": 116,
+                "connObjVer": "103"
+            }, {
+                "supMemId": "0000100",
+                "connObjCatCd": "1010101",
+                "demMemId": "0000079",
+                "prdtName": "浏览视频类型列表",
+                "orgFullNameCN": "电信浙江",
+                "connObjNo": "DOS20161004000000168",
+                "connObjId": "DON00001000000000201",
+                "deptName": "大数据部门",
+                "id": 117,
+                "connObjVer": "102"
+            }],
+            "0000101": [{
+                "supMemId": "0000100",
+                "connObjCatCd": "1010101",
+                "demMemId": "0000079",
+                "prdtName": "命中指定金融产品",
+                "orgFullNameCN": "电信浙江",
+                "connObjNo": "DOS20161005000000222",
+                "connObjId": "DON00001000000000222",
+                "deptName": "大数据部门",
+                "id": 114,
+                "connObjVer": "103"
+            }, {
+                "supMemId": "0000100",
+                "connObjCatCd": "1010101",
+                "demMemId": "0000079",
+                "prdtName": "命中指定母婴产品",
+                "orgFullNameCN": "电信浙江",
+                "connObjNo": "DOS20161005000000158",
+                "connObjId": "DON00001000000000211",
+                "deptName": "大数据部门",
+                "id": 115,
+                "connObjVer": "103"
+            }, {
+                "supMemId": "0000100",
+                "connObjCatCd": "1010101",
+                "demMemId": "0000079",
+                "prdtName": "命中指定汽车车系",
+                "orgFullNameCN": "电信浙江",
+                "connObjNo": "DOS20161005000000190",
+                "connObjId": "DON00001000000000192",
+                "deptName": "大数据部门",
+                "id": 116,
+                "connObjVer": "103"
+            }, {
+                "supMemId": "0000100",
+                "connObjCatCd": "1010101",
+                "demMemId": "0000079",
+                "prdtName": "浏览视频类型列表",
+                "orgFullNameCN": "电信浙江",
+                "connObjNo": "DOS20161004000000168",
+                "connObjId": "DON00001000000000201",
+                "deptName": "大数据部门",
+                "id": 117,
+                "connObjVer": "102"
+            }]
+        },
+        "cartNum": 4
+    },
+    "msg_level": 1
+}
+

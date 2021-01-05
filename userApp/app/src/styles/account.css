@@ -1,0 +1,112 @@
+.btn-dowmload{
+    height: 34px;
+    line-height: 32px;
+    color: #2e9bcf;
+    border: solid 1px #ded7d7;
+    background-color: #fff;
+    font-size: 14px;
+    padding: 0px 20px;
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+.item-title{
+	margin-top: 10px;
+	font-weight: bold;
+	color: #595757;
+}
+.item-title span{
+	color: #c09853;
+}
+.item-title .item-name {
+    color: #e74c3c;
+}
+.item-content{
+    font-size: 14px;
+	padding: 10px;
+	line-height: 1.42857143rem;
+	color: #414246;
+}
+.item-content label{
+	margin-bottom: 0;
+	font-weight: lighter;
+    min-width: 90px;
+}
+.item-content .money{
+    color: #e74c3c;
+}
+.item-content span {
+	margin-right: 20px;
+	font-weight: bold;
+}
+.item-content .date {
+    color: #414246;
+}
+.item-content .back {
+    border-radius: 0;
+}
+.item-content-inline {
+    line-height: 2.84;
+}
+
+.btn-success{
+	color: #fff;
+    background-color: #1abc9c;
+    border: solid 1px #1abc9c;
+    font-size: 14px;
+    // padding: 0 20px;
+    margin-left: 20px;
+}
+.btn-success:hover {
+    background-color: #0acca6;
+    border: solid 1px #0acca6;
+}
+.btn-confirm {
+    color: #fff;
+    background-color: #1abc9c;
+    border: solid 1px #1abc9c;
+    margin-left: 20px;
+}
+.btn-confirm:hover, .btn-confirm:active {
+    color: #fff;
+    background-color: #0acca6;
+    border: solid 1px #0acca6;
+}
+.account-title{
+    font-size: 16px;
+    font-weight: bold;
+    font-family: "Microsoft YaHei", SimHei, SimSun, Sun;
+    text-align: center;
+    line-height: 1.5em;
+    margin-top: 25px;
+    color: #25a9df;
+}
+.infoContent{
+	color: #414246;
+}
+.infoDate{
+	line-height: 34px;
+    margin-bottom: 0;
+}
+
+.dls-panel {
+    border: solid 1px #eee;
+    padding: 10px 8px;
+    margin: 20px 10px;
+}
+.dls-panel-heading {
+    font-size: 16px;
+    font-family: '微软雅黑';
+    color: #595757;
+    font-weight: bolder;
+    border-bottom: solid 1px #eee;
+    padding: 5px;
+}
+.dls-panel-body {
+    padding: 10px 40px 0px 10px;
+}
+
+.dls-panel .infoLbl {
+    width: 140px;
+    text-align: left;
+}

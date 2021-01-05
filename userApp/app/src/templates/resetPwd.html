@@ -1,0 +1,45 @@
+<div class="modal-dialog" ng-controller="resetPwdCtrl">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title"><span class='p-lr-10'>修改密码</span></h5>
+        </div>
+        <div class="modal-body">
+            <form id="resetPwdForm" name="resetPwdForm" novalidate>
+                <ul style='width:80%;margin:0 10%;'>
+                    <li class='f-s-14 p-tb-5'>
+                        <span class='p-lr-10'>用户账号</span>
+                        <label>{{username}}</label>
+                    </li>
+                    <li class='f-s-14 p-tb-5' ng-init="showOriginPwd = false">
+                        <span class='p-lr-10'>修改前密码</span>
+                        <input type="{{showOriginPwd ? 'text' : 'password'}}" style='display:inline' name="originPwd" ng-model="originPwd" required>
+                        <i class="glyphicon glyphicon-eye-open m-l-20" ng-show="!showOriginPwd" ng-click="showOriginPwd = !showOriginPwd"></i>
+                        <i class="glyphicon glyphicon-eye-close m-l-20" ng-show="showOriginPwd" ng-click="showOriginPwd = !showOriginPwd"></i>
+                        <label ng-show="resetPwdForm.originPwd.$dirty && resetPwdForm.originPwd.$error.required" class="f-col-red f-w-l f-s-12">该项不能为空！</label>
+                    </li>
+                    <li class='f-s-14 p-tb-5' ng-init="showPwd = false">
+                        <span class='p-lr-10'>修改后密码</span>
+                        <input type="{{showPwd ? 'text' : 'password'}}" style='display:inline' name="pwd" ng-model="pwd" ng-pattern="/^(\S)*(?=\S{6,})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*?])(\S)*$/" required>
+                        <i class="glyphicon glyphicon-eye-open m-l-20" ng-show="!showPwd" ng-click="showPwd = !showPwd"></i>
+                        <i class="glyphicon glyphicon-eye-close m-l-20" ng-show="showPwd" ng-click="showPwd = !showPwd"></i>
+                        <label ng-show="resetPwdForm.pwd.$dirty && resetPwdForm.pwd.$error.required" class="f-col-red f-w-l f-s-12">该项不能为空！</label>
+                        <label ng-show="resetPwdForm.pwd.$dirty && resetPwdForm.pwd.$error.pattern" class="f-col-red f-w-l f-s-12">最少6位，至少1个大写字母、小写字母、数字和特殊字符(非空格)</label>
+                    </li>
+                    <li class='f-s-14 p-tb-5' ng-init="showCertifyPwd = false">
+                        <span class='p-lr-10'>请确认密码</span>
+                        <input type="{{showCertifyPwd ? 'text' : 'password'}}" ng-model="certifyPwd" name="certifyPwd" required>
+                        <i class="glyphicon glyphicon-eye-open m-l-20" ng-show="!showCertifyPwd" ng-click="showCertifyPwd = !showCertifyPwd"></i>
+                        <i class="glyphicon glyphicon-eye-close m-l-20" ng-show="showCertifyPwd" ng-click="showCertifyPwd = !showCertifyPwd"></i>
+                        <label ng-show="resetPwdForm.certifyPwd.$dirty && notMatch" class="f-col-red f-w-l f-s-12">密码输入不一致！</label>
+                    </li>
+                </ul>
+                <div class="w-250" style="margin: 20px auto;">
+                    <button class="btn btn-primary" ng-click="confirmReset()" ng-disabled="resetPwdForm.valid && !notMatch">提交</button>
+                    <button class="m-l-40 btn btn-default" ng-click="reset()">重置</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

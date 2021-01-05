@@ -1,0 +1,62 @@
+<article class="bg-2" ng-controller="settlementSummaryCtrl">
+	<header class="h-50 dls-btn-default ver-mid lh-50">
+	    <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">结算信息</span>
+	</header>
+
+	<section class="flex-container">
+		<p class="cart-item item-title">业务产品</p>
+		<div class="cart-item flex flex-d-r">
+			<label class="radio-inline">
+			  <input class="cart-ratio" type="radio" name="prdtType" ng-model="prdtType" id="01" value="01"> 标准数据配送
+			</label>
+			<label class="radio-inline">
+			  <input class="cart-ratio" type="radio" name="prdtType" ng-model="prdtType" id="02" value="02"> 征信类产品
+			</label>
+			<label class="radio-inline">
+			  <input class="cart-ratio" type="radio" name="prdtType" ng-model="prdtType" id="03" value="03"> 营销类产品
+			</label>
+		</div>
+
+		<p class="cart-item item-title">查询起止日期</p>
+		<div class="cart-item flex flex-d-r">
+			<date-picker class="inline-block w-150 m-r-10 datePicker" dt="startTime" mindt="1970, 5, 22"></date-picker>
+			<span> ~ </span>
+			<date-picker class="inline-block w-150 m-l-10 datePicker" dt="endTime" mindt="1970, 5, 22"></date-picker>
+			<button class="btn btn-primary m-l-10" ng-click="getDatas(curPageNum,prdtType,startTime,endTime)">查询</button>
+		</div>
+
+		<p class="cart-item item-title">结算单数量：<span> {{settlementDatas.settNum}} </span>张</p>
+		<p class="cart-item item-title">实付金额合计：<span> {{settlementDatas.paidAmtTot}} </span>元</p>
+		<p class="cart-item item-title">实收金额合计：<span> {{settlementDatas.rcvAmtTot}} </span>元</p>
+		<div class="dls-tab">
+			<table class="table table-bordered table-striped">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in titles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in settlementDatas.list">
+		          
+		          <td><a class="btn btn-link" ui-sref="dls.settlement.detail({settNo:item.settNo})" ng-bind="item.settNo" href="javascript:void(0);"></a></td>
+		          <td>{{item.startTime}}</td>
+		          <td>{{item.endTime}}</td>
+		          <td>{{item.settPeriod | settPeriodFilter}}</td>
+		          <td>{{!!item.paidAmt ? item.paidAmt : '--'}}</td>
+		          <td>{{!!item.rctAmt ? item.rctAmt : '--'}}</td>
+		        </tr>
+		        <!-- <tr ng-show="settlementDatas.list.length!=0">
+		        	<td colspan="{{titles.length-2}}">合计</td>
+		        	<td >{{settlementDatas.paidAmtTot}}</td>
+		        	<td >{{settlementDatas.rcvAmtTot}}</td>
+		        </tr> -->
+		        <tr ng-show="settlementDatas.list.length==0">
+		        	<td colspan="{{titles.length}}">没有任何数据</td>
+		        </tr>
+
+		      </tbody>
+		    </table>
+		</div>
+		<pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination>
+	</section>
+</article>

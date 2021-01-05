@@ -1,0 +1,52 @@
+<article class="bg-2" ng-controller="tradeOrderListCtrl">
+    <header class="h-50 dls-btn-default ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">订单列表</span>
+    </header>
+
+    <section class="flex-container">
+        <div class="cart-item flex flex-d-r">
+            <label class="radio-inline">
+                <input class="cart-ratio" type="radio" name="searchType" ng-model="searchType" id="1" value="1"> 订单编号
+            </label>
+            <label class="radio-inline">
+                <input class="cart-ratio" type="radio" name="searchType" ng-model="searchType" id="2" value="2"> 订单名称
+            </label>
+        </div>
+
+        <div class="relative cart-item">
+            <span class="iconfont icon-search"></span>
+            <input type="text" placeholder="请输入想搜索的关键字" class="h-30 lh-30 p-lr-25 no-border-radius w-300" name="table-search" ng-model="searchText" ng-keyup="searchKeyup($event)">
+            <select class="inline-block lh-30 h-30" ng-options="item.value as item.name for item in searchStatus" ng-model="searchStatusVal"></select>
+            <!--<button class="btn btn-primary" ng-click="searchItem()">搜索</button>-->
+        </div>
+
+        <div class="dls-tab">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr class="primary">
+                        <th>订单编号</th>
+                        <th>订单名称</th>
+                        <th>生效日期</th>
+                        <th>失效日期</th>
+                        <th>状态</th>
+                        <th ng-if="role === 'dem'">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in orderListDatas">
+                        <td><span class="f-col-3 cursor-pointer" ng-click="detail(item)">{{item.orderId}}</span></td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.orderEffectDate}}</td>
+                        <td>{{item.orderExpiryDate}}</td>
+                        <td><state-btn data="item.status"></state-btn></td>
+                        <td ng-if="role === 'dem'">
+                            <span class="f-col-3 cursor-pointer" ng-click="edit(item)" ng-if="item.status === '01'">订单编辑</span>
+                            <span class="f-col-1 cursor-pointer" ng-if="item.status !== '01'">订单编辑</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <pagination  options="pageOptions" cur-page="curPageNum" sum="totalItems"></pagination>
+    </section>
+</article>

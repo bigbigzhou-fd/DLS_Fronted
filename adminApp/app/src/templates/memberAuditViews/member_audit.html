@@ -1,0 +1,49 @@
+<div class="bg-2 p-lr-20" ng-controller="memberAuditCtrl">
+    <header id="memberAudit" class="h-50 ver-mid lh-50">
+        <span class="pull-left inline-block ver-mid lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">成员审核列表</span>
+        <label class="f-s-12 f-w-l ver-top p-r-10">审核状态</label>
+        <select ng-options="item.value as item.label for item in auditStateType" ng-model="auditStateTypeVal"></select>
+        <label class="f-s-12 f-w-l ver-top p-l-80 p-r-10">搜索</label>
+        <div class="relative inline-block w-400">
+            <span class="iconfont icon-search" ng-click="getData()"></span>
+            <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" placeholder="请输入想搜索的关键字" ng-keyup="search($event)" ng-model="searchText">
+            <span class="p-r-10 iconfont icon-enter" ng-click="getData()"></span>
+        </div>
+    </header>
+
+    <div class="flex bg-3 p-lr-20 flex-d-c">
+        <div class="dls-grid m-t-10">
+            <table class="table table-bordered table-hover table-striped" exporterSuppressColumns="{{itemGridOptions.exporterSuppressColumns}}">
+                <thead>
+                <tr class='grid-header-row'>
+                    <th style="min-width:{{col.width}}px" ng-repeat="col in auditGridOptions.columnDefs">{{col.displayName}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr class="grid-body-row" ng-repeat="list in memberLists">
+                        <td class="grid-body-row-content">{{$index +1}} </td>
+                        <td class="grid-body-row-content f-col-3" ng-click="detail(list)">{{list.applyNo}}</td>
+                        <td class="grid-body-row-content">{{list.orgFullNameCN | textEmptyFilter}} </td>
+                        <td class="grid-body-row-content">{{list.deptName | textEmptyFilter}}</td>
+                        <td class="grid-body-row-content">{{list.applyName | textEmptyFilter}} </td>
+                        <td class="grid-body-row-content">
+                            <span class="inline-block f-col-4 auditState auditState{{list.applyProgCd}}" ng-class="{true : 'auditState-null'}[list.applyProgCd == '']">{{(list.applyProgCd + list.openAcctStatCd) | auditState}}</span>
+                        </td>
+                        <td class="grid-body-row-content">
+                            <span ng-if="list.applyProgCd == '01'" class="f-col-2" ng-click="audit(list)"><span class="iconfont icon-viewcheck f-s-12 p-r-5"></span>审核</span>
+                            <span ng-if="list.applyProgCd != '01'" class="f-col-1 glyphicon glyphicon-lock"></span>
+                        </td>
+                        <td class="grid-body-row-content">
+                            <span ng-if="list.applyProgCd == '02' && list.openAcctStatCd == '00'" class="f-col-2" ng-click="openAccount(list)">开户</span>
+                            <span ng-if="!(list.applyProgCd == '02' && list.openAcctStatCd == '00')" class="f-col-1 glyphicon glyphicon-lock"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <pagination options="auditPageOpt" cur-page="curPage"></pagination>
+        </div>
+    </div>
+</div>
+

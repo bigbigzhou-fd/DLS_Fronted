@@ -1,0 +1,49 @@
+<article class="bg-2" ng-controller="accountClearingCtrl">
+	<header class="h-50 dls-btn-default  lh-50">
+	    <span class="pull-left inline-block  lh-50 w-250 p-lr-20 f-s-16 f-col-2 f-w-b">清算</span>
+	</header>
+
+	<section class="flex-container f-s-12">
+		<p class="item-title">成员信息</p>
+		<p class="item-content">
+			<label class="infoLbl">机构名称：</label>
+			<span class="infoContent"> 博彦科技(上海)有限公司 </span>
+		</p>
+		<p class="item-content">
+			<label class="infoLbl">部门名称：</label>
+			<span class="infoContent"> 微软事业部</span>
+		</p>
+
+		<p class="item-title">清算月份：</p>
+		<div class="item-content flex flex-d-r">
+			<label class="infoLbl infoDate">结算单日期：</label>
+			<select class="form-control form-short-select w-150 m-r-10 no-border-radius" name="clear-year" ng-model="clearYear">
+                <option value="2016" selected="">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+            </select>
+
+            <select class="form-control form-short-select w-150 m-l-10 no-border-radius" name="clear-month" ng-model="clearMonth">
+                <option value="01" selected="">1月</option>
+                <option value="02">2月</option>
+                <option value="03">3月</option>
+                <option value="04">4月</option>
+                <option value="05">5月</option>
+                <option value="06">6月</option>
+                <option value="07">7月</option>
+                <option value="08">8月</option>
+                <option value="09">9月</option>
+                <option value="10">10月</option>
+                <option value="11">11月</option>
+                <option value="12">12月</option>
+	        </select>
+			<a class="btn-success lh-30" href={{"/api/rpt/report/institute/setl/export?clear_year="+clearYear+"&clear_month="+clearMonth}} target="_blank">下载清算单</a>
+		</div>
+	</section>
+</article>

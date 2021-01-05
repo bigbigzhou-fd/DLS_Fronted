@@ -1,0 +1,62 @@
+<article class="dls-admin bg-2" ng-controller="productAccountCheckCtrl">
+	<header class="h-50 dls-btn-default  lh-50" style="width: 1150px;">
+	    <span class="pull-left inline-block  lh-50 p-lr-20 f-s-16 f-col-2 f-w-b">产品账户审核</span>
+	</header>
+
+	<section class="flex-container">
+		<div class="cart-item flex flex-d-r">
+			<div class="flex-1">
+				<!-- <label class="header-tag">搜索:</label> -->
+				<div class="relative inline-block" style="width: 240px;">
+				    <span class="iconfont icon-search" ng-click="getData()"></span>
+				    <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" placeholder="请输入搜索关键字" ng-keyup="search($event)" ng-model="keyword">
+				    <span class="p-r-10 iconfont icon-enter" ng-click="getDatas()"></span>
+				</div>
+			</div>
+
+			<div>
+				<label class="header-tag">审核状态:</label>
+				<select  class="form-control inline-block no-border-radius" style="width: 120px;" ng-model="status" ng-options="item.value as item.name  for item in checkStates" >
+				  <option value="" ng-if="false"></option>
+				</select>
+			</div>
+		</div>
+
+
+
+		<!-- <p class="item-title">共有<span>{{totalItems}}</span>家机构结算单信息</p> -->
+		<div class="dls-tab">
+			<table class="table table-bordered table-striped">
+		      <thead>
+		        <tr class="primary">
+		          <th ng-repeat="title in titles">{{title}}</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr ng-repeat="item in datas.list">
+		          <td>{{$index+1}}</td>
+		          <td>{{item.applyNo | textEmptyFilter}}</td>
+		          <td>{{item.orgFullNameCN | textEmptyFilter}}</td>
+		          <td>{{item.deptName | textEmptyFilter}}</td>
+		          <td>{{item.applyTime | textEmptyFilter}}</td>
+		          <td>{{item.reviewTime | textEmptyFilter}}</td>
+		          <td><span ng-repeat="prdt in item.applyPrdt" class="m-l-10">{{prdt | prdtTypeFilter}}</span></td>
+		          <td>{{item.applicant | textEmptyFilter}}</td>
+		          <td>{{item.status | prdtAccCheckStatusFilter}}</td>
+		          <td>
+		          	<a class="btn btn-link" ng-click="setStatus()" ui-sref="dls.productAccount.checkInfo({memId:item.memId})" href="javascript:void(0);">查看</a>
+		          	<a class="btn btn-link" ng-if="item.status !== '02' && item.status !== '03' " ng-click="openCheck('md',item.applyNo,$index)"  href="javascript:void(0);">审核</a>
+		          </td>
+
+		        </tr>
+		        <tr ng-show="pageOptions.total_items_num === 0">
+		        	<td colspan="{{titles.length+1}}">没有任何数据</td>
+		        </tr>
+
+		      </tbody>
+		    </table>
+		</div>
+		<pagination  options="pageOptions" cur-page="curPageNum" sum="pageOptions.total_items_num"></pagination>
+	</section>
+
+</article>

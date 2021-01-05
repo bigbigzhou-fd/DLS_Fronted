@@ -1,0 +1,26 @@
+<div ng-controller="tradeMallItemCtrl" class="tradeMallPanel">
+    <section class="p-t-10" style="min-width:740px">
+        <label class="f-s-12 p-lr-10 h-34 lh-34 pull-left">搜索</label>
+        <div class="relative inline-block w-350">
+            <span class="iconfont icon-search"></span>
+            <input type="text" value="" name="table-search" class="table-search form-control p-l-30 no-border-radius" ng-model="searchText" ng-keyup="searchItem($event)" placeholder="请输入想搜索的关键字或单品名称">
+            <span class="iconfont icon-enter"></span>
+        </div>
+
+        <section class="pull-right btn-middle dls-btn-default dls-btn-near">
+            <btn-tab data = trade_type_btn_datas value="tradeTypeValue"></btn-tab>
+        </section>
+    </section>
+
+    <div ng-show = "showitemData">
+        <section class="m-t-10 min-h-300 p-r-0">
+            <show-data data = tradeDatas  class="show-data"></show-data>
+        </section>
+
+        <pagination class="m-l-20 m-t-50" options="pageOptions" cur-page="curPage"></pagination>
+    </div>
+    <!-- <div ng-show = "showSpinning" class="spinning"></div> -->
+    <div ng-show = "!showitemData" class="text-center min-h-400 lh-300">
+        搜索结果为 0 ，请更换搜索关键词
+    </div>
+</div>
